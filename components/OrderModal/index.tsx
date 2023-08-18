@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useRouter } from 'next/navigation';
 
 interface OrderModalProps {
   openModal: boolean;
@@ -18,6 +19,7 @@ interface OrderModalProps {
 }
 export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
   const [date, setDate] = useState<Date>();
+  const router = useRouter();
   return (
     <ModalTransparent
       open={openModal}
@@ -69,7 +71,13 @@ export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
       </div>
       <DialogFooter>
         <div className="px-10 w-full">
-          <Button className="w-full h-20" type="submit">
+          <Button
+            className="w-full h-20"
+            type="button"
+            onClick={() => {
+              router.push('/orders');
+            }}
+          >
             <span className="text-xl">Submit</span>
           </Button>
           <p className="p-4 text-white text-center">All fields are required</p>

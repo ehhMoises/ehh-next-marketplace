@@ -2,6 +2,7 @@ import MainNavigationHeader from '@/components/MainNavigationHeader';
 import HomeScreen from './(Home)/HomeScreen';
 import Footer from '@/components/Footer';
 import { Fragment } from 'react';
+import { HeroComponent } from '@/components/Hero';
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <main className="flex min-h-screen">
         <section className="flex flex-col w-full">
           <MainNavigationHeader />
+          <HeroComponent />
           <HomeScreen />
         </section>
       </main>

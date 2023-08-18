@@ -9,7 +9,7 @@ const MainNavigationHeader: FC = () => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
   return (
-    <section className="w-full">
+    <section className="w-full bg-white">
       <SignIn
         openModal={isSignInModalOpen}
         onOpenModal={(isOpen) => {
@@ -44,12 +44,6 @@ const MainNavigationHeader: FC = () => {
           <ChevronDown width={16} />
         </div>
       </nav>
-
-      <div className="flex flex-col justify-center w-full">
-        <div className="w-full">
-          <Image className="w-full" src="/fruits/cherry.jpg" alt="eHarvestHub Logo" width="800" height="400" />
-        </div>
-      </div>
     </section>
   );
 };

@@ -9,14 +9,27 @@ import { CalendarIcon } from 'lucide-react';
 import { FC, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
+import { FieldConfig, FieldInputProps, FormikErrors } from 'formik';
+import { IFilter } from '.';
 
-const QuickSearchBrand: FC = () => {
+interface IQuickSearchBrandProps {
+  getFieldProps: (nameOrOptions: string | FieldConfig<any>) => FieldInputProps<any>;
+  handleChange: any;
+  values: IFilter;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<void> | Promise<FormikErrors<IFilter>>;
+}
+
+const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({ getFieldProps, handleChange, values, setFieldValue }) => {
   const [date, setDate] = useState<Date>();
 
   return (
     <section className="flex flex-col gap-y-3">
       <div key="commoditySearch">
-        <Select name="commodity">
+        <Select name="commodity" onValueChange={(value) => setFieldValue('commodity', value)} value={values.commodity}>
           <SelectTrigger>
             <SelectValue placeholder="Commodity" />
           </SelectTrigger>
