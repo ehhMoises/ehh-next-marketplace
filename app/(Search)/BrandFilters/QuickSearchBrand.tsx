@@ -6,12 +6,17 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
+import JSCookie from 'js-cookie';
 
 const QuickSearchBrand: FC = () => {
   const [date, setDate] = useState<Date>();
+
+  useEffect(() => {
+    JSCookie.set('access-token', 'SuperAccessTokenFake');
+  }, []);
 
   return (
     <section className="flex flex-col gap-y-3">
@@ -33,7 +38,7 @@ const QuickSearchBrand: FC = () => {
       </div>
 
       <div key="packSizeSearch">
-        <Select>
+        <Select name="packSize">
           <SelectTrigger>
             <SelectValue placeholder="Pack Size" />
           </SelectTrigger>
@@ -48,7 +53,7 @@ const QuickSearchBrand: FC = () => {
       </div>
 
       <div key="packStyleSearch">
-        <Select name="pack-style">
+        <Select name="packStyle">
           <SelectTrigger>
             <SelectValue placeholder="Pack Style" />
           </SelectTrigger>
