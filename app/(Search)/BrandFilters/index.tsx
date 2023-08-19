@@ -1,18 +1,27 @@
-import { FC, FormEvent } from 'react';
+'use client';
+
+import { FC, FormEvent, useState } from 'react';
 import { QuickSearchBrand } from './QuickSearchBrand';
 import { Separator } from '@/components/ui/separator';
 import { AdvancedFilterBrand } from './AdvancedFilterBrand';
 import { Button } from '@/components/ui/button';
+import { SearchBrandValidationError } from '../lib/filterBrandSchema';
 
 const BrandFilters: FC = () => {
+  const [deliverDate, setDeliverDate] = useState<Date>();
+  const [searchError, setSearchError] = useState<SearchBrandValidationError>({});
   const searchBrandsHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
+    if (deliverDate) {
+      formData.set('deliverDate', deliverDate.toISOString());
+    }
 
-    const jsonData: { [key: string]: FormDataEntryValue } = {};
+    const jsonData: { [key: string]: FormDataEntryValue | null } = {};
     formData.forEach((value, key) => {
       jsonData[key] = value;
     });
+    jsonData.quantity = jsonData?.quantity && jsonData.quantity?.length > 0 ? jsonData.quantity : null;
 
     const response = await fetch('/api/search', {
       method: 'POST',
@@ -22,8 +31,10 @@ const BrandFilters: FC = () => {
       },
     });
 
-    const dataResponse = await response.json();
-    console.log(dataResponse);
+    const dataResponse = (await response.json()) as SearchBrandValidationError;
+    if (response.status === 400) {
+      setSearchError(dataResponse);
+    }
   };
 
   return (
@@ -34,7 +45,7 @@ const BrandFilters: FC = () => {
             <h2 className="uppercase text-stone-400 font-bold">Quick Search</h2>
             <Separator className="my-3" orientation="horizontal" />
 
-            <QuickSearchBrand />
+            <QuickSearchBrand deliverDate={deliverDate} updateDeliverDate={setDeliverDate} searchError={searchError} />
             <Button className="mt-10" type="submit">
               Search
             </Button>

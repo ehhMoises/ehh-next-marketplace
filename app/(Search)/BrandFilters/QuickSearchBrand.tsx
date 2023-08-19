@@ -6,21 +6,26 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
-import { FC, useEffect, useState } from 'react';
+import { Dispatch, FC, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import JSCookie from 'js-cookie';
+import { SearchBrandValidationError } from '../lib/filterBrandSchema';
 
-const QuickSearchBrand: FC = () => {
-  const [date, setDate] = useState<Date>();
+interface QuickSearchBrandProps {
+  deliverDate?: Date;
+  updateDeliverDate: Dispatch<Date | undefined>;
+  searchError: SearchBrandValidationError;
+}
 
+const QuickSearchBrand: FC<QuickSearchBrandProps> = ({ deliverDate, updateDeliverDate, searchError }) => {
   useEffect(() => {
     JSCookie.set('access-token', 'SuperAccessTokenFake');
   }, []);
 
   return (
     <section className="flex flex-col gap-y-3">
-      <div key="commoditySearch">
+      <div key="commoditySearch" className="flex flex-col gap-y-2">
         <Select name="commodity">
           <SelectTrigger>
             <SelectValue placeholder="Commodity" />
@@ -35,9 +40,10 @@ const QuickSearchBrand: FC = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
+        {searchError.commodity && <p className="text-red-400 ml-1.5">{searchError.commodity[0]}</p>}
       </div>
 
-      <div key="packSizeSearch">
+      <div key="packSizeSearch" className="flex flex-col gap-y-2">
         <Select name="packSize">
           <SelectTrigger>
             <SelectValue placeholder="Pack Size" />
@@ -50,6 +56,7 @@ const QuickSearchBrand: FC = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
+        {searchError.packSize && <p className="text-red-400 ml-1.5">{searchError.packSize[0]}</p>}
       </div>
 
       <div key="packStyleSearch">
@@ -85,26 +92,35 @@ const QuickSearchBrand: FC = () => {
         </Select>
       </div>
 
-      <div key="quantitySearch">
+      <div key="quantitySearch" className="flex flex-col gap-y-2">
         <Input name="quantity" type="number" min={1} placeholder="Enter Quantity Needed" />
+        {searchError.deliverDate && <p className="text-red-400 ml-1.5">{searchError.deliverDate[0]}</p>}
       </div>
 
-      <div key="deliverDateSearch" className="flex flex-row items-center gap-x-1">
-        <Popover>
-          <PopoverTrigger className="rounded-none" asChild>
-            <Button
-              variant={'outline'}
-              className={cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}
-            >
-              {date ? format(date, 'PPP') : <span>Deliver Date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-          </PopoverContent>
-        </Popover>
+      <div key="deliverDateSearch" className="flex flex-col gap-y-2">
+        <div className="flex flex-row items-center gap-x-1">
+          <Popover>
+            <PopoverTrigger className="rounded-none" asChild>
+              <Button
+                variant={'outline'}
+                className={cn('w-full justify-start text-left font-normal', !deliverDate && 'text-muted-foreground')}
+              >
+                {deliverDate ? format(deliverDate, 'PPP') : <span>Deliver Date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={deliverDate}
+                onSelect={(date) => updateDeliverDate(date)}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
 
-        <CalendarIcon size={42} className="text-stone-400" />
+          <CalendarIcon size={42} className="text-stone-400" />
+        </div>
+        {searchError.deliverDate && <p className="text-red-400 ml-1.5">{searchError.deliverDate[0]}</p>}
       </div>
     </section>
   );

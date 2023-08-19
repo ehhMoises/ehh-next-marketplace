@@ -44,7 +44,7 @@ const AdvancedFilterBrand: FC = () => {
   return (
     <section className="flex flex-col gap-y-3">
       <CollapsibleAdvancedFilterBrand key="commodityAdvancedSearch" label="Commodity">
-        <RadioGroup name="commodity-advanced">
+        <RadioGroup name="commodityAdvanced">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="apples-1" id="r1" />
             <Label htmlFor="apples-1" className="text-stone-500">
@@ -67,7 +67,7 @@ const AdvancedFilterBrand: FC = () => {
       </CollapsibleAdvancedFilterBrand>
 
       <CollapsibleAdvancedFilterBrand key="varietyAdvancedSearch" label="Variety">
-        <RadioGroup name="variety-advanced">
+        <RadioGroup name="varietyAdvanced">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="all-1" id="r1" />
             <Label htmlFor="all-1" className="text-stone-500">
@@ -96,7 +96,7 @@ const AdvancedFilterBrand: FC = () => {
       </CollapsibleAdvancedFilterBrand>
 
       <CollapsibleAdvancedFilterBrand key="subVarietyAdvancedSearch" label="Sub Variety">
-        <RadioGroup name="sub-variety-advanced">
+        <RadioGroup name="subVarietyAdvanced">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="all-sub-varieties" id="r1" />
             <Label htmlFor="all-1" className="text-stone-500">
@@ -125,7 +125,7 @@ const AdvancedFilterBrand: FC = () => {
       </CollapsibleAdvancedFilterBrand>
 
       <CollapsibleAdvancedFilterBrand key="packSizeAdvancedSearch" label="Pack Size">
-        <RadioGroup name="pack-size-advanced">
+        <RadioGroup name="packSizeAdvanced">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="all-sub-varieties" id="r1" />
             <Label htmlFor="all-pack-size-1" className="text-stone-500">
@@ -154,7 +154,7 @@ const AdvancedFilterBrand: FC = () => {
       </CollapsibleAdvancedFilterBrand>
 
       <CollapsibleAdvancedFilterBrand key="packStyleAdvancedSearch" label="Pack Style">
-        <RadioGroup name="pack-style-advanced">
+        <RadioGroup name="packStyleAdvanced">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="all-pack-style" id="all-pack-style" />
             <Label htmlFor="all-pack-style" className="text-stone-500">
@@ -183,7 +183,7 @@ const AdvancedFilterBrand: FC = () => {
       </CollapsibleAdvancedFilterBrand>
 
       <CollapsibleAdvancedFilterBrand key="growingMethodAdvancedSearch" label="Growing Method">
-        <RadioGroup name="growing-method-advanced">
+        <RadioGroup name="growingMethodAdvanced">
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="all-growing-method" id="all-growing-method" />
             <Label htmlFor="all-growing-method" className="text-stone-500">
@@ -220,7 +220,7 @@ const AdvancedFilterBrand: FC = () => {
       <Separator orientation="horizontal" />
 
       <CollapsibleAdvancedFilterBrand key="quantityAdvancedSearch" label="Quantity Needed">
-        <Input type="number" min={1} placeholder="Enter Quantity Needed" name="quantity-advanced" />
+        <Input type="number" min={1} placeholder="Enter Quantity Needed" name="quantityAdvanced" />
       </CollapsibleAdvancedFilterBrand>
 
       <CollapsibleAdvancedFilterBrand key="deliverDateSearch" label="Deliver Date">
