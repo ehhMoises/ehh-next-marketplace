@@ -34,6 +34,8 @@ const BrandFilters: FC = () => {
     const dataResponse = (await response.json()) as SearchBrandValidationError;
     if (response.status === 400) {
       setSearchError(dataResponse);
+    } else {
+      setSearchError({});
     }
   };
 
