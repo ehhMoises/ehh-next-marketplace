@@ -18,7 +18,7 @@ export const getPackSizeList = async () => {
   try {
     const response = await axios.get<PackSize[]>(`/${context}`);
 
-    return response.data;
+    return response.data ?? [];
   } catch (err: unknown) {
     if (err instanceof AxiosError) throw err?.response?.data;
   }

@@ -11,8 +11,14 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { FormikErrors } from 'formik';
 import { IFilter, KeysFilterBrand } from '../lib/filterBrandSchema';
+import { PackSize } from '@/models/packSize';
+import { PackStyle } from '@/models/packStyle';
+import { Grade } from '@/models/grade';
 
 interface IQuickSearchBrandProps {
+  packSizeList: PackSize[];
+  packStyles: PackStyle[];
+  grades: Grade[];
   errors: FormikErrors<IFilter>;
   values: IFilter;
   setFieldValue: (
@@ -23,7 +29,15 @@ interface IQuickSearchBrandProps {
   dirty: boolean;
 }
 
-const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({ values, setFieldValue, errors, dirty }) => {
+const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
+  packSizeList,
+  packStyles,
+  grades,
+  values,
+  setFieldValue,
+  errors,
+  dirty,
+}) => {
   return (
     <section className="flex flex-col gap-y-3">
       <div key="commoditySearch">
@@ -61,9 +75,11 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({ values, setFieldValue, e
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value={'1-vendoer-pack'}>Vendor Packing</SelectItem>
-              <SelectItem value={'2-warehouse-pack'}>Warehouse Packing</SelectItem>
-              <SelectItem value={'3-brand-packing'}>Brand Packing</SelectItem>
+              {packSizeList.map((packSize) => (
+                <SelectItem key={packSize.id} value={packSize.id}>
+                  {packSize.name}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -81,12 +97,11 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({ values, setFieldValue, e
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value={'pack-style-1'}>Pack Style 1</SelectItem>
-              <SelectItem value={'pack-style-2'}>Pack Style 2</SelectItem>
-              <SelectItem value={'pack-style-3'}>Pack Style 3</SelectItem>
-              <SelectItem value={'pack-style-4'}>Pack Style 4</SelectItem>
-              <SelectItem value={'pack-style-5'}>Pack Style 5</SelectItem>
-              <SelectItem value={'pack-style-6'}>Pack Style 6</SelectItem>
+              {packStyles.map((packStyle) => (
+                <SelectItem key={packStyle.id} value={packStyle.id}>
+                  {packStyle.name}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -104,9 +119,11 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({ values, setFieldValue, e
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value={'grade-1'}>US-DOT 1</SelectItem>
-              <SelectItem value={'grade-2'}>US-DOT 2</SelectItem>
-              <SelectItem value={'grade-3'}>US-DOT 3</SelectItem>
+              {grades.map((grade) => (
+                <SelectItem key={grade.id} value={grade.id}>
+                  {grade.name}
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>

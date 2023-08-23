@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import { QuickSearchBrand } from './QuickSearchBrand';
 import { Separator } from '@/components/ui/separator';
@@ -5,8 +7,21 @@ import { AdvancedFilterBrand } from './AdvancedFilterBrand';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/button';
 import FilterBrandValidationSchema, { filterInitialValues } from '../lib/filterBrandSchema';
+import { PackSize } from '@/models/packSize';
+import { PackStyle } from '@/models/packStyle';
+import { Grade } from '@/models/grade';
 
-const BrandFilters: FC = () => {
+interface BrandFiltersProps {
+  packSizeList: PackSize[];
+  packStyles: PackStyle[];
+  grades: Grade[];
+}
+
+const BrandFilters: FC<BrandFiltersProps> = ({ packSizeList, packStyles, grades }) => {
+  // console.log('packSizeList', packSizeList);
+  // console.log('packStyles', packStyles);
+  // console.log('grades', grades);
+
   // Create Listing
   const onSubmit = async () => {
     console.log('form values', values);
@@ -27,7 +42,15 @@ const BrandFilters: FC = () => {
           <Separator className="my-3" orientation="horizontal" />
 
           <form onSubmit={handleSubmit} className="flex flex-col">
-            <QuickSearchBrand values={values} setFieldValue={setFieldValue} errors={errors} dirty={dirty} />
+            <QuickSearchBrand
+              packSizeList={packSizeList}
+              packStyles={packStyles}
+              grades={grades}
+              values={values}
+              setFieldValue={setFieldValue}
+              errors={errors}
+              dirty={dirty}
+            />
 
             <Button variant="thirdnary" type="submit" className="mt-5">
               <span className="text-white">Search</span>

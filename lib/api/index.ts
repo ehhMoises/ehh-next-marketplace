@@ -1,9 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-
-export const enum TokenTypes {
-  ACCESS_TOKEN = 'access-token',
-}
+import { TokenTypes } from '../cookies';
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
