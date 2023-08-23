@@ -5,7 +5,7 @@ import { columns } from './columns';
 import { data } from './data';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { DataTable } from '@/components/ui/DataTable';
+import { DataTable } from '@/components/ui/data-table';
 
 export const OrdersTable: FC = () => {
   const router = useRouter();

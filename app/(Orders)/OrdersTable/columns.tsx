@@ -58,6 +58,7 @@ export const columns: ColumnDef<IOrder>[] = [
   {
     id: 'actions',
     header: 'Actions',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cell: ({ row }) => {
       // const payment = row.original;
 
