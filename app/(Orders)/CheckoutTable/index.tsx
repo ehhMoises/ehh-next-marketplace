@@ -1,11 +1,11 @@
 'use client';
 
 import { FC } from 'react';
-import { DataTable } from './DataTable';
 import { columns } from './columns';
 import { data } from './data';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { DataTable } from '@/components/ui/DataTable';
 
 export const CheckoutTable: FC = () => {
   const router = useRouter();
