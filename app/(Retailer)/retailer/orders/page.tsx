@@ -4,12 +4,14 @@ import { OrdersCards } from '../OrdersCards';
 import { data } from './data';
 import { MyOrdersTable } from '../MyOrdersTable';
 import { RetailerChart } from './chart';
+import { NavigationMenuRetailer } from './navigation';
 
 const OrdersRetailer: FC = () => (
   <main className="flex min-h-screen">
     <section className="flex flex-col w-full">
       <MainNavigationHeader />
-      <div className="p-4">
+      <NavigationMenuRetailer />
+      <div className="p-4 pt-0">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {data.map((item, index) => (
             <OrdersCards key={index} {...item} />
