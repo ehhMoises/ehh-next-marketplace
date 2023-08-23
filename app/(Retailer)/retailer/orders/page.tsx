@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { OrdersCards } from '../OrdersCards';
 import { data } from './data';
 import { MyOrdersTable } from '../MyOrdersTable';
+import { RetailerChart } from './chart';
 
 const OrdersRetailer: FC = () => (
   <main className="flex min-h-screen">
@@ -16,7 +17,9 @@ const OrdersRetailer: FC = () => (
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           <MyOrdersTable />
-          <div>Nice chart goes here...</div>
+          <div className="bg-white p-4 flex justify-center">
+            <RetailerChart />
+          </div>
         </div>
       </div>
     </section>
