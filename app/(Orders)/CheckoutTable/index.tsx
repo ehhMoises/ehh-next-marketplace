@@ -7,7 +7,7 @@ import { data } from './data';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
-export const OrdersTable: FC = () => {
+export const CheckoutTable: FC = () => {
   const router = useRouter();
   return (
     <div className="m-4">
@@ -22,7 +22,7 @@ export const OrdersTable: FC = () => {
           >
             Keep Shopping
           </Button>
-          <Button onClick={() => router.push('/checkout')}>Verify Order</Button>
+          <Button onClick={() => router.push('/retailer/orders')}>Save Order</Button>
         </div>
       </div>
       <DataTable columns={columns} data={data} />
