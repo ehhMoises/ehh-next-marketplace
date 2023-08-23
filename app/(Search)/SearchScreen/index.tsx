@@ -14,7 +14,7 @@ const SearchScreen = () => {
         }}
       />
 
-      <section className="grid grid-cols-1 xl:grid-cols-4 mt-10 mx-10 gap-x-6">
+      <section className="grid grid-cols-1 xl:grid-cols-4 mt-10 mx-3 sm:mx-10 gap-x-0 xl:gap-x-6">
         <div>
           <BrandFilters />
         </div>
