@@ -17,7 +17,7 @@ const SignIn: FC<SignInProps> = ({ onOpenModal, openModal }) => {
     <ModalTransparent
       open={openModal}
       onOpenChange={onOpenModal}
-      className="sm:max-w-[720px] h-[30rem]"
+      className="sm:max-w-[720px] min-h-[30rem]"
       title={<DialogTitle className="text-white  text-[2.5rem] text-center mt-4">Welcome to eHarvestHub</DialogTitle>}
       description={
         <DialogDescription className="text-white text-xl text-center">
@@ -25,7 +25,7 @@ const SignIn: FC<SignInProps> = ({ onOpenModal, openModal }) => {
         </DialogDescription>
       }
     >
-      <div className="grid gap-4 py-4 px-10">
+      <div className="grid gap-4 py-4 px-2 md:px-10">
         <div className="grid grid-cols-1">
           <Input
             id="username"
@@ -51,7 +51,7 @@ const SignIn: FC<SignInProps> = ({ onOpenModal, openModal }) => {
         </div>
       </div>
       <DialogFooter>
-        <div className="px-10 w-full">
+        <div className="px-0 sm:px-10 w-full">
           <Button className="w-full h-20" type="submit">
             <span className="text-xl">Sign In</span>
           </Button>

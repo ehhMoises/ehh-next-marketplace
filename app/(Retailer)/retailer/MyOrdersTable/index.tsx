@@ -3,12 +3,10 @@
 import { FC } from 'react';
 import { columns } from './columns';
 import { data } from './data';
-import { useRouter } from 'next/navigation';
-import { DataTable } from '@/components/ui/DataTable';
+import { DataTable } from '@/components/ui/data-table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const MyOrdersTable: FC = () => {
-  const router = useRouter();
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">

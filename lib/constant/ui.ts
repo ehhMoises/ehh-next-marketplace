@@ -1,0 +1,5 @@
+export enum ProductCardMode {
+  PRESENTATIONAL = 'PRESENTATIONAL',
+  ON_FILTER = 'ON_FILTER',
+  FILTERED = 'FILTERED',
+}

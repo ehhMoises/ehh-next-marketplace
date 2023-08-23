@@ -266,7 +266,7 @@ const AdvancedFilterBrand: FC = () => {
               </div>
             )}
             pearling
-            minDistance={10}
+            minDistance={9}
           />
         </div>
 
