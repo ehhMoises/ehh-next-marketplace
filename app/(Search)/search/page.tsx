@@ -3,6 +3,12 @@ import SearchScreen from '../SearchScreen';
 import { Fragment } from 'react';
 import Footer from '@/components/Footer';
 import { HeroComponent } from '@/components/Hero';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Filter Brands Retailer - Marketplace',
+  description: 'Filter Brands',
+};
 
 export default function SearchPage() {
   return (
