@@ -12,28 +12,29 @@ import { PRODUCT_CARD_MODE_KEY } from '@/lib/cookies';
 import { ProductCardMode } from '@/lib/constant/ui';
 import { cn } from '@/lib/utils';
 import LoaderSearch from '../LoaderSearch';
+import { ProductPresentation } from '@/models/product';
 
 interface SearchScreenProps {
   packStyles: PackStyle[];
   packSizeList: PackSize[];
   grades: Grade[];
+  products: ProductPresentation[];
 }
 
-const SearchScreen: FC<SearchScreenProps> = ({ packSizeList, packStyles, grades }) => {
+const SearchScreen: FC<SearchScreenProps> = ({ packSizeList, packStyles, grades, products }) => {
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [currentCardsMode, setCurrentCardsMode] = useState<ProductCardMode>(ProductCardMode.ON_FILTER);
+  const [availableProducts, setAvailableProducts] = useState(products);
 
   useEffect(() => {
     Cookies.set(PRODUCT_CARD_MODE_KEY, ProductCardMode.ON_FILTER, { sameSite: 'Lax' });
   }, []);
 
-  const searchBrandsHandler = async () => {
+  const searchBrandsHandler = async ({ brandId }: { brandId: string; commodity: string; variety: string }) => {
     if (currentCardsMode === ProductCardMode.ON_FILTER) {
       setLoadingSearch(true);
       const formData = new FormData();
-      formData.set('commoditySearch', 'apples');
-      formData.set('packSizeSearch', 'pack-1');
-      formData.set('packStyleSearch', 'clam-shell-1');
+      formData.set('brandId', brandId);
 
       const jsonData: { [key: string]: FormDataEntryValue } = {};
       formData.forEach((value, key) => {
@@ -48,10 +49,10 @@ const SearchScreen: FC<SearchScreenProps> = ({ packSizeList, packStyles, grades 
         },
       });
 
-      const dataResponse = await response.json();
+      const filteredProducts = await response.json();
       setCurrentCardsMode(ProductCardMode.FILTERED);
       setLoadingSearch(false);
-      console.log(dataResponse);
+      setAvailableProducts(filteredProducts);
     }
   };
 
@@ -79,8 +80,16 @@ const SearchScreen: FC<SearchScreenProps> = ({ packSizeList, packStyles, grades 
               </div>
             </div>
           ) : (
-            [0, 1, 2, 3, 4, 5, 6, 7].map((d, index) => (
-              <ProductCard key={`${d}.${index}`} onSelectItem={searchBrandsHandler} mode={currentCardsMode} />
+            availableProducts.map((product) => (
+              <ProductCard
+                brandId={product.id}
+                commodity={product.commodity}
+                variety={product.variety}
+                organic={product.growingMethod.name}
+                key={product.id}
+                onSelectItem={searchBrandsHandler}
+                mode={currentCardsMode}
+              />
             ))
           )}
         </div>

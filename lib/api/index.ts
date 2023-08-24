@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosHeaders, RawAxiosRequestHeaders } from 'axios';
+import { MethodsHeaders } from '@/models/http';
 import Cookies from 'js-cookie';
 import { TokenTypes } from '../cookies';
 
@@ -35,5 +36,27 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const buildServerSideHeaders = (
+  accessToken?: string,
+  originHeaders?: (RawAxiosRequestHeaders & MethodsHeaders) | AxiosHeaders
+): (RawAxiosRequestHeaders & MethodsHeaders) | AxiosHeaders => {
+  let headers: (RawAxiosRequestHeaders & MethodsHeaders) | AxiosHeaders = {};
+  if (accessToken) {
+    const bearerToken = `Bearer ${accessToken}`;
+    if (originHeaders) {
+      headers = {
+        ...originHeaders,
+        Authorization: bearerToken,
+      };
+    } else {
+      headers = {
+        Authorization: bearerToken,
+      };
+    }
+  }
+
+  return headers;
+};
 
 export default instance;

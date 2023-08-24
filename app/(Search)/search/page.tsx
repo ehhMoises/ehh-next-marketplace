@@ -11,21 +11,29 @@ import { getPackStyles } from '@/lib/api/packStyle';
 import { PackStyle } from '@/models/packStyle';
 import { getGrades } from '@/lib/api/grade';
 import { Grade } from '@/models/grade';
-// import { PRODUCT_CARD_MODE_KEY } from '@/lib/cookies';
+import { getCommoditiesProduct } from '@/lib/api/product';
+import { cookies } from 'next/headers';
+import { TokenTypes } from '@/lib/cookies';
+import { ProductPresentation } from '@/models/product';
 
 export const metadata: Metadata = {
   title: 'Filter Brands Retailer - Marketplace',
   description: 'Filter Brands',
 };
 
-const getData = async (): Promise<[PackSize[], PackStyle[], Grade[]]> => {
-  // const cookieStore = cookies();
-  // console.log(cookieStore.get(PRODUCT_CARD_MODE_KEY));
-  return Promise.all([(await getPackSizeList()) ?? [], (await getPackStyles()) ?? [], (await getGrades()) ?? []]);
+const getData = async (): Promise<[PackSize[], PackStyle[], Grade[], ProductPresentation[]]> => {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get(TokenTypes.ACCESS_TOKEN)?.value;
+  return Promise.all([
+    (await getPackSizeList()) ?? [],
+    (await getPackStyles()) ?? [],
+    (await getGrades()) ?? [],
+    (await getCommoditiesProduct(accessToken))?.data ?? [],
+  ]);
 };
 
 export default async function SearchPage() {
-  const [packSizeList, packStyles, grades] = await getData();
+  const [packSizeList, packStyles, grades, products] = await getData();
 
   return (
     <Fragment key="SearchBrands">
@@ -34,7 +42,7 @@ export default async function SearchPage() {
           <MainNavigationHeader />
           <HeroComponent />
           <Suspense fallback={<div>Loading...</div>}>
-            <SearchScreen grades={grades} packStyles={packStyles} packSizeList={packSizeList} />
+            <SearchScreen products={products} grades={grades} packStyles={packStyles} packSizeList={packSizeList} />
           </Suspense>
         </section>
       </main>

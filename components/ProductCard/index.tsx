@@ -9,12 +9,23 @@ import { ProductCardMode } from '@/lib/constant/ui';
 
 interface ProductCardProps {
   mode?: ProductCardMode;
-  onSelectItem?: Dispatch<void>;
+  onSelectItem?: Dispatch<{
+    brandId: string;
+    commodity: string;
+    variety: string;
+  }>;
+  brandId: string;
+  commodity: string;
+  variety: string;
+  organic?: string;
 }
 
 const ProductCard: FC<ProductCardProps> = ({
   mode = ProductCardMode.PRESENTATIONAL,
-
+  brandId,
+  commodity,
+  variety,
+  organic,
   onSelectItem,
 }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -26,7 +37,10 @@ const ProductCard: FC<ProductCardProps> = ({
     <section
       className={cn(
         'bg-white border border-stone-300 w-full',
-        mode !== ProductCardMode.PRESENTATIONAL && mode === ProductCardMode.ON_FILTER ? 'cursor-pointer' : 'cursor-auto'
+        mode !== ProductCardMode.PRESENTATIONAL && mode === ProductCardMode.ON_FILTER
+          ? 'cursor-pointer'
+          : 'cursor-auto',
+        mode === ProductCardMode.FILTERED ? 'h-[28rem]' : 'h-[23rem]'
       )}
     >
       <div
@@ -36,34 +50,37 @@ const ProductCard: FC<ProductCardProps> = ({
         )}
         onClick={() => {
           if (mode !== ProductCardMode.PRESENTATIONAL && onSelectItem) {
-            onSelectItem();
+            onSelectItem({
+              brandId,
+              commodity,
+              variety,
+            });
           }
         }}
       >
-        <Image src="/products/apple_granny_255x235.png" alt="Apple Granny" width={235} height={235} />
-        {mode !== ProductCardMode.PRESENTATIONAL && (
+        <Image src="/products/apple_granny_255x235.png" alt={commodity ?? ''} width={235} height={235} />
+        {!(mode === ProductCardMode.PRESENTATIONAL || mode === ProductCardMode.ON_FILTER) && (
           <div className="w-full flex flex-row justify-center">
             <Image src="/cart.png" alt="Cart Image" width={50} height={50} />
           </div>
         )}
-        <p className="text-stone-400 font-semibold text-xl">Apple</p>
+        {commodity && <p className="text-stone-400 font-semibold text-xl">{commodity}</p>}
 
         {mode === ProductCardMode.ON_FILTER && (
           <Fragment key="onFilterDetailedProduct">
-            <p className="text-stone-400 font-semibold">Granny Smith</p>
-            <p className="text-stone-400 font-semibold">Organic</p>
+            <p className="text-stone-400 font-semibold">{variety}</p>
           </Fragment>
         )}
 
         {mode === ProductCardMode.FILTERED && (
           <Fragment key="detailedProduct">
-            <p className="text-stone-400 font-semibold">Granny Smith</p>
-            <p className="text-stone-400 font-semibold">Quantity: 100</p>
+            <p className="text-stone-400 font-semibold">{variety}</p>
+            {organic && <p className="text-stone-400 font-semibold">{organic}</p>}
           </Fragment>
         )}
 
         {mode === ProductCardMode.FILTERED && (
-          <div className="py-5">
+          <section className="pt-1">
             <div
               className="justify-center min-h-0 cursor-pointer inline"
               onClick={() => {
@@ -76,7 +93,7 @@ const ProductCard: FC<ProductCardProps> = ({
               </div>
             </div>
             <OrderModal openModal={openModal} onOpenModal={onOpenModal} />
-          </div>
+          </section>
         )}
       </div>
     </section>
