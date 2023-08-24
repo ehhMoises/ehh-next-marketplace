@@ -28,7 +28,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ packSizeList, packStyles, grades 
   };
 
   // Formik
-  const { setFieldValue, handleSubmit, values, errors, dirty } = useFormik({
+  const { setFieldValue, handleSubmit, values, errors, dirty, touched } = useFormik({
     initialValues: filterInitialValues,
     validationSchema: FilterBrandValidationSchema,
     onSubmit,
@@ -48,6 +48,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ packSizeList, packStyles, grades 
               grades={grades}
               values={values}
               setFieldValue={setFieldValue}
+              touched={touched}
               errors={errors}
               dirty={dirty}
             />

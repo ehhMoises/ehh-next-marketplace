@@ -9,7 +9,7 @@ import { CalendarIcon } from 'lucide-react';
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { FormikErrors } from 'formik';
+import { FormikErrors, FormikTouched } from 'formik';
 import { IFilter, KeysFilterBrand } from '../lib/filterBrandSchema';
 import { PackSize } from '@/models/packSize';
 import { PackStyle } from '@/models/packStyle';
@@ -19,6 +19,7 @@ interface IQuickSearchBrandProps {
   packSizeList: PackSize[];
   packStyles: PackStyle[];
   grades: Grade[];
+  touched: FormikTouched<IFilter<Date, string>>;
   errors: FormikErrors<IFilter>;
   values: IFilter;
   setFieldValue: (
@@ -35,6 +36,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
   grades,
   values,
   setFieldValue,
+  touched,
   errors,
   dirty,
 }) => {
@@ -59,7 +61,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {(dirty || errors.commoditySearch) && (
+        {touched.commoditySearch && errors.commoditySearch && dirty && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.commoditySearch}</p>
         )}
       </div>
@@ -83,7 +85,9 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {errors.packSizeSearch && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packSizeSearch}</p>}
+        {touched.packSizeSearch && errors.packSizeSearch && dirty && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packSizeSearch}</p>
+        )}
       </div>
 
       <div key="packStyleSearch">
@@ -105,7 +109,9 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {errors.packStyleSearch && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packStyleSearch}</p>}
+        {touched.packStyleSearch && errors.packStyleSearch && dirty && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packStyleSearch}</p>
+        )}
       </div>
 
       <div key="gradeSearch">
@@ -127,7 +133,9 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {errors.gradeSearch && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.gradeSearch}</p>}
+        {touched.gradeSearch && errors.gradeSearch && dirty && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.gradeSearch}</p>
+        )}
       </div>
 
       <div key="quantitySearch">
@@ -139,7 +147,9 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             setFieldValue('quantitySearch', event.target.value);
           }}
         />
-        {errors.quantitySearch && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.quantitySearch}</p>}
+        {((touched.quantitySearch && errors.quantitySearch) || dirty) && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.quantitySearch}</p>
+        )}
       </div>
 
       <div className="flex flex-col">
@@ -174,7 +184,9 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
 
           <CalendarIcon size={42} className="text-stone-400" />
         </div>
-        {errors.deliverDateSearch && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.deliverDateSearch}</p>}
+        {touched.deliverDateSearch && errors.deliverDateSearch && dirty && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.deliverDateSearch}</p>
+        )}
       </div>
     </section>
   );
