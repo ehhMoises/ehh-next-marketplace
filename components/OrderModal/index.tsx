@@ -46,7 +46,7 @@ export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
     <ModalTransparent
       open={openModal}
       onOpenChange={onOpenModal}
-      className={cn('sm:max-w-[720px] min-h-[30rem]', is2xl || isXl || isLg ? 'mt-0' : 'mt-10')}
+      className={cn('sm:max-w-[720px] min-h-[30rem] overflow-y-scroll', is2xl || isXl ? 'mt-0' : 'mt-16')}
       title={
         <DialogTitle className="text-white text-[2.5rem] text-center mt-4">
           To ensure accurate pricing enter order specifics below
