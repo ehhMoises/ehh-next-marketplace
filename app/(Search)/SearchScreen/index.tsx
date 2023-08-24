@@ -70,7 +70,8 @@ const SearchScreen: FC<SearchScreenProps> = ({ packStyles, packSizeList, grades,
         <div
           className={cn(
             'grid grid-col-1 sm:grid-cols-2 gap-5 col-span-3 mt-3 xl:mt-0',
-            loadingSearch ? 'lg:grid-cols-1' : 'lg:grid-cols-3'
+            loadingSearch ? 'lg:grid-cols-1' : 'lg:grid-cols-3',
+            currentCardsMode === ProductCardMode.FILTERED ? 'h-[28rem]' : 'h-[23rem]'
           )}
         >
           {loadingSearch ? (
