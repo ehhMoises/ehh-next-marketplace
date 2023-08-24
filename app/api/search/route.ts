@@ -18,7 +18,11 @@ export async function POST(req: Request) {
       accessToken,
     });
 
-    return NextResponse.json(filteredProducts);
+    cookieStore.set(PRODUCT_CARD_MODE_KEY, ProductCardMode.FILTERED);
+
+    return NextResponse.json(filteredProducts, {
+      status: (filteredProducts ?? []).length === 0 ? 400 : 200,
+    });
   }
 
   await new Promise((resolve) => setTimeout(resolve, 5000));
