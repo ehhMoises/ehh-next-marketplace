@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { IRetailerOrders } from '../orders/data';
+import { IRetailerOrders } from '../../lib/data';
 
 export const OrdersCards: FC<IRetailerOrders> = ({ title, description, value, footer }) => {
   return (
