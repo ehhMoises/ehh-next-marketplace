@@ -1,19 +1,9 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import Image from 'next/image';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -54,6 +44,7 @@ export const columns: ColumnDef<ICheckout>[] = [
   {
     id: 'actions',
     header: 'Actions',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cell: ({ row }) => {
       return (
         <Button variant="ghost">
