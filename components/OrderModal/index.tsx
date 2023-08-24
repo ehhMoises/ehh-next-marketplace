@@ -26,10 +26,6 @@ export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
   const [date, setDate] = useState<Date>();
   const router = useRouter();
 
-  const getCalendarAlignment = (): 'center' | 'start' | 'end' => {
-    return 'center';
-  };
-
   const getSideCalendar = (): 'top' | 'right' | 'bottom' | 'left' => {
     if (is2xl || isXl) {
       return 'right';
@@ -46,7 +42,7 @@ export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
     <ModalTransparent
       open={openModal}
       onOpenChange={onOpenModal}
-      className={cn('sm:max-w-[720px] min-h-[30rem] overflow-y-scroll', is2xl || isXl ? 'mt-0' : 'mt-16')}
+      className={cn('sm:max-w-[720px] min-h-[30rem]', is2xl || isXl ? 'mt-0' : 'mt-16')}
       title={
         <DialogTitle className="text-white text-[2.5rem] text-center mt-4">
           To ensure accurate pricing enter order specifics below
@@ -85,7 +81,7 @@ export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
                 </div>
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" side={getSideCalendar()} align={getCalendarAlignment()}>
+            <PopoverContent className="w-auto p-0" side={getSideCalendar()} align="center">
               <Calendar
                 classNames={{
                   head_cell: cn('text-muted-foreground font-normal text-[0.8rem] w-full'),
