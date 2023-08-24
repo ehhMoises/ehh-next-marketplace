@@ -9,9 +9,9 @@ import style from './Style.module.css';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon } from 'lucide-react';
-import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useRouter } from 'next/navigation';
+import { SearchCalendar } from '../ui/searchCalendar';
 
 interface OrderModalProps {
   openModal: boolean;
@@ -30,11 +30,6 @@ export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
           To ensure accurate pricing enter order specifics below
         </DialogTitle>
       }
-      // description={
-      //   <DialogDescription className="text-white text-xl text-center">
-      //     Connecting Growers + Retailers + Carriers
-      //   </DialogDescription>
-      // }
     >
       <div className="grid gap-4 py-4 px-10">
         <div className="grid grid-cols-1">
@@ -63,8 +58,8 @@ export const OrderModal: FC<OrderModalProps> = ({ onOpenModal, openModal }) => {
                 {date ? format(date, 'PPP') : <span>Pick a date</span>}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+            <PopoverContent className="w-auto p-0" side="bottom">
+              <SearchCalendar mode="single" selected={date} onSelect={setDate} initialFocus />
             </PopoverContent>
           </Popover>
         </div>
