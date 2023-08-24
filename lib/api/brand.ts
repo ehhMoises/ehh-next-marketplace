@@ -40,7 +40,7 @@ export const addBrand = async (data: Brand) => {
 
 export const updateBrand = async (data: Brand) => {
   try {
-    const response = await axios.post<Brand>(`/${context}/${data.id}`, {
+    const response = await axios.post<Brand<GrowingMethod>>(`/${context}/${data.id}`, {
       ...data,
     });
 
