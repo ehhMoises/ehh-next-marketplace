@@ -1,13 +1,9 @@
 import { GrowingMethod } from './growingMethod';
 
-export interface Brand {
+export interface ProductPresentation {
   id: string;
-  name: string;
-  description: string;
   commodity: string;
   variety: string;
-  subVariety: string;
-  plu: string;
   growingMethod: GrowingMethod;
-  isActive: boolean;
+  imageUrl: string;
 }

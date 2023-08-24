@@ -1,6 +1,7 @@
 import axios from './index';
 import { AxiosError } from 'axios';
 import { Brand } from '@/models/brand';
+import { ResponseHttpBase } from '@/models/http';
 
 const context = 'brands';
 
@@ -16,7 +17,7 @@ export const getBrandById = async (id: string) => {
 
 export const getBrands = async () => {
   try {
-    const response = await axios.get<Brand[]>(`/${context}`);
+    const response = await axios.get<ResponseHttpBase<Brand[]>>(`/${context}`);
 
     return response.data;
   } catch (err: unknown) {

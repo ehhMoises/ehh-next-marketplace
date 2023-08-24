@@ -1,6 +1,7 @@
 import { PackStyle } from '@/models/packStyle';
 import axios from './index';
 import { AxiosError } from 'axios';
+import { ResponseHttpBase } from '@/models/http';
 
 const context = 'pack-styles';
 
@@ -16,9 +17,11 @@ export const getPackStyleById = async (id: string) => {
 
 export const getPackStyles = async () => {
   try {
-    const response = await axios.get<PackStyle[]>(`/${context}`);
+    const {
+      data: { data },
+    } = await axios.get<ResponseHttpBase<PackStyle[]>>(`/${context}`);
 
-    return response.data;
+    return data;
   } catch (err: unknown) {
     if (err instanceof AxiosError) throw err?.response?.data;
   }

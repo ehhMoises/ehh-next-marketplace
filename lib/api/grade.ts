@@ -1,6 +1,7 @@
 import { Grade } from '@/models/grade';
 import axios from './index';
 import { AxiosError } from 'axios';
+import { ResponseHttpBase } from '@/models/http';
 
 const context = 'grades';
 
@@ -16,9 +17,11 @@ export const getGradeById = async (id: string) => {
 
 export const getGrades = async () => {
   try {
-    const response = await axios.get<Grade[]>(`/${context}`);
+    const {
+      data: { data },
+    } = await axios.get<ResponseHttpBase<Grade[]>>(`/${context}`);
 
-    return response.data;
+    return data;
   } catch (err: unknown) {
     if (err instanceof AxiosError) throw err?.response?.data;
   }
