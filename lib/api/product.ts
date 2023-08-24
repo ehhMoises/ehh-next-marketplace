@@ -30,7 +30,6 @@ export const getCommoditiesProduct = async (accessToken?: string) => {
 
 export const getVarietiesProduct = async ({ brandId, accessToken }: { brandId: string; accessToken?: string }) => {
   try {
-    console.log('brandId', brandId);
     const headers = buildServerSideHeaders(accessToken);
     const {
       data: { data },
