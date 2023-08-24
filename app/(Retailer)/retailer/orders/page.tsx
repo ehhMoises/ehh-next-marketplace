@@ -1,10 +1,7 @@
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
-import { OrdersCards } from '../OrdersCards';
-import { data } from './data';
-import { MyOrdersTable } from '../MyOrdersTable';
-import { RetailerChart } from './chart';
-import { NavigationMenuRetailer } from './navigation';
+import { NavigationMenuRetailer } from '../../components/Navigation';
+import { ProductCatalogTable } from '../../components/ProductCatalogTable';
 
 const OrdersRetailer: FC = () => (
   <main className="flex min-h-screen">
@@ -12,17 +9,7 @@ const OrdersRetailer: FC = () => (
       <MainNavigationHeader />
       <NavigationMenuRetailer />
       <div className="p-4 pt-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          {data.map((item, index) => (
-            <OrdersCards key={index} {...item} />
-          ))}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-          <MyOrdersTable />
-          <div className="bg-white p-4 flex justify-center">
-            <RetailerChart />
-          </div>
-        </div>
+        <ProductCatalogTable />
       </div>
     </section>
   </main>

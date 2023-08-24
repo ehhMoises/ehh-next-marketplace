@@ -1,9 +1,6 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '@/components/ui/button';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
