@@ -2,7 +2,6 @@
 
 import { FC, Fragment, useEffect, useState } from 'react';
 import SortBrand from '@/app/(Home)/SortBrand';
-import BrandFilters from '../BrandFilters';
 import { PackSize } from '@/models/packSize';
 import { PackStyle } from '@/models/packStyle';
 import { Grade } from '@/models/grade';
@@ -11,8 +10,9 @@ import Cookies from 'js-cookie';
 import { PRODUCT_CARD_MODE_KEY } from '@/lib/cookies';
 import { ProductCardMode } from '@/lib/constant/ui';
 import { cn } from '@/lib/utils';
-import LoaderSearch from '../LoaderSearch';
 import { ProductPresentation } from '@/models/product';
+import LoaderSearch from '../LoaderSearch';
+import BrandFilters from '../BrandFilters';
 
 interface SearchScreenProps {
   packStyles: PackStyle[];
@@ -21,7 +21,7 @@ interface SearchScreenProps {
   products: ProductPresentation[];
 }
 
-const SearchScreen: FC<SearchScreenProps> = ({ packSizeList, packStyles, grades, products }) => {
+const SearchScreen: FC<SearchScreenProps> = ({ packStyles, packSizeList, grades, products }) => {
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [currentCardsMode, setCurrentCardsMode] = useState<ProductCardMode>(ProductCardMode.ON_FILTER);
   const [availableProducts, setAvailableProducts] = useState(products);
@@ -70,7 +70,8 @@ const SearchScreen: FC<SearchScreenProps> = ({ packSizeList, packStyles, grades,
         <div
           className={cn(
             'grid grid-col-1 sm:grid-cols-2 gap-5 col-span-3 mt-3 xl:mt-0',
-            loadingSearch ? 'lg:grid-cols-1' : 'lg:grid-cols-3'
+            loadingSearch ? 'lg:grid-cols-1' : 'lg:grid-cols-3',
+            currentCardsMode === ProductCardMode.FILTERED ? 'h-[28rem]' : 'h-[23rem]'
           )}
         >
           {loadingSearch ? (

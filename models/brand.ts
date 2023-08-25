@@ -1,6 +1,4 @@
-import { GrowingMethod } from './growingMethod';
-
-export interface Brand {
+export interface Brand<GrowingMethodType = number> {
   id: string;
   name: string;
   description: string;
@@ -8,6 +6,6 @@ export interface Brand {
   variety: string;
   subVariety: string;
   plu: string;
-  growingMethod: GrowingMethod;
+  growingMethod: GrowingMethodType;
   isActive: boolean;
 }

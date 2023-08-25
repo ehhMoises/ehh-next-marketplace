@@ -2,6 +2,7 @@ import { PackStyle } from '@/models/packStyle';
 import axios from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
+import { PackSize } from '@/models/packSize';
 
 const context = 'pack-styles';
 
@@ -20,6 +21,18 @@ export const getPackStyles = async () => {
     const {
       data: { data },
     } = await axios.get<ResponseHttpBase<PackStyle[]>>(`/${context}`);
+
+    return data;
+  } catch (err: unknown) {
+    if (err instanceof AxiosError) throw err?.response?.data;
+  }
+};
+
+export const getPackSizeListById = async (id: string) => {
+  try {
+    const {
+      data: { data },
+    } = await axios.get<ResponseHttpBase<PackSize[]>>(`/${context}/${id}/pack-sizes`);
 
     return data;
   } catch (err: unknown) {
