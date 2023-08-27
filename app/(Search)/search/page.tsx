@@ -10,7 +10,7 @@ import { ProductPresentation } from '@/models/product';
 import { cookies } from 'next/headers';
 import { getPackSizeList } from '@/lib/api/packSize';
 import { TokenTypes } from '@/lib/cookies';
-import SearchScreen from '../SearchScreen';
+import SearchScreen from '../components/SearchScreen';
 
 export const metadata: Metadata = {
   title: 'Filter Brands Retailer - Marketplace',
