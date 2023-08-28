@@ -51,9 +51,6 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
     setFieldValue('growingMethod', growingMethodId);
   }, [commodity, growingMethodId, setFieldValue, variety]);
 
-  console.log('errors', errors);
-  console.log('values', values);
-
   const getSideCalendar = (): 'top' | 'right' | 'bottom' | 'left' => {
     if (is2xl || isXl) {
       return 'right';

@@ -17,8 +17,8 @@ interface SearchParamsPotentialGrowers {
 }
 
 export const metadata: Metadata = {
-  title: 'Orders Retailer - Marketplace',
-  description: 'Filter Brands',
+  title: 'Searching Growers - Marketplace',
+  description: 'Potential Growers',
 };
 
 const getPotentialGrowers = async (searchParams: SearchParamsPotentialGrowers) => {
