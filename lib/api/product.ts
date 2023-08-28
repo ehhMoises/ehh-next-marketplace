@@ -2,7 +2,7 @@ import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 import { ProductPresentation } from '@/models/product';
-import { PotentialGrowers, PotentialGrowersBody } from '@/models/targetSellers';
+import { PotentialGrowers, PotentialGrowersBody, QuickSearchPotentialGrowersBody } from '@/models/targetSellers';
 
 const context = 'search';
 
@@ -47,7 +47,7 @@ export const getVarietiesProduct = async ({ brandId, accessToken }: { brandId: s
 export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrowersBody & { accessToken?: string }) => {
   try {
     const headers = buildServerSideHeaders(accessToken);
-    const { data: possibleGrowers } = await axios.post<ResponseHttpBase<PotentialGrowers[]>>(
+    const { data: potentialGrowersForPurchaseItems } = await axios.post<ResponseHttpBase<PotentialGrowers[]>>(
       `/${context}/sellers`,
       { ...data },
       {
@@ -55,7 +55,27 @@ export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrow
       }
     );
 
-    return possibleGrowers;
+    return potentialGrowersForPurchaseItems;
+  } catch (err: unknown) {
+    if (err instanceof AxiosError) throw err?.response?.data;
+  }
+};
+
+export const getPossibleGrowersViaQuickSearch = async ({
+  accessToken,
+  ...data
+}: QuickSearchPotentialGrowersBody & { accessToken?: string }) => {
+  try {
+    const headers = buildServerSideHeaders(accessToken);
+    const { data: potentialGrowersForPurchaseItems } = await axios.post<ResponseHttpBase<PotentialGrowers[]>>(
+      `/${context}/quick`,
+      { ...data },
+      {
+        headers,
+      }
+    );
+
+    return potentialGrowersForPurchaseItems;
   } catch (err: unknown) {
     if (err instanceof AxiosError) throw err?.response?.data;
   }

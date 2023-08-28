@@ -14,8 +14,11 @@ import { IFilter, KeysFilterBrand } from '../lib/filterBrandSchema';
 import { PackSize } from '@/models/packSize';
 import { PackStyle } from '@/models/packStyle';
 import { Grade } from '@/models/grade';
+import { Brand } from '@/models/brand';
+import { GrowingMethod } from '@/models/growingMethod';
 
 interface IQuickSearchBrandProps {
+  brands: Brand<GrowingMethod>[];
   packSizeList: PackSize[];
   packStyles: PackStyle[];
   grades: Grade[];
@@ -31,6 +34,7 @@ interface IQuickSearchBrandProps {
 }
 
 const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
+  brands,
   packSizeList,
   packStyles,
   grades,
@@ -43,35 +47,27 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
   return (
     <section className="flex flex-col gap-y-3">
       <div key="commoditySearch">
-        <Select
-          name="commoditySearch"
-          onValueChange={(value) => setFieldValue('commoditySearch', value)}
-          value={values.commoditySearch}
-        >
+        <Select name="commodity" onValueChange={(value) => setFieldValue('commodity', value)} value={values.commodity}>
           <SelectTrigger>
             <SelectValue placeholder="Commodity" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value={'1-apples'}>Apples</SelectItem>
-              <SelectItem value={'2-asparagaus'}>Asparagaus</SelectItem>
-              <SelectItem value={'3-blueberries'}>Blueberries</SelectItem>
-              <SelectItem value={'4-brussels'}>Brussel Sprouts</SelectItem>
-              <SelectItem value={'5-carrots'}>Carrots</SelectItem>
+              {brands.map((brand) => (
+                <SelectItem key={brand.id} value={brand.commodity}>
+                  <p className="capitalize">{brand.commodity}</p>
+                </SelectItem>
+              ))}
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.commoditySearch && errors.commoditySearch && (
-          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.commoditySearch}</p>
+        {touched.commodity && errors.commodity && dirty && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.commodity}</p>
         )}
       </div>
 
       <div key="packSizeSearch">
-        <Select
-          name="packSizeSearch"
-          onValueChange={(value) => setFieldValue('packSizeSearch', value)}
-          value={values.packSizeSearch}
-        >
+        <Select name="packSize" onValueChange={(value) => setFieldValue('packSize', value)} value={values.packSize}>
           <SelectTrigger>
             <SelectValue placeholder="Pack Size" />
           </SelectTrigger>
@@ -85,17 +81,11 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.packSizeSearch && errors.packSizeSearch && (
-          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packSizeSearch}</p>
-        )}
+        {touched.packSize && errors.packSize && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packSize}</p>}
       </div>
 
-      <div key="packStyleSearch">
-        <Select
-          name="packStyleSearch"
-          onValueChange={(value) => setFieldValue('packStyleSearch', value)}
-          value={values.packStyleSearch}
-        >
+      <div key="packStyle">
+        <Select name="packStyle" onValueChange={(value) => setFieldValue('packStyle', value)} value={values.packStyle}>
           <SelectTrigger>
             <SelectValue placeholder="Pack Style" />
           </SelectTrigger>
@@ -109,17 +99,13 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.packStyleSearch && errors.packStyleSearch && (
-          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packStyleSearch}</p>
+        {touched.packStyle && errors.packStyle && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packStyle}</p>
         )}
       </div>
 
-      <div key="gradeSearch">
-        <Select
-          name="gradeSearch"
-          onValueChange={(value) => setFieldValue('gradeSearch', value)}
-          value={values.gradeSearch}
-        >
+      <div key="grade">
+        <Select name="grade" onValueChange={(value) => setFieldValue('grade', value)} value={values.grade}>
           <SelectTrigger>
             <SelectValue placeholder="Grade" />
           </SelectTrigger>
@@ -133,49 +119,43 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.gradeSearch && errors.gradeSearch && (
-          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.gradeSearch}</p>
-        )}
+        {touched.grade && errors.grade && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.grade}</p>}
       </div>
 
-      <div key="quantitySearch">
+      <div key="quantity">
         <Input
           type="number"
           min={1}
           placeholder="Enter Quantity Needed"
           onChange={(event) => {
-            setFieldValue('quantitySearch', event.target.value);
+            setFieldValue('quantity', event.target.value);
           }}
         />
-        {((touched.quantitySearch && errors.quantitySearch) || dirty) && (
-          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.quantitySearch}</p>
+        {touched.quantity && errors.quantity && dirty && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.quantity}</p>
         )}
       </div>
 
       <div className="flex flex-col">
-        <div key="deliverDateSearch" className="flex flex-row items-center gap-x-1">
+        <div key="deliverDate" className="flex flex-row items-center gap-x-1">
           <Popover>
             <PopoverTrigger className="rounded-none" asChild>
               <Button
                 variant={'outline'}
                 className={cn(
                   'w-full justify-start text-left font-normal',
-                  !values.deliverDateSearch && 'text-muted-foreground'
+                  !values.deliverDate && 'text-muted-foreground'
                 )}
               >
-                {values.deliverDateSearch ? (
-                  format(new Date(values.deliverDateSearch), 'PPP')
-                ) : (
-                  <span>Deliver Date</span>
-                )}
+                {values.deliverDate ? format(new Date(values.deliverDate), 'PPP') : <span>Deliver Date</span>}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
-                selected={values.deliverDateSearch ? new Date(values.deliverDateSearch) : undefined}
+                selected={values.deliverDate ? new Date(values.deliverDate) : undefined}
                 onSelect={(date) => {
-                  setFieldValue('deliverDateSearch', date as Date);
+                  setFieldValue('deliverDate', date as Date);
                 }}
                 initialFocus
               />
@@ -184,8 +164,8 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
 
           <CalendarIcon size={42} className="text-stone-400" />
         </div>
-        {touched.deliverDateSearch && errors.deliverDateSearch && (
-          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.deliverDateSearch}</p>
+        {touched.deliverDate && errors.deliverDate && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.deliverDate}</p>
         )}
       </div>
     </section>

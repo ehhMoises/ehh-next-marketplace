@@ -28,7 +28,7 @@ export const getBrands = async () => {
 
 export const addBrand = async (data: Brand) => {
   try {
-    const response = await axios.post<Brand<GrowingMethod>>(`/${context}`, {
+    const response = await axios.post<Brand<Brand>>(`/${context}`, {
       ...data,
     });
 
@@ -40,7 +40,7 @@ export const addBrand = async (data: Brand) => {
 
 export const updateBrand = async (data: Brand) => {
   try {
-    const response = await axios.post<Brand<GrowingMethod>>(`/${context}/${data.id}`, {
+    const response = await axios.post<Brand<Brand>>(`/${context}/${data.id}`, {
       ...data,
     });
 

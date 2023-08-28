@@ -8,6 +8,15 @@ export interface PotentialGrowersBody {
   deliveryDateUtc: string;
 }
 
+export interface QuickSearchPotentialGrowersBody {
+  commodity: string;
+  packStyleId: string;
+  packSizeId: string;
+  gradeId: string;
+  quantity: number;
+  deliveryDateUtc: string;
+}
+
 export interface PotentialGrowers {
   id: string;
   accountId: string;

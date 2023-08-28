@@ -28,7 +28,6 @@ export const columns: ColumnDef<PotentialGrowers>[] = [
     },
   },
   {
-    accessorKey: 'productDescription',
     header: 'Product Description',
     cell: ({ row }) => (
       <div className="flex flex-col text-stone-500">

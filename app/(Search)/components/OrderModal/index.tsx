@@ -90,7 +90,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
               onChange={handleChange}
               onBlur={handleChange}
             />
-            {(touched.quantity || (errors.quantity && dirty)) && (
+            {touched.quantity && errors.quantity && dirty && (
               <p className="text-zinc-300 mt-3 text-xl">{errors.quantity}</p>
             )}
           </div>
@@ -138,7 +138,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
                   initialFocus
                 />
               </PopoverContent>
-              {touched.deliveryDateUtc && errors.deliveryDateUtc && (
+              {touched.deliveryDateUtc && errors.deliveryDateUtc && dirty && (
                 <p className="text-zinc-300 mt-3 text-xl">{errors.deliveryDateUtc}</p>
               )}
             </Popover>

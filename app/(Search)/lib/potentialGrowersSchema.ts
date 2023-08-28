@@ -4,7 +4,7 @@ const PotentialGrowersSchema = Yup.object().shape({
   commodity: Yup.string().required('Commodity is Required'),
   variety: Yup.string().required('Variety is Required'),
   growingMethod: Yup.number().required('Growing Method is Required'),
-  quantity: Yup.number().required('Quantity is Required'),
+  quantity: Yup.number().required('Quantity is Required').min(1),
   deliveryDateUtc: Yup.string().required('Deliver Date is Required'),
 });
 

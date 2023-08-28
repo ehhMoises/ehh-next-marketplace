@@ -14,15 +14,18 @@ import { ProductPresentation } from '@/models/product';
 import LoaderSearch from '../LoaderSearch';
 import BrandFilters from '../BrandFilters';
 import { OrderModal } from '../OrderModal';
+import { Brand } from '@/models/brand';
+import { GrowingMethod } from '@/models/growingMethod';
 
 interface SearchScreenProps {
+  brands: Brand<GrowingMethod>[];
   packStyles: PackStyle[];
   packSizeList: PackSize[];
   grades: Grade[];
   products: ProductPresentation[];
 }
 
-const SearchScreen: FC<SearchScreenProps> = ({ packStyles, packSizeList, grades, products }) => {
+const SearchScreen: FC<SearchScreenProps> = ({ brands, packStyles, packSizeList, grades, products }) => {
   const [selectedProductDetailedCard, setSelectedProductDetailedCard] = useState<{
     commodity: string;
     variety: string;
@@ -83,7 +86,7 @@ const SearchScreen: FC<SearchScreenProps> = ({ packStyles, packSizeList, grades,
       />
 
       <section className="grid grid-cols-1 xl:grid-cols-4 mt-10 mx-3 sm:mx-10 gap-x-0 xl:gap-x-6">
-        <BrandFilters packSizeList={packSizeList} packStyles={packStyles} grades={grades} />
+        <BrandFilters brands={brands} packSizeList={packSizeList} packStyles={packStyles} grades={grades} />
 
         <div
           className={cn(

@@ -10,23 +10,28 @@ import FilterBrandValidationSchema, { filterInitialValues } from '../lib/filterB
 import { PackSize } from '@/models/packSize';
 import { PackStyle } from '@/models/packStyle';
 import { Grade } from '@/models/grade';
+import { Brand } from '@/models/brand';
+import { GrowingMethod } from '@/models/growingMethod';
+import { useRouter } from 'next/navigation';
 
 interface BrandFiltersProps {
+  brands: Brand<GrowingMethod>[];
   packSizeList: PackSize[];
   packStyles: PackStyle[];
   grades: Grade[];
 }
 
-const BrandFilters: FC<BrandFiltersProps> = ({ packSizeList, packStyles, grades }) => {
-  // Create Listing
-  const onSubmit = async () => {
-    console.log('form values', values);
-  };
-
+const BrandFilters: FC<BrandFiltersProps> = ({ brands, packSizeList, packStyles, grades }) => {
+  const router = useRouter();
   const { setFieldValue, handleSubmit, values, errors, dirty, touched } = useFormik({
     initialValues: filterInitialValues,
     validationSchema: FilterBrandValidationSchema,
-    onSubmit,
+    onSubmit: async (values) => {
+      const deliveryDate = new Date(values?.deliverDate ?? '').getTime();
+      router.push(
+        `/orders?commodity=${values?.commodity}&packStyleId=${values?.packStyle}&packSizeId=${values?.packSize}&quantity=${values?.quantity}&deliveryDateUtc=${deliveryDate}&grade=${values?.grade}&mode=quick-search`
+      );
+    },
   });
 
   return (
@@ -38,6 +43,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ packSizeList, packStyles, grades 
 
           <form onSubmit={handleSubmit} className="flex flex-col">
             <QuickSearchBrand
+              brands={brands}
               packSizeList={packSizeList}
               packStyles={packStyles}
               grades={grades}
