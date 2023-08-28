@@ -2,12 +2,16 @@
 
 import { FC } from 'react';
 import { columns } from './columns';
-import { data } from './data';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { DataTable } from '@/components/ui/data-table';
+import { PotentialGrowers } from '@/models/targetSellers';
 
-export const OrdersTable: FC = () => {
+interface PotentialsGrowersProps {
+  potentialGrowers: PotentialGrowers[];
+}
+
+export const PotentialsGrowersTable: FC<PotentialsGrowersProps> = ({ potentialGrowers }) => {
   const router = useRouter();
   return (
     <div className="m-4">
@@ -25,7 +29,7 @@ export const OrdersTable: FC = () => {
           <Button onClick={() => router.push('/checkout')}>Verify Order</Button>
         </div>
       </div>
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={potentialGrowers} />
     </div>
   );
 };

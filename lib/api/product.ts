@@ -2,6 +2,7 @@ import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 import { ProductPresentation } from '@/models/product';
+import { PotentialGrowers, PotentialGrowersBody } from '@/models/targetSellers';
 
 const context = 'search';
 
@@ -38,6 +39,23 @@ export const getVarietiesProduct = async ({ brandId, accessToken }: { brandId: s
     });
 
     return data;
+  } catch (err: unknown) {
+    if (err instanceof AxiosError) throw err?.response?.data;
+  }
+};
+
+export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrowersBody & { accessToken?: string }) => {
+  try {
+    const headers = buildServerSideHeaders(accessToken);
+    const { data: possibleGrowers } = await axios.post<ResponseHttpBase<PotentialGrowers[]>>(
+      `/${context}/sellers`,
+      { ...data },
+      {
+        headers,
+      }
+    );
+
+    return possibleGrowers;
   } catch (err: unknown) {
     if (err instanceof AxiosError) throw err?.response?.data;
   }

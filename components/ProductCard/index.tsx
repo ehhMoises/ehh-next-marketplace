@@ -1,11 +1,11 @@
 'use client';
 
-import { FC, Dispatch, Fragment, useState } from 'react';
+import { FC, Dispatch, Fragment } from 'react';
 import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { OrderModal } from '../OrderModal';
 import { ProductCardMode } from '@/lib/constant/ui';
+import { GrowingMethod } from '@/models/growingMethod';
 
 interface ProductCardProps {
   mode?: ProductCardMode;
@@ -16,8 +16,13 @@ interface ProductCardProps {
   }>;
   brandId: string;
   commodity: string;
+  growingMethod?: GrowingMethod;
   variety: string;
-  organic?: string;
+  onSeePricingModal?: Dispatch<{
+    commodity: string;
+    variety: string;
+    growingMethodId: number;
+  }>;
 }
 
 const ProductCard: FC<ProductCardProps> = ({
@@ -25,14 +30,11 @@ const ProductCard: FC<ProductCardProps> = ({
   brandId,
   commodity,
   variety,
-  organic,
+  growingMethod,
   onSelectItem,
+  onSeePricingModal,
 }) => {
-  const [openModal, setOpenModal] = useState(false);
-  const onOpenModal = (val: boolean) => {
-    setOpenModal(val);
-    console.log(val);
-  };
+  const organic = growingMethod?.name;
   return (
     <section
       className={cn(
@@ -84,7 +86,13 @@ const ProductCard: FC<ProductCardProps> = ({
             <div
               className="justify-center min-h-0 cursor-pointer inline"
               onClick={() => {
-                setOpenModal(true);
+                if (onSeePricingModal) {
+                  onSeePricingModal({
+                    commodity,
+                    growingMethodId: growingMethod?.id ?? -1,
+                    variety,
+                  });
+                }
               }}
             >
               <div className="flex flex-row items-center pl-2">
@@ -92,7 +100,6 @@ const ProductCard: FC<ProductCardProps> = ({
                 <ChevronRight className="text-marketplace" />
               </div>
             </div>
-            <OrderModal openModal={openModal} onOpenModal={onOpenModal} />
           </section>
         )}
       </div>

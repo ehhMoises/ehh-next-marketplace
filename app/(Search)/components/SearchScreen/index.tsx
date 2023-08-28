@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 import { ProductPresentation } from '@/models/product';
 import LoaderSearch from '../LoaderSearch';
 import BrandFilters from '../BrandFilters';
+import { OrderModal } from '../OrderModal';
 
 interface SearchScreenProps {
   packStyles: PackStyle[];
@@ -22,6 +23,16 @@ interface SearchScreenProps {
 }
 
 const SearchScreen: FC<SearchScreenProps> = ({ packStyles, packSizeList, grades, products }) => {
+  const [selectedProductDetailedCard, setSelectedProductDetailedCard] = useState<{
+    commodity: string;
+    variety: string;
+    growingMethodId: number;
+  }>({
+    commodity: '',
+    variety: '',
+    growingMethodId: -1,
+  });
+  const [openModal, setOpenModal] = useState(false);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [currentCardsMode, setCurrentCardsMode] = useState<ProductCardMode>(ProductCardMode.ON_FILTER);
   const [availableProducts, setAvailableProducts] = useState(products);
@@ -58,6 +69,13 @@ const SearchScreen: FC<SearchScreenProps> = ({ packStyles, packSizeList, grades,
 
   return (
     <Fragment key="SearchScreen">
+      <OrderModal
+        {...selectedProductDetailedCard}
+        openModal={openModal}
+        onOpenModal={(isOpen) => {
+          setOpenModal(isOpen);
+        }}
+      />
       <SortBrand
         onSelectSorting={(data) => {
           console.log('data', data);
@@ -86,10 +104,14 @@ const SearchScreen: FC<SearchScreenProps> = ({ packStyles, packSizeList, grades,
                 brandId={product.id}
                 commodity={product.commodity}
                 variety={product.variety}
-                organic={product.growingMethod.name}
+                growingMethod={product.growingMethod}
                 key={product.id}
                 onSelectItem={searchBrandsHandler}
                 mode={currentCardsMode}
+                onSeePricingModal={(data) => {
+                  setSelectedProductDetailedCard(data);
+                  setOpenModal(true);
+                }}
               />
             ))
           )}

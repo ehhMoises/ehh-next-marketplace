@@ -61,7 +61,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.commoditySearch && errors.commoditySearch && dirty && (
+        {touched.commoditySearch && errors.commoditySearch && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.commoditySearch}</p>
         )}
       </div>
@@ -85,7 +85,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.packSizeSearch && errors.packSizeSearch && dirty && (
+        {touched.packSizeSearch && errors.packSizeSearch && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packSizeSearch}</p>
         )}
       </div>
@@ -109,7 +109,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.packStyleSearch && errors.packStyleSearch && dirty && (
+        {touched.packStyleSearch && errors.packStyleSearch && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packStyleSearch}</p>
         )}
       </div>
@@ -133,7 +133,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.gradeSearch && errors.gradeSearch && dirty && (
+        {touched.gradeSearch && errors.gradeSearch && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.gradeSearch}</p>
         )}
       </div>
@@ -184,7 +184,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
 
           <CalendarIcon size={42} className="text-stone-400" />
         </div>
-        {touched.deliverDateSearch && errors.deliverDateSearch && dirty && (
+        {touched.deliverDateSearch && errors.deliverDateSearch && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.deliverDateSearch}</p>
         )}
       </div>

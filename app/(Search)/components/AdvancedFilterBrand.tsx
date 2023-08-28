@@ -256,15 +256,18 @@ const AdvancedFilterBrand: FC = () => {
             onChange={(values) => {
               setRangePrice(values);
             }}
-            renderThumb={({ key, ...rest }) => (
-              <div key={key} {...rest}>
-                <div className="block h-6 w-6 rounded-sm border-2 border-stone-400 bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                  <div className="flex flex-row items-center justify-center mt-[0.2rem] text-stone-400">
-                    <Plus size={16} />
+            renderThumb={(props, state) => {
+              const { key, ...rest } = props;
+              return (
+                <div key={key} {...rest}>
+                  <div className="block h-6 w-6 rounded-sm border-2 border-stone-400 bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                    <div className="flex flex-row items-center justify-center mt-[0.2rem] text-stone-400">
+                      {state.index === 0 ? <Minus size={16} /> : <Plus size={16} />}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              );
+            }}
             pearling
             minDistance={9}
           />

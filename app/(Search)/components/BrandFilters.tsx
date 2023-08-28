@@ -18,16 +18,11 @@ interface BrandFiltersProps {
 }
 
 const BrandFilters: FC<BrandFiltersProps> = ({ packSizeList, packStyles, grades }) => {
-  // console.log('packSizeList', packSizeList);
-  // console.log('packStyles', packStyles);
-  // console.log('grades', grades);
-
   // Create Listing
   const onSubmit = async () => {
     console.log('form values', values);
   };
 
-  // Formik
   const { setFieldValue, handleSubmit, values, errors, dirty, touched } = useFormik({
     initialValues: filterInitialValues,
     validationSchema: FilterBrandValidationSchema,
