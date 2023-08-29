@@ -1,6 +1,6 @@
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
-import { NavigationMenuRetailer } from '../../components/Navigation';
+import { NavigationGrower } from '../../components/Navigation';
 import { ProductCatalogTable } from '../../components/ProductCatalogTable';
 import { data } from '../../lib/data';
 import { OrdersCards } from '@/app/(Retailer)/components/OrdersCards';
@@ -11,7 +11,7 @@ const HomeRetailer: FC = () => (
   <main className="flex min-h-screen">
     <section className="flex flex-col w-full">
       <MainNavigationHeader />
-      <NavigationMenuRetailer />
+      <NavigationGrower />
       <div className="p-4 pt-0">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {data.map((item, index) => (

@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { FC } from 'react';
 
-export const NavigationMenuRetailer: FC = () => {
+export const NavigationGrower: FC = () => {
   const pathname = usePathname();
   return (
     <div className="w-full bg-gray-800 text-white flex mb-4">
@@ -14,6 +14,30 @@ export const NavigationMenuRetailer: FC = () => {
         className={pathname === '/grower/home' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
         Home
+      </Link>
+      <Link
+        href="/grower/brands"
+        className={pathname === '/grower/brands' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+      >
+        Brands
+      </Link>
+      <Link
+        href="/grower/pack-style"
+        className={pathname === '/grower/pack-style' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+      >
+        Pack Style
+      </Link>
+      <Link
+        href="/grower/pack-size"
+        className={pathname === '/grower/pack-size' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+      >
+        Pack Size
+      </Link>
+      <Link
+        href="/grower/grade"
+        className={pathname === '/grower/grade' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+      >
+        Grade
       </Link>
       <Link
         href="/grower/catalog"
@@ -32,12 +56,6 @@ export const NavigationMenuRetailer: FC = () => {
         className={pathname === '/grower/retailers' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
         Retailers
-      </Link>
-      <Link
-        href="/grower/carriers"
-        className={pathname === '/grower/carriers' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
-      >
-        Carriers
       </Link>
     </div>
   );
