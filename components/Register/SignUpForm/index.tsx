@@ -1,8 +1,8 @@
 'use client';
 
 import { FC } from 'react';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import { Input } from '../../ui/input';
+import { Button } from '../../ui/button';
 import style from './Register.module.css';
 import { cn } from '@/lib/utils';
 import { useFormik } from 'formik';
