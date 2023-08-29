@@ -5,17 +5,9 @@ import { FC } from 'react';
 import { initialValues } from './initialValues';
 import { validationSchema } from './validationSchema';
 import { IParamsProps } from '@/app/interfaces';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useGetBrandsQuery } from '@/app/(Grower)/hooks/queries';
+import { useGetBrandsQuery } from '@/app/(Grower)/hooks/queries/useBrandsQuery';
 
 export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   const isNew = params.id === 'new';

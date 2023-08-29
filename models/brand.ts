@@ -1,5 +1,4 @@
-export interface Brand<GrowingMethodType = number> {
-  id: string;
+export interface IBrand<GrowingMethodType = number> {
   name: string;
   description: string;
   commodity: string;
@@ -7,5 +6,9 @@ export interface Brand<GrowingMethodType = number> {
   subVariety: string;
   plu: string;
   growingMethod: GrowingMethodType;
+}
+
+export interface Brand<GrowingMethodType = number> extends IBrand {
+  id: string;
   isActive: boolean;
 }

@@ -1,14 +1,14 @@
 import axios from './index';
 import { AxiosError } from 'axios';
-import { GrowingMethod } from '@/models/growingMethod';
+import {  GrowingMethodsResponse } from '@/models/growingMethod';
 
-const context = 'growing-methods';
+const context = 'enums/growing-methods';
 
 export const getGrowingMethods = async () => {
   try {
-    const response = await axios.get<GrowingMethod[]>(`/${context}`);
-
-    return response.data;
+    const response = await axios.get<GrowingMethodsResponse>(`/${context}`);
+    console.log('RESPONSE', response)
+    return response?.data;
   } catch (err: unknown) {
     if (err instanceof AxiosError) throw err?.response?.data;
   }
