@@ -16,28 +16,28 @@ export const NavigationGrower: FC = () => {
         Home
       </Link>
       <Link
-        href="/grower/brand"
-        className={pathname === '/grower/brand' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+        href="/grower/brands"
+        className={pathname === '/grower/brands' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
         Brands
       </Link>
       <Link
-        href="/grower/pack-style"
-        className={pathname === '/grower/pack-style' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+        href="/grower/pack-styles"
+        className={pathname === '/grower/pack-styles' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
-        Pack Style
+        Pack Styles
       </Link>
       <Link
-        href="/grower/pack-size"
-        className={pathname === '/grower/pack-size' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+        href="/grower/pack-sizes"
+        className={pathname === '/grower/pack-sizes' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
-        Pack Size
+        Pack Sizes
       </Link>
       <Link
-        href="/grower/grade"
-        className={pathname === '/grower/grade' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+        href="/grower/grades"
+        className={pathname === '/grower/grades' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
-        Grade
+        Grades
       </Link>
       <Link
         href="/grower/catalog"

@@ -5,9 +5,9 @@ import { FC } from 'react';
 import { NavigationGrower } from '../../components/Navigation';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { PackSizeTable } from '../../components/pack-size/Table';
+import { GradeTable } from '../../components/grades/Table';
 
-const PackSize: FC = () => {
+const GradePage: FC = () => {
   const router = useRouter();
   return (
     <main className="flex min-h-screen">
@@ -16,14 +16,14 @@ const PackSize: FC = () => {
         <NavigationGrower />
         <div className="p-4 pt-0">
           <div className="flex justify-end mb-4">
-            <Button onClick={() => router.push('/grower/pack-size/new')}>Create</Button>
+            <Button onClick={() => router.push('/grower/grades/new')}>Create</Button>
           </div>
 
-          <PackSizeTable />
+          <GradeTable />
         </div>
       </section>
     </main>
   );
 };
 
-export default PackSize;
+export default GradePage;

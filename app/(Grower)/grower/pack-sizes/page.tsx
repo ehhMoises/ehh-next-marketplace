@@ -5,9 +5,9 @@ import { FC } from 'react';
 import { NavigationGrower } from '../../components/Navigation';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { PackStyleTable } from '../../components/pack-style/Table';
+import { PackSizeTable } from '../../components/pack-sizes/Table';
 
-const PackStyle: FC = () => {
+const PackSize: FC = () => {
   const router = useRouter();
   return (
     <main className="flex min-h-screen">
@@ -16,14 +16,13 @@ const PackStyle: FC = () => {
         <NavigationGrower />
         <div className="p-4 pt-0">
           <div className="flex justify-end mb-4">
-            <Button onClick={() => router.push('/grower/pack-style/new')}>Create</Button>
+            <Button onClick={() => router.push('/grower/pack-sizes/new')}>Create</Button>
           </div>
-
-          <PackStyleTable />
+          <PackSizeTable />
         </div>
       </section>
     </main>
   );
 };
 
-export default PackStyle;
+export default PackSize;
