@@ -4,9 +4,12 @@ import { FC, useState } from 'react';
 import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import SignIn from '../SignIn';
+import Register from '../Register';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 const MainNavigationHeader: FC = () => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
+  const [isSignUpInModalOpen, setIsSignUpInModalOpen] = useState(false);
 
   return (
     <section className="w-full bg-white">
@@ -14,6 +17,12 @@ const MainNavigationHeader: FC = () => {
         openModal={isSignInModalOpen}
         onOpenModal={(isOpen) => {
           setIsSignInModalOpen(isOpen);
+        }}
+      />
+      <Register
+        openModal={isSignUpInModalOpen}
+        onOpenModal={(isOpen) => {
+          setIsSignUpInModalOpen(isOpen);
         }}
       />
 
@@ -34,15 +43,32 @@ const MainNavigationHeader: FC = () => {
           <Image src="/logo.png" alt="eHarvestHub Logo" width="300" height="200" />
         </div>
 
-        <div
-          className="flex flex-row  cursor-pointer h-min"
-          onClick={() => {
-            setIsSignInModalOpen(true);
-          }}
-        >
-          <p className="text-stone-500 hover:text-stone-600 transition-colors inline-block ">Sign in or register</p>
-          <ChevronDown width={16} />
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex flex-row  cursor-pointer h-min">
+              <p className="text-stone-500 hover:text-stone-600 transition-colors inline-block ">Sign in or register</p>
+              <ChevronDown width={16} />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel> */}
+            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuCheckboxItem
+              onClick={() => {
+                setIsSignInModalOpen(true);
+              }}
+            >
+              Sign In
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              onClick={() => {
+                setIsSignUpInModalOpen(true);
+              }}
+            >
+              Register
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </nav>
     </section>
   );
