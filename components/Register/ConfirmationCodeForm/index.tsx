@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
-import style from './Register.module.css';
+import style from '../Register.module.css';
 import { cn } from '@/lib/utils';
 import { useFormik } from 'formik';
 import ConfirmationCodeSchemaSchema, { confirmationCodeInitialValues } from './confirmationCodeSchema';
