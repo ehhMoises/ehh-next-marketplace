@@ -2,11 +2,12 @@
 
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
+import { NavigationGrower } from '../../components/Navigation';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { NavigationGrower } from '../components/Navigation';
+import { BrandTable } from '../../components/brand/Table';
 
-const GrowerCatalog: FC = () => {
+const BrandPage: FC = () => {
   const router = useRouter();
   return (
     <main className="flex min-h-screen">
@@ -18,11 +19,11 @@ const GrowerCatalog: FC = () => {
             <Button onClick={() => router.push('/grower/brand/new')}>Create</Button>
           </div>
 
-          {/* <BrandTable /> */}
+          <BrandTable />
         </div>
       </section>
     </main>
   );
 };
 
-export default GrowerCatalog;
+export default BrandPage;

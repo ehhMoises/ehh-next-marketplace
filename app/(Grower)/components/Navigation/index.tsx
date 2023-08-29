@@ -16,8 +16,8 @@ export const NavigationGrower: FC = () => {
         Home
       </Link>
       <Link
-        href="/grower/brands"
-        className={pathname === '/grower/brands' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+        href="/grower/brand"
+        className={pathname === '/grower/brand' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
         Brands
       </Link>
@@ -45,18 +45,18 @@ export const NavigationGrower: FC = () => {
       >
         Catalog
       </Link>
-      <Link
+      {/* <Link
         href="/grower/orders"
-        className={pathname === '/grower/orders' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+        className={pathname === '/grower/order' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
         Orders
-      </Link>
-      <Link
-        href="/grower/retailers"
-        className={pathname === '/grower/retailers' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
+      </Link> */}
+      {/* <Link
+        href="/grower/retailer"
+        className={pathname === '/grower/retailer' ? 'py-4 px-8 bg-black' : 'py-4 px-8 hover:bg-gray-700'}
       >
-        Retailers
-      </Link>
+        Retailer
+      </Link> */}
     </div>
   );
 };

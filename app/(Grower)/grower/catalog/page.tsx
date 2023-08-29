@@ -3,9 +3,9 @@
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
 import { NavigationGrower } from '../../components/Navigation';
-import { ProductCatalogTable } from '../../components/ProductCatalogTable';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { ProductCatalogTable } from '@/app/(Retailer)/components/ProductCatalogTable';
 
 const GrowerCatalog: FC = () => {
   const router = useRouter();

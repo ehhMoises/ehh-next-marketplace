@@ -85,3 +85,7 @@
   width: 100%;
   height: 400px;
 }
+
+label {
+  @apply block mb-1 text-sm  text-gray-600
+}

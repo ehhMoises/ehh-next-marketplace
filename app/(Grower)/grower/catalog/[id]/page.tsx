@@ -2,7 +2,7 @@ import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
 import { NavigationGrower } from '../../../components/Navigation';
 import { IParamsProps } from '@/app/interfaces';
-import { CatalogForm } from '@/app/(Grower)/components/CatalogForm';
+import { CatalogForm } from '@/app/(Grower)/components/catalog/CatalogForm';
 
 const GrowerCatalogDetail: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   return (
