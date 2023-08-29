@@ -78,10 +78,18 @@ export const columns: ColumnDef<PotentialGrowers>[] = [
         <div className="flex flex-row gap-x-4">
           <div className="text-stone-500 text-md">{formatPotentialGrowersPrice(total)}</div>
           <div>
-            <FontAwesomeIcon icon={faCartShopping} size={'2x'} className="text-stone-500 hover:text-stone-400" />
+            <FontAwesomeIcon
+              icon={faCartShopping}
+              size={'2x'}
+              className="text-stone-500 hover:text-stone-400 transition-colors"
+            />
           </div>
           <div>
-            <FontAwesomeIcon icon={faTrash} size={'2x'} className="text-stone-500 hover:text-stone-400" />
+            <FontAwesomeIcon
+              icon={faTrash}
+              size={'2x'}
+              className="text-stone-500 hover:text-stone-400 transition-colors"
+            />
           </div>
         </div>
       );
