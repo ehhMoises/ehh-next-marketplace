@@ -22,12 +22,11 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(
   (response) => {
-    // if (response.config.url === '/signin' && response.status === 200) {
-    //   Cookies.set(TokenTypes.ACCESS_TOKEN, response?.data?.accessToken, { sameSite: 'Lax' });
-    //   // const redirectUrl = Cookies.get(TokenTypes.ACCESS_TOKEN);
-    //   window.sessionStorage.removeItem('redirectUrl');
-    //   // Router.push(redirectUrl ?? Routes.ROOT);
-    // }
+    if (response.config.url === '/login' && response.status === 200) {
+      Cookies.set(TokenTypes.ACCESS_TOKEN, response?.data?.idToken, { sameSite: 'Lax' });
+      // const redirectUrl = Cookies.get(TokenTypes.ACCESS_TOKEN);
+      // Router.push(redirectUrl ?? Routes.ROOT);
+    }
 
     return response;
   },

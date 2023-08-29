@@ -24,6 +24,10 @@ const MainNavigationHeader: FC = () => {
         onOpenModal={(isOpen) => {
           setIsSignUpInModalOpen(isOpen);
         }}
+        onSuccessConfirmation={() => {
+          setIsSignUpInModalOpen(false);
+          setIsSignInModalOpen(true);
+        }}
       />
 
       <nav className="h-20 flex flex-row justify-between mt-3 px-4">

@@ -1,34 +1,64 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import ModalTransparent from '../ModalTransparent';
-
 import { DialogDescription, DialogTitle } from '../ui/dialog';
 import { SignUpForm } from './SignUpForm';
+import { ConfirmationCodeForm } from './ConfirmationCodeForm';
+
+enum RegisterType {
+  SIGN_UP = 'SIGN_UP',
+  CONFIRMATION = 'CONFIRMATION',
+}
 
 interface RegisterProps {
   openModal: boolean;
   onOpenModal?: (open: boolean) => void;
+  onSuccessConfirmation: () => void;
 }
-const Register: FC<RegisterProps> = ({ onOpenModal, openModal }) => {
+const Register: FC<RegisterProps> = ({ onOpenModal, openModal, onSuccessConfirmation }) => {
+  const [mode, setMode] = useState<RegisterType>(RegisterType.SIGN_UP);
+
+  const onSuccessConfirmationHandler = () => {
+    onSuccessConfirmation();
+    setMode(RegisterType.SIGN_UP);
+  };
+
   return (
     <ModalTransparent
       open={openModal}
-      onOpenChange={onOpenModal}
+      onOpenChange={(isOpen) => {
+        setMode(RegisterType.SIGN_UP);
+        if (onOpenModal) {
+          onOpenModal(isOpen);
+        }
+      }}
       className="sm:max-w-[720px] min-h-[30rem]"
       title={<DialogTitle className="text-white  text-[2.5rem] text-center mt-4">Welcome to eHarvestHub</DialogTitle>}
       description={
-        <DialogDescription className="text-white text-xl text-center">
-          <div className="flex flex-col">
-            <span>Connecting Growers + Retailers + Carriers</span>
-            <span>Register</span>
-          </div>
-        </DialogDescription>
+        <section className="flex flex-col">
+          <DialogDescription className="text-white text-xl text-center">
+            Connecting Growers + Retailers + Carriers
+          </DialogDescription>
+          <DialogDescription className="text-white text-xl text-center">
+            Register {mode === RegisterType.CONFIRMATION && '- Confirmation Code'}
+          </DialogDescription>
+        </section>
       }
     >
-      <SignUpForm />
-      {/* <DialogFooter>  
-      </DialogFooter> */}
+      {mode === RegisterType.SIGN_UP && (
+        <SignUpForm
+          onNewUserCreated={() => {
+            setMode(RegisterType.CONFIRMATION);
+          }}
+          onSelectConfirmationCode={() => {
+            setMode(RegisterType.CONFIRMATION);
+          }}
+        />
+      )}
+      {mode === RegisterType.CONFIRMATION && (
+        <ConfirmationCodeForm onSuccessConfirmation={onSuccessConfirmationHandler} />
+      )}
     </ModalTransparent>
   );
 };

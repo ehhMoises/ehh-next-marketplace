@@ -4,7 +4,7 @@ import { ResponseHttpBase } from '@/models/http';
 import { ProductPresentation } from '@/models/product';
 import { PotentialGrowers, PotentialGrowersBody, QuickSearchPotentialGrowersBody } from '@/models/targetSellers';
 
-const context = 'search';
+const context = 'cards';
 
 export const getPlaceholdersBrand = async () => {
   try {

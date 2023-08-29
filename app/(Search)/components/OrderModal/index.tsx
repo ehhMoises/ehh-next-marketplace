@@ -30,7 +30,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
   const { isMd } = useBreakpoint(Breakpoints.MD);
   const router = useRouter();
 
-  const { setFieldValue, handleChange, handleSubmit, errors, values, touched, dirty } = useFormik({
+  const { setFieldValue, handleChange, handleBlur, handleSubmit, errors, values, touched, dirty } = useFormik({
     initialValues: getPotentialGrowersInitalValues({
       commodity,
       growingMethod: growingMethodId,
@@ -88,7 +88,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
                 'w-full h-20 bg-opacity-80 bg-transparent border-2 text-white text-xl text-center'
               )}
               onChange={handleChange}
-              onBlur={handleChange}
+              onBlur={handleBlur}
             />
             {touched.quantity && errors.quantity && dirty && (
               <p className="text-zinc-300 mt-3 text-xl">{errors.quantity}</p>

@@ -42,7 +42,6 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
   setFieldValue,
   touched,
   errors,
-  dirty,
 }) => {
   return (
     <section className="flex flex-col gap-y-3">
@@ -61,7 +60,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             </SelectGroup>
           </SelectContent>
         </Select>
-        {touched.commodity && errors.commodity && dirty && (
+        {touched.commodity && errors.commodity && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.commodity}</p>
         )}
       </div>
@@ -131,9 +130,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
             setFieldValue('quantity', event.target.value);
           }}
         />
-        {touched.quantity && errors.quantity && dirty && (
-          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.quantity}</p>
-        )}
+        {touched.quantity && errors.quantity && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.quantity}</p>}
       </div>
 
       <div className="flex flex-col">
