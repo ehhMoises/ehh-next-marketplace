@@ -24,9 +24,10 @@ const SpinClockwiseLoader: FC<SpinClockwiseLoaderProps> = ({ loaderSize, color }
     <div
       className={cn([classes['la-ball-spin-clockwise']])}
       style={{
-        color: color ?? 'red',
+        color: color ?? 'orange',
         width: `${loaderSize}px`,
         height: `${loaderSize}px`,
+        textAlign: 'center',
       }}
     >
       {Array.from(Array(8).keys()).map((d) => (

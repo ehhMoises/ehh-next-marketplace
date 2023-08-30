@@ -1,3 +1,5 @@
+import { GrowingMethod } from "./growingMethod";
+
 export interface IBrand<GrowingMethodType = number> {
   name: string;
   description: string;

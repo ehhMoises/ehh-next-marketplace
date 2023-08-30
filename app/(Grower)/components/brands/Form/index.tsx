@@ -11,23 +11,88 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useGetGrowingMethodsQuery } from '@/app/(Grower)/hooks/queries/useGrowingMethodsQuery';
 import { Button } from '@/components/ui/button';
+import { useGetBrandByIdQuery } from '@/app/(Grower)/hooks/queries/useBrandsQuery';
+import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
+import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useCreateBrandMutation } from '@/app/(Grower)/hooks/mutations/useBrandMutation';
 
 export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   const isNew = params.id === 'new';
-  const { data: growingMethods, isLoading: isLoadingGrowingMethods, isError } = useGetGrowingMethodsQuery({});
+  const id = params.id;
+  const router = useRouter();
+
+  // Get Brand
+  const {
+    data: brand,
+    isError: isErrorBrand,
+    isLoading: isLoadingBrand,
+  } = useGetBrandByIdQuery(id, {
+    enabled: id !== undefined && !isNew,
+  });
+
+  // Create Brand
+  const {
+    mutate: createBrand,
+    isLoading: isLoadingCreateBrand,
+    isError: isErrorCreateBrand,
+  } = useCreateBrandMutation();
+
+  // Get Growing Methods
+  const { data: growingMethods } = useGetGrowingMethodsQuery({});
+
+  // Form
   const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues, setFieldValue } =
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: () => {},
+      onSubmit: () => {
+        if (isNew) {
+          createBrand(values, {
+            onSuccess: (data) => {
+              console.log('Brand created', data);
+            },
+          });
+        }
+      },
     });
 
-  console.log('Growing Methods', growingMethods);
-  console.log('Form Values', values);
+  useEffect(() => {
+    if (brand && !isNew) {
+      const payload = {
+        ...brand,
+        growingMethod: brand.growingMethod.id,
+      };
+      setValues(payload);
+      setFieldValue('growingMethod', brand.growingMethod.id);
+    }
+  }, [brand]);
+
+  if (isLoadingBrand) {
+    return (
+      <div className="flex justify-center mt-8">
+        <SpinClockwiseLoader loaderSize={AwesomeLoaderSize.LARGE} />
+      </div>
+    );
+  }
+
+  if (isErrorBrand) {
+    return (
+      <div className="bg-white rounded-lg">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>There was an error loading Brand, please try again later.</AlertDescription>
+        </Alert>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">
-      <div className="bg-orange-500 p-4 text-white">Brands Information</div>
+      <div className="bg-orange-500 p-4 text-white">Brand Information</div>
       <div className="p-4 bg-white">
         <form onSubmit={handleSubmit}>
           <div className="pb-4">
@@ -95,7 +160,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
             )}
           </div>
           <div className="flex justify-end mt-4">
-            <Button type="button" variant="outline" onClick={() => resetForm()} className="mr-4">
+            <Button type="button" variant="outline" onClick={() => router.push('/grower/brands')} className="mr-4">
               Cancel
             </Button>
             <Button type="submit" disabled={!isValid || !dirty}>
