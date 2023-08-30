@@ -1,3 +1,4 @@
+import { ErrorDetail } from '@/models/errorDetail';
 import axios from './index';
 import { AxiosError } from 'axios';
 
@@ -28,11 +29,17 @@ export const signUp = async ({
 
     return false;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    if (err instanceof AxiosError) {
+      const error = new ErrorDetail({
+        ...err?.response?.data,
+      });
+
+      throw error;
+    }
   }
 };
 
-export const confirm = async ({ email, code }: { email: string; code: string }) => {
+export const confirmCode = async ({ email, code }: { email: string; code: string }) => {
   try {
     const response = await axios.post<void>(`/${context}/confirm`, {
       email,
@@ -45,7 +52,13 @@ export const confirm = async ({ email, code }: { email: string; code: string }) 
 
     return false;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    if (err instanceof AxiosError) {
+      const error = new ErrorDetail({
+        ...err?.response?.data,
+      });
+
+      throw error;
+    }
   }
 };
 
@@ -61,7 +74,13 @@ export const resendConfirmation = async ({ email }: { email: string }) => {
 
     return false;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    if (err instanceof AxiosError) {
+      const error = new ErrorDetail({
+        ...err?.response?.data,
+      });
+
+      throw error;
+    }
   }
 };
 
@@ -78,6 +97,12 @@ export const signIn = async ({ email, password }: { email: string; password: str
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    if (err instanceof AxiosError) {
+      const error = new ErrorDetail({
+        ...err?.response?.data,
+      });
+
+      throw error;
+    }
   }
 };

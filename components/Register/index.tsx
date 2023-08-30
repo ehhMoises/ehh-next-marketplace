@@ -5,6 +5,7 @@ import ModalTransparent from '../ModalTransparent';
 import { DialogDescription, DialogTitle } from '../ui/dialog';
 import { SignUpForm } from './SignUpForm';
 import { ConfirmationCodeForm } from './ConfirmationCodeForm';
+import { cn } from '@/lib/utils';
 
 enum RegisterType {
   SIGN_UP = 'SIGN_UP',
@@ -33,7 +34,10 @@ const Register: FC<RegisterProps> = ({ onOpenModal, openModal, onSuccessConfirma
           onOpenModal(isOpen);
         }
       }}
-      className="sm:max-w-[720px] min-h-[30rem]"
+      className={cn('sm:max-w-[720px]', mode === RegisterType.SIGN_UP ? 'overflow-y-auto' : '')}
+      style={{
+        height: mode === RegisterType.SIGN_UP ? 'calc(100vh - 100px)' : '',
+      }}
       title={<DialogTitle className="text-white  text-[2.5rem] text-center mt-4">Welcome to eHarvestHub</DialogTitle>}
       description={
         <section className="flex flex-col">

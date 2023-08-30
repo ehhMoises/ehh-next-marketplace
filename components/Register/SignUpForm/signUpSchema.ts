@@ -9,11 +9,15 @@ const SignUpSchema = Yup.object().shape({
     message: 'Email is Invalid',
   }),
   password: Yup.string().required("Password it's Required"),
+  companyName: Yup.string().required("Company name it's Required"),
+  accountType: Yup.string().required("Account type it's Required"),
 });
 
 export const signUpInitialValues: SignUpModel = {
   email: '',
   password: '',
+  companyName: '',
+  accountType: '',
 };
 
 export type SignUpModel = Yup.InferType<typeof SignUpSchema>;
