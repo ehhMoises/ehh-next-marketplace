@@ -1,12 +1,11 @@
-import MainNavigationHeader from '@/components/MainNavigationHeader';
-import { Fragment } from 'react';
-import Footer from '@/components/Footer';
-import { PotentialsGrowersTable } from '../PotentialsGrowersTable';
+import { Fragment, Suspense } from 'react';
 import { Metadata } from 'next';
 import PotentialGrowersSchema from '@/app/(Search)/lib/potentialGrowersSchema';
 import { getPossibleGrowers, getPossibleGrowersViaQuickSearch } from '@/lib/api/product';
 import { cookies } from 'next/headers';
-import { TokenTypes } from '@/lib/cookies';
+import { TokenTypes } from '@/lib/constant/cookies';
+import { notFound } from 'next/navigation';
+import { PotentialsGrowersTable } from '../PotentialsGrowersTable';
 
 interface SearchParamsPotentialGrowers {
   commodity: string;
@@ -66,7 +65,6 @@ const getPotentialGrowers = async (
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function OrdersPage({
   searchParams,
 }: {
@@ -75,15 +73,15 @@ export default async function OrdersPage({
   const { mode, ...restSearchParams } = searchParams;
   const potentialGrowers = await getPotentialGrowers(restSearchParams, mode === 'quick-search');
 
+  if (potentialGrowers.length === 0) {
+    notFound();
+  }
+
   return (
     <Fragment key="PotentialGrowersPage">
-      <main className="flex min-h-screen">
-        <section className="flex flex-col w-full">
-          <MainNavigationHeader />
-          <PotentialsGrowersTable potentialGrowers={potentialGrowers} />
-        </section>
-      </main>
-      <Footer />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PotentialsGrowersTable potentialGrowers={potentialGrowers} />
+      </Suspense>
     </Fragment>
   );
 }

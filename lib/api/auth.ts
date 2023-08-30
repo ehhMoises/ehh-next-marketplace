@@ -88,7 +88,6 @@ export const signIn = async ({ email, password }: { email: string; password: str
   try {
     const response = await axios.post<{
       idToken: string;
-      accessToken: string;
       refreshToken: string;
     }>(`/${context}/login`, {
       email,

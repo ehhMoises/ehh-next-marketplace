@@ -3,7 +3,7 @@
 import { FC, Fragment, useEffect } from 'react';
 import SortBrand from '../SortBrand';
 import ProductCard from '@/components/ProductCard';
-import { PRODUCT_CARD_MODE_KEY } from '@/lib/cookies';
+import { PRODUCT_CARD_MODE_KEY } from '@/lib/constant/cookies';
 import Cookies from 'js-cookie';
 import { ProductCardMode } from '@/lib/constant/ui';
 import { ProductPresentation } from '@/models/product';

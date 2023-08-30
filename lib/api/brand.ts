@@ -1,4 +1,4 @@
-import axios from './index';
+import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { Brand } from '@/models/brand';
 import { ResponseHttpBase } from '@/models/http';
@@ -16,9 +16,12 @@ export const getBrandById = async (id: string) => {
   }
 };
 
-export const getBrands = async () => {
+export const getBrands = async ({ accessToken }: { accessToken?: string }) => {
   try {
-    const response = await axios.get<ResponseHttpBase<Brand<GrowingMethod>[]>>(`/${context}`);
+    const headers = buildServerSideHeaders(accessToken);
+    const response = await axios.get<ResponseHttpBase<Brand<GrowingMethod>[]>>(`/${context}`, {
+      headers,
+    });
 
     return response.data;
   } catch (err: unknown) {

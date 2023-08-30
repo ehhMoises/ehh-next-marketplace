@@ -1,5 +1,5 @@
 import { PackStyle } from '@/models/packStyle';
-import axios from './index';
+import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 import { PackSize } from '@/models/packSize';
@@ -16,11 +16,14 @@ export const getPackStyleById = async (id: string) => {
   }
 };
 
-export const getPackStyles = async () => {
+export const getPackStyles = async ({ accessToken }: { accessToken?: string }) => {
   try {
+    const headers = buildServerSideHeaders(accessToken);
     const {
       data: { data },
-    } = await axios.get<ResponseHttpBase<PackStyle[]>>(`/${context}`);
+    } = await axios.get<ResponseHttpBase<PackStyle[]>>(`/${context}`, {
+      headers,
+    });
 
     return data;
   } catch (err: unknown) {

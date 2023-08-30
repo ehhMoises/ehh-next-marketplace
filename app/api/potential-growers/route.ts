@@ -1,6 +1,6 @@
 import PotentialGrowersSchema from '@/app/(Search)/lib/potentialGrowersSchema';
 import { getPossibleGrowers } from '@/lib/api/product';
-import { TokenTypes } from '@/lib/cookies';
+import { TokenTypes } from '@/lib/constant/cookies';
 import {} from '@/models/http';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';

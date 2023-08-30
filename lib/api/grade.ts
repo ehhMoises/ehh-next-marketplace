@@ -1,5 +1,5 @@
 import { Grade } from '@/models/grade';
-import axios from './index';
+import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 
@@ -15,11 +15,14 @@ export const getGradeById = async (id: string) => {
   }
 };
 
-export const getGrades = async () => {
+export const getGrades = async ({ accessToken }: { accessToken?: string }) => {
   try {
+    const headers = buildServerSideHeaders(accessToken);
     const {
       data: { data },
-    } = await axios.get<ResponseHttpBase<Grade[]>>(`/${context}`);
+    } = await axios.get<ResponseHttpBase<Grade[]>>(`/${context}`, {
+      headers,
+    });
 
     return data;
   } catch (err: unknown) {

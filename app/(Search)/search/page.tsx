@@ -9,7 +9,7 @@ import { Grade } from '@/models/grade';
 import { ProductPresentation } from '@/models/product';
 import { cookies } from 'next/headers';
 import { getPackSizeList } from '@/lib/api/packSize';
-import { TokenTypes } from '@/lib/cookies';
+import { TokenTypes } from '@/lib/constant/cookies';
 import SearchScreen from '../components/SearchScreen';
 import { getBrands } from '@/lib/api/brand';
 import { Brand } from '@/models/brand';
@@ -26,10 +26,10 @@ const getData = async (): Promise<
   const cookieStore = cookies();
   const accessToken = cookieStore.get(TokenTypes.ACCESS_TOKEN)?.value;
   return Promise.all([
-    (await getBrands())?.data ?? [],
-    (await getPackSizeList()) ?? [],
-    (await getPackStyles()) ?? [],
-    (await getGrades()) ?? [],
+    (await getBrands({ accessToken }))?.data ?? [],
+    (await getPackSizeList({ accessToken })) ?? [],
+    (await getPackStyles({ accessToken })) ?? [],
+    (await getGrades({ accessToken })) ?? [],
     (await getCommoditiesProduct(accessToken))?.data ?? [],
   ]);
 };

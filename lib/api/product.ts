@@ -48,7 +48,7 @@ export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrow
   try {
     const headers = buildServerSideHeaders(accessToken);
     const { data: potentialGrowersForPurchaseItems } = await axios.post<ResponseHttpBase<PotentialGrowers[]>>(
-      `/${context}/sellers`,
+      `/${context}/seller-search`,
       { ...data },
       {
         headers,
@@ -57,6 +57,7 @@ export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrow
 
     return potentialGrowersForPurchaseItems;
   } catch (err: unknown) {
+    console.log(err);
     if (err instanceof AxiosError) throw err?.response?.data;
   }
 };

@@ -7,7 +7,7 @@ import { PackStyle } from '@/models/packStyle';
 import { Grade } from '@/models/grade';
 import ProductCard from '@/components/ProductCard';
 import Cookies from 'js-cookie';
-import { PRODUCT_CARD_MODE_KEY } from '@/lib/cookies';
+import { PRODUCT_CARD_MODE_KEY } from '@/lib/constant/cookies';
 import { ProductCardMode } from '@/lib/constant/ui';
 import { cn } from '@/lib/utils';
 import { ProductPresentation } from '@/models/product';

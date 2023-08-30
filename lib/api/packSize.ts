@@ -1,5 +1,5 @@
 import { PackSize } from '@/models/packSize';
-import axios from './index';
+import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 
@@ -15,11 +15,14 @@ export const getPackSizeById = async (id: string) => {
   }
 };
 
-export const getPackSizeList = async () => {
+export const getPackSizeList = async ({ accessToken }: { accessToken?: string }) => {
   try {
+    const headers = buildServerSideHeaders(accessToken);
     const {
       data: { data },
-    } = await axios.get<ResponseHttpBase<PackSize[]>>(`/${context}`);
+    } = await axios.get<ResponseHttpBase<PackSize[]>>(`/${context}`, {
+      headers,
+    });
 
     return data;
   } catch (err: unknown) {

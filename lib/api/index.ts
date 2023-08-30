@@ -1,7 +1,7 @@
 import axios, { AxiosHeaders, RawAxiosRequestHeaders } from 'axios';
 import { MethodsHeaders } from '@/models/http';
-import Cookies from 'js-cookie';
-import { TokenTypes } from '../cookies';
+import { TokenTypes } from '../constant/cookies';
+import { getCookie, setCookie } from '../cookie';
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -9,9 +9,7 @@ const instance = axios.create({
 
 // https://github.com/axios/axios#interceptors
 instance.interceptors.request.use((config) => {
-  // const token = Cookies.get(TokenTypes.ACCESS_TOKEN);
-  const token =
-    'eyJraWQiOiIyRUF0WllWSjR4TFFjXC91ekFxcGRGSnZTYTczWXpRNkR2VittTFJUdFwvN3c9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJmNDU4YzRkOC1mMDIxLTcwMDEtYjljNC04YzgxNmRiYjdlMDIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfTnk5c2JOUENVIiwiY29nbml0bzp1c2VybmFtZSI6ImY0NThjNGQ4LWYwMjEtNzAwMS1iOWM0LThjODE2ZGJiN2UwMiIsIm9yaWdpbl9qdGkiOiJlYmM0OWM4Yi1hYTYxLTQxMjQtOGZkZS0zMTg0MzA1OTBiMDAiLCJhdWQiOiIxZGZ0djV2anBqMDU0aDlkbG9xM3YyZGU1IiwiY3VzdG9tOmFjY291bnRfdHlwZSI6IjEwMCIsImV2ZW50X2lkIjoiYzU0N2I4ZGEtM2YzZi00MThhLWJhNmItOGRhZDg2ZDMxYWE2IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2OTMzNDE5MDksImN1c3RvbTphY2NvdW50X2lkIjoiN2U4ODNjZGItYWIyMS00NjJiLWI0MTAtNjY3MDVlNTY2YTZiIiwiZXhwIjoxNjkzNDI4MzA5LCJpYXQiOjE2OTMzNDE5MDksImp0aSI6IjYzMWFkMzVkLTE4NmEtNDBlMS04N2ZiLTllMzE3ZTg4NDJlMSIsImVtYWlsIjoibm9lbGZsb3Jlc3JAZ21haWwuY29tIn0.Q87_bRY4ytwG8neWo99jOyos193iauQ_ParjhMYymrHLIC3h-DIPrd7Gh0d9sdWUc0EkRLuWmodIwdWJv8lsHFToOoKaQD_zpyZIcx1eK_w0O2eLDmvq6OidqL_ARKBBCwRQZntXuq0aVtbgYsBcT2S5_yUlmXnITSEkmZg-wKgOws_ul8pnbQLOSQlv2vMD27X4HzsY-fLBNybWb1swBwN0S8xAfVWVRXamHXcmhX_42Xab-8hjv_9ykD1INpjXYvoG-Xhh30ZxVLmBltuoI_EcP4rVa-1FCQgoMuyLIv6E1ePLZnTHvCJ92W8IjxPpfMbdBULf3XpIzHW1Fja85g';
+  const token = getCookie(TokenTypes.ACCESS_TOKEN);
 
   if (token) {
     // eslint-disable-next-line no-param-reassign
@@ -24,10 +22,13 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(
   (response) => {
-    if (response.config.url === '/login' && response.status === 200) {
-      Cookies.set(TokenTypes.ACCESS_TOKEN, response?.data?.idToken, { sameSite: 'Lax' });
-      // const redirectUrl = Cookies.get(TokenTypes.ACCESS_TOKEN);
-      // Router.push(redirectUrl ?? Routes.ROOT);
+    if (response.config.url === '/auth/login' && response.status === 200) {
+      const tokens = response?.data as {
+        idToken: string;
+        refreshToken: string;
+      };
+      setCookie(TokenTypes.ACCESS_TOKEN, tokens.idToken);
+      setCookie(TokenTypes.REFRESH_TOKEN, tokens.refreshToken);
     }
 
     return response;
@@ -65,3 +66,23 @@ export const buildServerSideHeaders = (
 };
 
 export default instance;
+
+// TODO: Token customizable, we need to decode it from token and serialize & type it, in order to get
+//       in order to get current account type
+// {
+//   "sub": "845844b8-a0f1-7095-d216-aa32be6aaca6",
+//   "email_verified": true,
+//   "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_Ny9sbNPCU",
+//   "cognito:username": "845844b8-a0f1-7095-d216-aa32be6aaca6",
+//   "origin_jti": "a7cf9f93-d181-40e8-bde9-c2dc1ef93f05",
+//   "aud": "1dftv5vjpj054h9dloq3v2de5",
+//   "custom:account_type": "100",
+//   "event_id": "84e3174f-71ec-481e-95b5-dc0c43953707",
+//   "token_use": "id",
+//   "auth_time": 1693372726,
+//   "custom:account_id": "8f59a492-ecfe-4083-ab69-fe491dd05c2e",
+//   "exp": 1693459126,
+//   "iat": 1693372726,
+//   "jti": "5182d710-b55d-49b1-8acd-9cd18e06dfcf",
+//   "email": "moises+dev1@eharvesthub.com"
+// }

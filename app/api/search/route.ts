@@ -1,6 +1,6 @@
 import { getVarietiesProduct } from '@/lib/api/product';
 import { ProductCardMode } from '@/lib/constant/ui';
-import { PRODUCT_CARD_MODE_KEY, TokenTypes } from '@/lib/cookies';
+import { PRODUCT_CARD_MODE_KEY, TokenTypes } from '@/lib/constant/cookies';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
@@ -9,7 +9,6 @@ export async function POST(req: Request) {
   // console.log(cookieStore.get(PRODUCT_CARD_MODE_KEY));
 
   const accessToken = cookieStore.get(TokenTypes.ACCESS_TOKEN)?.value;
-  // console.log('accessToken', accessToken);
   const body = await req.json();
 
   if (body.brandId) {

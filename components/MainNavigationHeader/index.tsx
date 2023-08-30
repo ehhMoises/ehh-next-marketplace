@@ -1,15 +1,25 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 import Image from 'next/image';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, LogOut } from 'lucide-react';
 import SignIn from '../SignIn';
 import Register from '../Register';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import useCookie from '@/lib/hooks/useCookie';
+import { TokenTypes } from '@/lib/constant/cookies';
 
 const MainNavigationHeader: FC = () => {
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpInModalOpen, setIsSignUpInModalOpen] = useState(false);
+  const accessToken = useCookie(TokenTypes.ACCESS_TOKEN);
 
   return (
     <section className="w-full bg-white">
@@ -50,27 +60,45 @@ const MainNavigationHeader: FC = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex flex-row  cursor-pointer h-min">
-              <p className="text-stone-500 hover:text-stone-600 transition-colors inline-block ">Sign in or register</p>
+              <p className="text-stone-500 hover:text-stone-600 transition-colors inline-block ">
+                {accessToken ? 'Sergio Velasquez' : 'Sign in or register'}
+              </p>
               <ChevronDown width={16} />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
-            {/* <DropdownMenuLabel>Appearance</DropdownMenuLabel> */}
-            {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuCheckboxItem
-              onClick={() => {
-                setIsSignInModalOpen(true);
-              }}
-            >
-              Sign In
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              onClick={() => {
-                setIsSignUpInModalOpen(true);
-              }}
-            >
-              Register
-            </DropdownMenuCheckboxItem>
+            {accessToken && (
+              <Fragment key="noLoginStage">
+                <DropdownMenuLabel>Grower Marketplace</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem>Dashboard</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Catalog</DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem>Profile</DropdownMenuCheckboxItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem className="gap-x-2">
+                  Sign Out
+                  <LogOut size={16} className="text-stone-400" />
+                </DropdownMenuCheckboxItem>
+              </Fragment>
+            )}
+            {!accessToken && (
+              <Fragment key="noLoginStage">
+                <DropdownMenuCheckboxItem
+                  onClick={() => {
+                    setIsSignInModalOpen(true);
+                  }}
+                >
+                  Sign In
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  onClick={() => {
+                    setIsSignUpInModalOpen(true);
+                  }}
+                >
+                  Register
+                </DropdownMenuCheckboxItem>
+              </Fragment>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </nav>
