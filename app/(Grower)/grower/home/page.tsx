@@ -1,7 +1,6 @@
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
 import { NavigationGrower } from '../../components/Navigation';
-import { ProductCatalogTable } from '../../components/ProductCatalogTable';
 import { data } from '../../lib/data';
 import { OrdersCards } from '@/app/(Retailer)/components/OrdersCards';
 import { MyOrdersTable } from '../../components/MyOrdersTable';
