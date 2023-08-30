@@ -17,7 +17,7 @@ import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useCreateBrandMutation } from '@/app/(Grower)/hooks/mutations/useBrandMutation';
+import { useCreateBrandMutation, useUpdateBrandMutation } from '@/app/(Grower)/hooks/mutations/useBrandMutation';
 import { useToast } from '@/components/ui/use-toast';
 
 export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
@@ -38,6 +38,9 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
   // Create Brand
   const { mutate: createBrand, isLoading: isLoadingCreateBrand } = useCreateBrandMutation();
 
+  // Update Brand
+  const { mutate: updateBrand, isLoading: isLoadingUpdateBrand } = useUpdateBrandMutation();
+
   // Get Growing Methods
   const { data: growingMethods } = useGetGrowingMethodsQuery({});
 
@@ -54,7 +57,6 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
             { ...values, growingMethod: +values.growingMethod },
             {
               onSuccess: (data) => {
-                console.log('Brand created', data);
                 resetForm();
                 toast({
                   title: 'Brand Successfully Created',
@@ -62,12 +64,35 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
                 });
                 setTimeout(() => {
                   router.push('/grower/brands/');
-                }, 3000);
+                }, 2000);
               },
               onError: (error) => {
                 toast({
                   title: 'Brand creation failed',
                   description: `There was an error creating the brand, please try again later. ${error}`,
+                  variant: 'destructive',
+                });
+              },
+            }
+          );
+        } else {
+          updateBrand(
+            { ...values, growingMethod: +values.growingMethod, id, isActive: true },
+            {
+              onSuccess: (data) => {
+                resetForm();
+                toast({
+                  title: 'Brand Successfully Updated',
+                  className: 'bg-green-500 text-white',
+                });
+                setTimeout(() => {
+                  router.push('/grower/brands/');
+                }, 2000);
+              },
+              onError: (error) => {
+                toast({
+                  title: 'Brand update failed',
+                  description: `There was an error updating the brand, please try again later. ${error}`,
                   variant: 'destructive',
                 });
               },
@@ -88,7 +113,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
     }
   }, [brand, isNew, isSuccessBrand]);
 
-  const isButtonDisabled = !isValid || !dirty || isLoadingCreateBrand;
+  const isButtonDisabled = !isValid || !dirty || isLoadingCreateBrand || isLoadingUpdateBrand;
 
   if (isLoadingBrand && !isNew) {
     return (

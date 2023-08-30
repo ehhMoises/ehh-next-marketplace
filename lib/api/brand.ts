@@ -42,7 +42,7 @@ export const addBrand = async (data: IBrand) => {
 
 export const updateBrand = async (data: Brand) => {
   try {
-    const response = await axios.post<Brand<Brand>>(`/${context}/${data.id}`, {
+    const response = await axios.put<Brand<Brand>>(`/${context}/${data.id}`, {
       ...data,
     });
 
