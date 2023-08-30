@@ -18,6 +18,7 @@ interface RegisterProps {
   onSuccessConfirmation: () => void;
 }
 const Register: FC<RegisterProps> = ({ onOpenModal, openModal, onSuccessConfirmation }) => {
+  const [emailFromSignUp, setEmailFromSignUp] = useState<string>();
   const [mode, setMode] = useState<RegisterType>(RegisterType.SIGN_UP);
 
   const onSuccessConfirmationHandler = () => {
@@ -45,14 +46,16 @@ const Register: FC<RegisterProps> = ({ onOpenModal, openModal, onSuccessConfirma
             Connecting Growers + Retailers + Carriers
           </DialogDescription>
           <DialogDescription className="text-white text-xl text-center">
-            Register {mode === RegisterType.CONFIRMATION && '- Confirmation Code'}
+            {mode === RegisterType.CONFIRMATION && 'Confirmation Code'}
+            {mode === RegisterType.SIGN_UP && 'Register'}
           </DialogDescription>
         </section>
       }
     >
       {mode === RegisterType.SIGN_UP && (
         <SignUpForm
-          onNewUserCreated={() => {
+          onNewUserCreated={(email) => {
+            setEmailFromSignUp(email);
             setMode(RegisterType.CONFIRMATION);
           }}
           onSelectConfirmationCode={() => {
@@ -61,7 +64,7 @@ const Register: FC<RegisterProps> = ({ onOpenModal, openModal, onSuccessConfirma
         />
       )}
       {mode === RegisterType.CONFIRMATION && (
-        <ConfirmationCodeForm onSuccessConfirmation={onSuccessConfirmationHandler} />
+        <ConfirmationCodeForm onSuccessConfirmation={onSuccessConfirmationHandler} emailFromSignUp={emailFromSignUp} />
       )}
     </ModalTransparent>
   );

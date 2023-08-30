@@ -7,10 +7,12 @@ const useConfirmationCode = () => {
 
   const confirm = async ({ email, code }: { email: string; code: string }) => {
     try {
-      await mutateAsync({
+      const isSuccessConfirmed = await mutateAsync({
         email,
         code,
       });
+
+      return isSuccessConfirmed;
     } catch (err) {
       console.log(err);
     }

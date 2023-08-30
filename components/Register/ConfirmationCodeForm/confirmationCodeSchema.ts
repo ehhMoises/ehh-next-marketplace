@@ -1,10 +1,12 @@
 import * as Yup from 'yup';
 
 const ConfirmationCodeSchemaSchema = Yup.object().shape({
+  email: Yup.string().required("Email it's Required"),
   code: Yup.string().required("Code it's Required"),
 });
 
 export const confirmationCodeInitialValues: ConfirmationCodeSchemaSchemaModel = {
+  email: '',
   code: '',
 };
 

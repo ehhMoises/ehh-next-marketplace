@@ -5,6 +5,7 @@ export interface IErrorDetail {
   traceId: string;
   errors: {
     Message: string[];
+    Email: string[];
   };
 }
 
@@ -15,6 +16,7 @@ export class ErrorDetail implements IErrorDetail {
   traceId: string;
   errors: {
     Message: string[];
+    Email: string[];
   };
 
   constructor({ errors, status, title, traceId, type }: IErrorDetail) {

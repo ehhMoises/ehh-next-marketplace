@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { Dispatch, FC } from 'react';
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 import style from './SignUp.module.css';
@@ -13,24 +13,31 @@ import { useSignUp } from '@/lib/hooks/auth';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface SignUpFormProps {
-  onNewUserCreated: () => void;
+  onNewUserCreated: Dispatch<string>;
   onSelectConfirmationCode: () => void;
 }
 
 const SignUpForm: FC<SignUpFormProps> = ({ onNewUserCreated, onSelectConfirmationCode }) => {
-  const { isSigningUp, register } = useSignUp();
+  const { isSigningUp, register, error } = useSignUp();
   const { setFieldTouched, setFieldValue, handleChange, handleBlur, handleSubmit, errors, touched } = useFormik({
     initialValues: signUpInitialValues,
     validationSchema: SignUpSchema,
     onSubmit: async (values, helper) => {
-      await register({
-        accountType: Number.parseInt(values.accountType, 10),
-        companyName: values.companyName,
-        email: values.email,
-        password: values.password,
-      });
-      helper.resetForm();
-      onNewUserCreated();
+      try {
+        const isSuccessRegister = await register({
+          accountType: Number.parseInt(values.accountType, 10),
+          companyName: values.companyName,
+          email: values.email,
+          password: values.password,
+        });
+
+        if (isSuccessRegister) {
+          helper.resetForm();
+          onNewUserCreated(values.email);
+        }
+
+        // eslint-disable-next-line no-empty
+      } catch (err) {}
     },
   });
 
@@ -41,6 +48,13 @@ const SignUpForm: FC<SignUpFormProps> = ({ onNewUserCreated, onSelectConfirmatio
 
   return (
     <form onSubmit={handleSubmit}>
+      {!!error?.errors?.Message && (
+        <section className="flex flex-col gap-y-1">
+          <p className="text-stone-200 text-xl text-center">There was an error</p>
+          <p className="text-stone-200 text-xl text-center">{error.errors.Message[0]}</p>
+        </section>
+      )}
+
       <div className="grid gap-y-4 py-4 px-2 md:px-10">
         <div className="grid grid-cols-1">
           <Input
@@ -123,6 +137,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ onNewUserCreated, onSelectConfirmatio
       <div className="flex flex-col gap-y-2">
         <div className="w-full flex flex-row justify-center">
           <Button
+            type="button"
             className="text-white text-lg text-center"
             variant={'link'}
             onClick={() => {

@@ -17,12 +17,14 @@ const useSignUp = () => {
     password: string;
   }) => {
     try {
-      await mutateAsync({
+      const isSuccessRegister = await mutateAsync({
         accountType,
         companyName,
         email,
         password,
       });
+
+      return isSuccessRegister;
     } catch (err) {
       console.log(err);
     }
