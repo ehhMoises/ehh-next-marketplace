@@ -19,8 +19,6 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
       onSubmit: () => {},
     });
 
-  console.log('Brands', brands?.data);
-
   return (
     <div>
       <div className="bg-orange-500 p-4 text-white">Product Information</div>

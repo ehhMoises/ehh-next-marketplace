@@ -14,7 +14,7 @@ export const useGetBrandsQuery = (queryProps: any) =>
   });
 
   export const useGetBrandByIdQuery = (id: string, queryProps: any) =>
-  useQuery([BRAND_QUERY_KEYS.GET_BRANDS], () => getBrandById(id), {
+  useQuery([BRAND_QUERY_KEYS.GET_BRAND_BY_ID, id], () => getBrandById(id), {
     ...defaultOptions,
     ...queryProps,
   });

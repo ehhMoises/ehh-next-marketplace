@@ -24,13 +24,15 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
   const id = params.id;
   const router = useRouter();
 
+  console.log('isNew', isNew);
   // Get Brand
   const {
     data: brand,
     isError: isErrorBrand,
     isLoading: isLoadingBrand,
+    isSuccess: isSuccessBrand,
   } = useGetBrandByIdQuery(id, {
-    enabled: id !== undefined && !isNew,
+    enabled: !isNew,
   });
 
   // Create Brand
@@ -50,17 +52,23 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
       validationSchema,
       onSubmit: () => {
         if (isNew) {
-          createBrand(values, {
-            onSuccess: (data) => {
-              console.log('Brand created', data);
-            },
-          });
+          createBrand(
+            { ...values, growingMethod: +values.growingMethod },
+            {
+              onSuccess: (data) => {
+                console.log('Brand created', data);
+              },
+            }
+          );
         }
       },
     });
 
+  console.log('brand', brand);
+  console.log('isLoadingBrand', isLoadingBrand);
+
   useEffect(() => {
-    if (brand && !isNew) {
+    if (!!brand && isSuccessBrand && !isNew) {
       const payload = {
         ...brand,
         growingMethod: brand.growingMethod.id,
@@ -68,9 +76,9 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
       setValues(payload);
       setFieldValue('growingMethod', brand.growingMethod.id);
     }
-  }, [brand]);
+  }, [brand, isNew, isSuccessBrand]);
 
-  if (isLoadingBrand) {
+  if (isLoadingBrand && !isNew) {
     return (
       <div className="flex justify-center mt-8">
         <SpinClockwiseLoader loaderSize={AwesomeLoaderSize.LARGE} />
