@@ -18,13 +18,13 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useCreateBrandMutation } from '@/app/(Grower)/hooks/mutations/useBrandMutation';
+import { useToast } from '@/components/ui/use-toast';
 
 export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   const isNew = params.id === 'new';
   const id = params.id;
   const router = useRouter();
 
-  console.log('isNew', isNew);
   // Get Brand
   const {
     data: brand,
@@ -36,14 +36,12 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
   });
 
   // Create Brand
-  const {
-    mutate: createBrand,
-    isLoading: isLoadingCreateBrand,
-    isError: isErrorCreateBrand,
-  } = useCreateBrandMutation();
+  const { mutate: createBrand, isLoading: isLoadingCreateBrand } = useCreateBrandMutation();
 
   // Get Growing Methods
   const { data: growingMethods } = useGetGrowingMethodsQuery({});
+
+  const { toast } = useToast();
 
   // Form
   const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues, setFieldValue } =
@@ -57,15 +55,27 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
             {
               onSuccess: (data) => {
                 console.log('Brand created', data);
+                resetForm();
+                toast({
+                  title: 'Brand Successfully Created',
+                  className: 'bg-green-500 text-white',
+                });
+                setTimeout(() => {
+                  router.push('/grower/brands/');
+                }, 3000);
+              },
+              onError: (error) => {
+                toast({
+                  title: 'Brand creation failed',
+                  description: `There was an error creating the brand, please try again later. ${error}`,
+                  variant: 'destructive',
+                });
               },
             }
           );
         }
       },
     });
-
-  console.log('brand', brand);
-  console.log('isLoadingBrand', isLoadingBrand);
 
   useEffect(() => {
     if (!!brand && isSuccessBrand && !isNew) {
@@ -77,6 +87,8 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
       setFieldValue('growingMethod', brand.growingMethod.id);
     }
   }, [brand, isNew, isSuccessBrand]);
+
+  const isButtonDisabled = !isValid || !dirty || isLoadingCreateBrand;
 
   if (isLoadingBrand && !isNew) {
     return (
@@ -171,7 +183,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
             <Button type="button" variant="outline" onClick={() => router.push('/grower/brands')} className="mr-4">
               Cancel
             </Button>
-            <Button type="submit" disabled={!isValid || !dirty}>
+            <Button type="submit" disabled={isButtonDisabled}>
               {isNew ? 'Create' : 'Update'}
             </Button>
           </div>
