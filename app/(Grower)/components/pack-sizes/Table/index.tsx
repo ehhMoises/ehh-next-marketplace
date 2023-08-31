@@ -75,7 +75,7 @@ export const PackSizeTable: FC = () => {
           variant="ghost"
           title="Edit"
           onClick={() => {
-            router.push(`/grower/brands/${row.getValue('id')}`);
+            router.push(`/grower/pack-sizes/${row.getValue('id')}`);
           }}
         >
           <FontAwesomeIcon icon={faPen} size="xl" className="text-stone-500 hover:text-stone-400 transition-colors" />
@@ -98,7 +98,7 @@ export const PackSizeTable: FC = () => {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
-          <AlertDescription>There was an error loading Brands, please try again later.</AlertDescription>
+          <AlertDescription>There was an error loading Pack Sizes, please try again later.</AlertDescription>
         </Alert>
       </div>
     );
