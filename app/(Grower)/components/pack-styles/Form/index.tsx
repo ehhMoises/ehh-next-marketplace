@@ -42,17 +42,38 @@ export const PackStyleForm: FC<IParamsProps> = ({ params }: { params: { id: stri
   const { toast } = useToast();
 
   // Form
-  const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues, setFieldValue } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit: () => {
-        if (isNew) {
-          createPackStyle(values, {
+  const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: () => {
+      if (isNew) {
+        createPackStyle(values, {
+          onSuccess: () => {
+            resetForm();
+            toast({
+              title: 'Pack Style Successfully Created',
+              className: 'bg-green-500 text-white',
+            });
+            setTimeout(() => {
+              router.push('/grower/pack-styles/');
+            }, 2000);
+          },
+          onError: (error) => {
+            toast({
+              title: 'Pack Style creation failed',
+              description: `There was an error creating the Pack Style, please try again later. ${error}`,
+              variant: 'destructive',
+            });
+          },
+        });
+      } else {
+        updatePackStyle(
+          { ...values, id, isActive: true },
+          {
             onSuccess: () => {
               resetForm();
               toast({
-                title: 'Pack Style Successfully Created',
+                title: 'Pack Style Successfully Updated',
                 className: 'bg-green-500 text-white',
               });
               setTimeout(() => {
@@ -61,38 +82,16 @@ export const PackStyleForm: FC<IParamsProps> = ({ params }: { params: { id: stri
             },
             onError: (error) => {
               toast({
-                title: 'Pack Style creation failed',
-                description: `There was an error creating the Pack Style, please try again later. ${error}`,
+                title: 'Pack Style update failed',
+                description: `There was an error updating the pack style, please try again later. ${error}`,
                 variant: 'destructive',
               });
             },
-          });
-        } else {
-          updatePackStyle(
-            { ...values, id, isActive: true },
-            {
-              onSuccess: () => {
-                resetForm();
-                toast({
-                  title: 'Pack Style Successfully Updated',
-                  className: 'bg-green-500 text-white',
-                });
-                setTimeout(() => {
-                  router.push('/grower/pack-styles/');
-                }, 2000);
-              },
-              onError: (error) => {
-                toast({
-                  title: 'Pack Style update failed',
-                  description: `There was an error updating the pack style, please try again later. ${error}`,
-                  variant: 'destructive',
-                });
-              },
-            }
-          );
-        }
-      },
-    });
+          }
+        );
+      }
+    },
+  });
 
   useEffect(() => {
     if (!!packStyle && isSuccessPackStyle && !isNew) {

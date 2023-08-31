@@ -1,4 +1,4 @@
-import { PackSize } from '@/models/packSize';
+import { IPackSize, PackSize } from '@/models/packSize';
 import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
@@ -30,9 +30,9 @@ export const getPackSizeList = async ({ accessToken }: { accessToken?: string })
   }
 };
 
-export const addPackSize = async (data: PackSize) => {
+export const addPackSize = async (data: IPackSize) => {
   try {
-    const response = await axios.post<PackSize>(`/${context}`, {
+    const response = await axios.post<IPackSize>(`/${context}`, {
       ...data,
     });
 
@@ -44,7 +44,7 @@ export const addPackSize = async (data: PackSize) => {
 
 export const updatePackSize = async (data: PackSize) => {
   try {
-    const response = await axios.post<PackSize>(`/${context}/${data.id}`, {
+    const response = await axios.put<PackSize>(`/${context}/${data.id}`, {
       ...data,
     });
 

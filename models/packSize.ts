@@ -1,5 +1,4 @@
-export interface PackSize {
-  id: string;
+export interface IPackSize {
   name: string;
   description: string;
   unitOfMeasure: string;
@@ -7,5 +6,9 @@ export interface PackSize {
   min: number;
   max: number;
   packStyleId: string;
+}
+
+export interface PackSize extends IPackSize {
+  id: string;
   isActive: boolean;
 }

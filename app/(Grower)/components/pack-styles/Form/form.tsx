@@ -7,13 +7,13 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { IBrand } from '@/models/brand';
+import { IPackStyle } from '@/models/packStyle';
 
 interface IPackStyleProps {
   handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void;
   getFieldProps: (nameOrOptions: string | FieldConfig<any>) => FieldInputProps<any>;
-  touched: FormikTouched<IBrand<number>>;
-  errors: FormikErrors<IBrand<number>>;
+  touched: FormikTouched<IPackStyle>;
+  errors: FormikErrors<IPackStyle>;
   isButtonDisabled: boolean;
   isNew: boolean;
 }
