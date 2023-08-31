@@ -1,4 +1,5 @@
 import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
+import { PackStyleForm } from '@/app/(Grower)/components/pack-styles/Form';
 import { IParamsProps } from '@/app/interfaces';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
@@ -8,7 +9,7 @@ const PackStyleDetail: FC<IParamsProps> = ({ params }: { params: { id: string } 
       <section className="flex flex-col w-full">
         <MainNavigationHeader />
         <NavigationGrower />
-        <div className="p-4 pt-0">Pack Style detail</div>
+        <PackStyleForm params={params} />
       </section>
     </main>
   );

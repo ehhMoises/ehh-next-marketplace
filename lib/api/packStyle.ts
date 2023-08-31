@@ -1,4 +1,4 @@
-import { PackStyle } from '@/models/packStyle';
+import { IPackStyle, PackStyle } from '@/models/packStyle';
 import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
@@ -43,9 +43,9 @@ export const getPackSizeListById = async (id: string) => {
   }
 };
 
-export const addPackStyle = async (data: PackStyle) => {
+export const addPackStyle = async (data: IPackStyle) => {
   try {
-    const response = await axios.post<PackStyle>(`/${context}`, {
+    const response = await axios.post<IPackStyle>(`/${context}`, {
       ...data,
     });
 
@@ -57,7 +57,7 @@ export const addPackStyle = async (data: PackStyle) => {
 
 export const updatePackStyle = async (data: PackStyle) => {
   try {
-    const response = await axios.post<PackStyle>(`/${context}/${data.id}`, {
+    const response = await axios.put<PackStyle>(`/${context}/${data.id}`, {
       ...data,
     });
 
