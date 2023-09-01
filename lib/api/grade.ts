@@ -1,4 +1,4 @@
-import { Grade } from '@/models/grade';
+import { Grade, IGrade } from '@/models/grade';
 import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
@@ -30,7 +30,7 @@ export const getGrades = async ({ accessToken }: { accessToken?: string }) => {
   }
 };
 
-export const addGrade = async (data: Grade) => {
+export const addGrade = async (data: IGrade) => {
   try {
     const response = await axios.post<Grade>(`/${context}`, {
       ...data,
@@ -44,7 +44,7 @@ export const addGrade = async (data: Grade) => {
 
 export const updateGrade = async (data: Grade) => {
   try {
-    const response = await axios.post<Grade>(`/${context}/${data.id}`, {
+    const response = await axios.put<Grade>(`/${context}/${data.id}`, {
       ...data,
     });
 
