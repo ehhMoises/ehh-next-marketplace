@@ -1,7 +1,15 @@
 'use client';
 
-import { FieldConfig, FieldInputProps, FormikErrors, FormikTouched, useFormik } from 'formik';
+import { FieldConfig, FieldInputProps, FormikErrors, FormikTouched } from 'formik';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { FC, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Grade, IGrade } from '@/models/grade';
@@ -58,6 +66,7 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  console.log('values', values);
   return (
     <div>
       <div className="bg-orange-500 p-4 text-white">Product Information</div>
@@ -156,6 +165,106 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
             </Select>
             {touched.gradeId && errors.gradeId && (
               <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.gradeId}</p>
+            )}
+          </div>
+
+          {/* Start Date */}
+          <div className="flex flex-col mb-4">
+            <div key="deliverDate" className="flex flex-row items-center gap-x-1">
+              <Popover>
+                <PopoverTrigger className="rounded-none" asChild>
+                  <Button
+                    variant={'outline'}
+                    className={cn(
+                      'w-full justify-start text-left font-normal',
+                      !values.startDate && 'text-muted-foreground'
+                    )}
+                  >
+                    {values.startDate ? format(new Date(values.startDate), 'PPP') : <span>Start Date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={values.startDate ? new Date(values.startDate) : undefined}
+                    onSelect={(date) => {
+                      setFieldValue('startDate', date as Date);
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+
+              <CalendarIcon size={35} className="text-stone-400" />
+            </div>
+            {touched.startDate && errors.startDate && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.startDate}</p>
+            )}
+          </div>
+
+          {/* End Date */}
+          <div className="flex flex-col mb-4">
+            <div key="deliverDate" className="flex flex-row items-center gap-x-1">
+              <Popover>
+                <PopoverTrigger className="rounded-none" asChild>
+                  <Button
+                    variant={'outline'}
+                    className={cn(
+                      'w-full justify-start text-left font-normal',
+                      !values.endDate && 'text-muted-foreground'
+                    )}
+                  >
+                    {values.endDate ? format(new Date(values.endDate), 'PPP') : <span>End Date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={values.endDate ? new Date(values.endDate) : undefined}
+                    onSelect={(date) => {
+                      setFieldValue('endDate', date as Date);
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+
+              <CalendarIcon size={35} className="text-stone-400" />
+            </div>
+            {touched.endDate && errors.endDate && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.endDate}</p>
+            )}
+          </div>
+
+          {/* Min Price */}
+          <div className="pb-4">
+            <Label htmlFor="minPrice">Min Price:</Label>
+            <Input type="number" placeholder="minPrice" id="minPrice" {...getFieldProps('minPrice')} />
+            {touched.minPrice && errors.minPrice && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.minPrice}</p>
+            )}
+          </div>
+
+          {/* Total Quantity */}
+          <div className="pb-4">
+            <Label htmlFor="totalQuantity">Total Quantity:</Label>
+            <Input type="number" placeholder="totalQuantity" id="totalQuantity" {...getFieldProps('totalQuantity')} />
+            {touched.totalQuantity && errors.totalQuantity && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.totalQuantity}</p>
+            )}
+          </div>
+
+          {/* Reserved Quantity */}
+          <div className="pb-4">
+            <Label htmlFor="reservedQuantity">Reserved Quantity:</Label>
+            <Input
+              type="number"
+              placeholder="reservedQuantity"
+              id="reservedQuantity"
+              {...getFieldProps('reservedQuantity')}
+            />
+            {touched.reservedQuantity && errors.reservedQuantity && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.reservedQuantity}</p>
             )}
           </div>
         </form>
