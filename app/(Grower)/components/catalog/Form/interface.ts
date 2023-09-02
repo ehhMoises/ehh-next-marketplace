@@ -1,10 +1,9 @@
 export interface IGrowerCatalog  {
-  commodity: string;
   brandId: string;
   gradeId: string;
-  packStyled: string;
+  packStyleId: string;
   packSizeId: string;
-  startDate: string | Date | null;
+  startDate: string | Date;
   endDate: string | Date | null;
   standardPrice: number;
   minPrice: number;

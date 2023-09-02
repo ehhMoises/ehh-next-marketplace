@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { NavigationGrower } from '../../components/Navigation';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { ProductCatalogTable } from '@/app/(Retailer)/components/ProductCatalogTable';
+import { StockTable } from '../../components/catalog/Table';
 
 const GrowerCatalog: FC = () => {
   const router = useRouter();
@@ -19,7 +19,7 @@ const GrowerCatalog: FC = () => {
             <Button onClick={() => router.push('/grower/catalog/new')}>Create</Button>
           </div>
 
-          <ProductCatalogTable />
+          <StockTable />
         </div>
       </section>
     </main>

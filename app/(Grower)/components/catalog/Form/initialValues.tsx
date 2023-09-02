@@ -2,9 +2,8 @@ import { IGrowerCatalog } from './interface';
 
 export const initialValues: IGrowerCatalog = {
   brandId: '',
-  commodity: '',
   gradeId: '',
-  packStyled: '',
+  packStyleId: '',
   packSizeId: '',
   startDate: null,
   endDate: null,

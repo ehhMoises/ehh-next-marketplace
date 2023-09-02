@@ -44,7 +44,7 @@ export const addCatalog = async (data: Catalog) => {
 
 export const updateCatalog = async (data: Omit<Catalog, 'brandId' | 'gradeId' | 'packStyleId' | 'packSizeId'>) => {
   try {
-    const response = await axios.post<Catalog>(`/${context}/${data.id}`, {
+    const response = await axios.put<Catalog>(`/${context}/${data.id}`, {
       ...data,
     });
 
