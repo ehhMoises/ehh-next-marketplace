@@ -7,7 +7,7 @@ const context = 'stock';
 
 export const getCatalogById = async (id: string) => {
   try {
-    const response = await axios.get<ICatalog>(`/${context}/${id}`);
+    const response = await axios.get<StockCatalog>(`/${context}/${id}`);
 
     return response.data;
   } catch (err: unknown) {

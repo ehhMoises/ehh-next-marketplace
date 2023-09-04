@@ -45,7 +45,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
     isLoadingUpdateCatalog ||
     isLoadingCatalog;
 
-  const isError = isErrorBrands || isErrorGrades || isErrorPackStyles || isErrorPackSizes;
+  const isError = isErrorBrands || isErrorGrades || isErrorPackStyles || isErrorPackSizes || isErrorCatalog;
 
   const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues, setFieldValue } =
     useFormik({
@@ -103,7 +103,14 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
   useEffect(() => {
     if (!!catalog && isSuccessCatalog && !isNew) {
       // const payload = values;
-      setValues(catalog);
+      setFieldValue('id', catalog.id);
+      setFieldValue('header', catalog.header);
+      setFieldValue('subHeader', catalog.subHeader);
+      setFieldValue('startDate', catalog.startDate);
+      setFieldValue('endDate', catalog.endDate);
+      setFieldValue('minPrice', catalog.minPrice);
+      setFieldValue('totalQuantity', catalog.totalQuantity);
+      setFieldValue('reservedQuantity', catalog.reservedQuantity);
     }
   }, [catalog, isNew, isSuccessCatalog]);
 
@@ -141,6 +148,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
       packStyles={packStyles}
       packSizes={packSizes}
       values={values}
+      catalog={catalog}
     />
   );
 };
