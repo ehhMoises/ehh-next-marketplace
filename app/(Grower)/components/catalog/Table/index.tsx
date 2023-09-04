@@ -7,19 +7,67 @@ import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { useGetGradeQuery } from '@/app/(Grower)/hooks/queries/useGradeQuery';
 import { useGetCatalgsQuery } from '@/app/(Grower)/hooks/queries/useStockQuery';
+import { StockCatalog } from '@/models/catalog';
 
 export const StockTable: FC = () => {
-  const { data: catalogs, isLoading: isLoadingCatalogs, isError } = useGetCatalgsQuery({});
+  const { data: catalogs, isLoading: isLoadingCatalogs, isError, isSuccess: isSuccessCatalog } = useGetCatalgsQuery({});
 
-  console.log('catalogs', catalogs);
   const router = useRouter();
+  const columns: ColumnDef<StockCatalog>[] = [
+    {
+      accessorKey: 'id',
+      header: 'Id',
+    },
+    {
+      accessorKey: 'header',
+      header: 'Header',
+    },
+    {
+      accessorKey: 'subHeader',
+      header: 'Sub Header',
+    },
+    {
+      accessorKey: 'startDate',
+      header: 'Start Date',
+    },
+    {
+      accessorKey: 'endDate',
+      header: 'End Date',
+    },
+    {
+      accessorKey: 'minPrice',
+      header: 'Min Price',
+    },
+    {
+      accessorKey: 'reservedQuantity',
+      header: 'Reserved Quantity',
+    },
+    {
+      accessorKey: 'totalQuantity',
+      header: 'Total Quantity',
+    },
+    {
+      id: 'action',
+      header: 'Actions',
+      cell: ({ row }) => (
+        <Button
+          type="button"
+          variant="ghost"
+          title="Edit"
+          onClick={() => {
+            router.push(`/grower/catalog/${row.getValue('id')}`);
+          }}
+        >
+          <FontAwesomeIcon icon={faPen} size="xl" className="text-stone-500 hover:text-stone-400 transition-colors" />
+        </Button>
+      ),
+    },
+  ];
 
   if (isLoadingCatalogs) {
     return (
@@ -44,7 +92,7 @@ export const StockTable: FC = () => {
   return (
     <div>
       <div className="bg-orange-500 p-4 text-white">Product Catalog</div>
-      {/* <DataTable columns={columns} data={catalogs || []} /> */}
+      <DataTable columns={columns} data={catalogs || []} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import { IGrowerCatalog } from './interface';
+import { ICatalog } from '@/models/catalog';
 
-export const initialValues: IGrowerCatalog = {
+export const initialValues: ICatalog = {
   brandId: '',
   gradeId: '',
   packStyleId: '',

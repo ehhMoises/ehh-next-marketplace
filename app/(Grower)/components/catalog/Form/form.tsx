@@ -99,8 +99,8 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
             <label htmlFor="packStyle">Pack Style:</label>
             <Select
               name="packStyle"
-              onValueChange={(value) => setFieldValue('packStyle', value)}
-              value={values.packSizeId}
+              onValueChange={(value) => setFieldValue('packStyleId', value)}
+              value={values.packStyleId}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select a Pack Style" />
@@ -125,7 +125,7 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
             <label htmlFor="packSize">Pack Size:</label>
             <Select
               name="packSize"
-              onValueChange={(value) => setFieldValue('packSize', value)}
+              onValueChange={(value) => setFieldValue('packSizeId', value)}
               value={values.packSizeId}
             >
               <SelectTrigger>
@@ -149,7 +149,7 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
           {/* GRADE */}
           <div key="grade" className="mb-4">
             <label htmlFor="grade">Grade:</label>
-            <Select name="grade" onValueChange={(value) => setFieldValue('grade', value)} value={values.gradeId}>
+            <Select name="grade" onValueChange={(value) => setFieldValue('gradeId', value)} value={values.gradeId}>
               <SelectTrigger>
                 <SelectValue placeholder="Select a Grade" />
               </SelectTrigger>
@@ -266,6 +266,24 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
             {touched.reservedQuantity && errors.reservedQuantity && (
               <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.reservedQuantity}</p>
             )}
+          </div>
+
+          {/* Standard Price */}
+          <div className="pb-4">
+            <Label htmlFor="standardPrice">Standard Price:</Label>
+            <Input type="number" placeholder="standardPrice" id="standardPrice" {...getFieldProps('standardPrice')} />
+            {touched.standardPrice && errors.standardPrice && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.standardPrice}</p>
+            )}
+          </div>
+
+          <div className="flex justify-end mt-4">
+            <Button type="button" variant="outline" onClick={() => router.push('/grower/catalog')} className="mr-4">
+              Cancel
+            </Button>
+            <Button type="submit" disabled={isButtonDisabled}>
+              {isNew ? 'Create' : 'Update'}
+            </Button>
           </div>
         </form>
       </div>

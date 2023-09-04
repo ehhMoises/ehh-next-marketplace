@@ -1,30 +1,20 @@
 'use client';
 
+import { StockCatalog } from '@/models/catalog';
 import { ColumnDef } from '@tanstack/react-table';
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type IProductCatalogTable = {
-  itemDescription: string;
-  stockAvailable: number;
-  safeStock: number;
-  startDate: Date | string | null;
-  endDate: Date | string | null;
-  casePrice: number;
-};
-
-export const columns: ColumnDef<IProductCatalogTable>[] = [
+export const columns: ColumnDef<StockCatalog>[] = [
   {
-    accessorKey: 'itemDescription',
-    header: 'Item Description',
+    accessorKey: 'id',
+    header: 'Id',
   },
   {
-    accessorKey: 'stockAvailable',
-    header: 'Stock Available',
+    accessorKey: 'header',
+    header: 'Header',
   },
   {
-    accessorKey: 'safeStock',
-    header: 'Safe Stock',
+    accessorKey: 'subHeader',
+    header: 'Sub Header',
   },
   {
     accessorKey: 'startDate',
@@ -35,7 +25,15 @@ export const columns: ColumnDef<IProductCatalogTable>[] = [
     header: 'End Date',
   },
   {
-    accessorKey: 'casePrice',
-    header: 'Case Price',
+    accessorKey: 'minPrice',
+    header: 'Min Price',
+  },
+  {
+    accessorKey: 'reservedQuantity',
+    header: 'Reserved Quantity',
+  },
+  {
+    accessorKey: 'totalQuantity',
+    header: 'Total Quantity',
   },
 ];

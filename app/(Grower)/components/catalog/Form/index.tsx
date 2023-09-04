@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { initialValues } from './initialValues';
 import { validationSchema } from './validationSchema';
 import { IParamsProps } from '@/app/interfaces';
@@ -14,25 +14,98 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { useGetPackSizesQuery } from '@/app/(Grower)/hooks/queries/usePackSize';
 import { CatalogFormComponent } from './form';
+import { useCreateCatalogMutation } from '@/app/(Grower)/hooks/mutations/useStockMutation';
+import { toast } from '@/components/ui/use-toast';
+import { useRouter } from 'next/navigation';
+import { useGetCatalogByIdQuery } from '@/app/(Grower)/hooks/queries/useStockQuery';
 
 export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   const isNew = params.id === 'new';
+  const router = useRouter();
+  const id = params.id;
+  const {
+    data: catalog,
+    isLoading: isLoadingCatalog,
+    isSuccess: isSuccessCatalog,
+    isError: isErrorCatalog,
+  } = useGetCatalogByIdQuery(id, {});
   const { data: brands, isLoading: isLoadingBrands, isError: isErrorBrands } = useGetBrandsQuery({});
   const { data: grades, isLoading: isLoadingGrades, isError: isErrorGrades } = useGetGradeQuery({});
   const { data: packStyles, isLoading: isLoadingPackStyles, isError: isErrorPackStyles } = useGetPackStyleQuery({});
   const { data: packSizes, isLoading: isLoadingPackSizes, isError: isErrorPackSizes } = useGetPackSizesQuery({});
+  const { mutate: createCatalog, isLoading: isLoadingCreateCatalog } = useCreateCatalogMutation();
+  const { mutate: updateCatalog, isLoading: isLoadingUpdateCatalog } = useCreateCatalogMutation();
 
-  const isLoadingData = isLoadingBrands || isLoadingGrades || isLoadingPackStyles || isLoadingPackSizes;
+  const isLoadingData =
+    isLoadingBrands ||
+    isLoadingGrades ||
+    isLoadingPackStyles ||
+    isLoadingPackSizes ||
+    isLoadingCreateCatalog ||
+    isLoadingUpdateCatalog ||
+    isLoadingCatalog;
+
   const isError = isErrorBrands || isErrorGrades || isErrorPackStyles || isErrorPackSizes;
-  // TOOD: Check this
-  const isButtonDisabled = true;
 
   const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues, setFieldValue } =
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: () => {},
+      onSubmit: () => {
+        if (isNew) {
+          createCatalog(values, {
+            onSuccess: (data) => {
+              resetForm();
+              toast({
+                title: 'Catalog Successfully Created',
+                className: 'bg-green-500 text-white',
+              });
+              setTimeout(() => {
+                router.push('/grower/catalog/');
+              }, 2000);
+            },
+            onError: (error) => {
+              toast({
+                title: 'Catalog creation failed',
+                description: `There was an error creating the catalog, please try again later. ${error}`,
+                variant: 'destructive',
+              });
+            },
+          });
+        } else {
+          updateCatalog(values, {
+            onSuccess: (data) => {
+              resetForm();
+              toast({
+                title: 'Catalog Successfully Updated',
+                className: 'bg-green-500 text-white',
+              });
+              setTimeout(() => {
+                router.push('/grower/catalog/');
+              }, 2000);
+            },
+            onError: (error) => {
+              toast({
+                title: 'Catalog update failed',
+                description: `There was an error updating the catalog, please try again later. ${error}`,
+                variant: 'destructive',
+              });
+            },
+          });
+        }
+      },
     });
+
+  const isButtonDisabled = !isValid || !dirty || isLoadingData;
+
+  console.log('errors', errors);
+
+  useEffect(() => {
+    if (!!catalog && isSuccessCatalog && !isNew) {
+      // const payload = values;
+      setValues(catalog);
+    }
+  }, [catalog, isNew, isSuccessCatalog]);
 
   if (isLoadingData) {
     return (

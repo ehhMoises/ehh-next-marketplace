@@ -3,7 +3,7 @@ export interface IGrowerCatalog  {
   gradeId: string;
   packStyleId: string;
   packSizeId: string;
-  startDate: string | Date;
+  startDate: string | Date | null;
   endDate: string | Date | null;
   standardPrice: number;
   minPrice: number;
