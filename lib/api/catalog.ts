@@ -1,4 +1,4 @@
-import { Catalog, ICatalog, StockCatalog } from '@/models/catalog';
+import { Catalog, ICatalog, ICatalogUpdate, StockCatalog } from '@/models/catalog';
 import axios from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
@@ -39,7 +39,7 @@ export const addCatalog = async (data: ICatalog) => {
   }
 };
 
-export const updateCatalog = async (data: Omit<Catalog, 'brandId' | 'gradeId' | 'packStyleId' | 'packSizeId'>) => {
+export const updateCatalog = async (data: ICatalogUpdate) => {
   try {
     const response = await axios.put<Catalog>(`/${context}/${data.id}`, {
       ...data,

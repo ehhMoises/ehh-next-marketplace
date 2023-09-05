@@ -14,7 +14,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { useGetPackSizesQuery } from '@/app/(Grower)/hooks/queries/usePackSize';
 import { CatalogFormComponent } from './form';
-import { useCreateCatalogMutation } from '@/app/(Grower)/hooks/mutations/useStockMutation';
+import { useCreateCatalogMutation, useUpdateCatalogMutation } from '@/app/(Grower)/hooks/mutations/useStockMutation';
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useGetCatalogByIdQuery } from '@/app/(Grower)/hooks/queries/useStockQuery';
@@ -34,7 +34,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
   const { data: packStyles, isLoading: isLoadingPackStyles, isError: isErrorPackStyles } = useGetPackStyleQuery({});
   const { data: packSizes, isLoading: isLoadingPackSizes, isError: isErrorPackSizes } = useGetPackSizesQuery({});
   const { mutate: createCatalog, isLoading: isLoadingCreateCatalog } = useCreateCatalogMutation();
-  const { mutate: updateCatalog, isLoading: isLoadingUpdateCatalog } = useCreateCatalogMutation();
+  const { mutate: updateCatalog, isLoading: isLoadingUpdateCatalog } = useUpdateCatalogMutation();
 
   const isLoadingData =
     isLoadingBrands ||
@@ -54,7 +54,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
       onSubmit: () => {
         if (isNew) {
           createCatalog(values, {
-            onSuccess: (data) => {
+            onSuccess: () => {
               resetForm();
               toast({
                 title: 'Catalog Successfully Created',
@@ -73,36 +73,44 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
             },
           });
         } else {
-          updateCatalog(values, {
-            onSuccess: (data) => {
-              resetForm();
-              toast({
-                title: 'Catalog Successfully Updated',
-                className: 'bg-green-500 text-white',
-              });
-              setTimeout(() => {
-                router.push('/grower/catalog/');
-              }, 2000);
+          updateCatalog(
+            {
+              id,
+              startDate: values.startDate,
+              endDate: values.endDate,
+              standardPrice: values.standardPrice,
+              minPrice: values.minPrice,
+              totalQuantity: values.totalQuantity,
+              reservedQuantity: values.reservedQuantity,
             },
-            onError: (error) => {
-              toast({
-                title: 'Catalog update failed',
-                description: `There was an error updating the catalog, please try again later. ${error}`,
-                variant: 'destructive',
-              });
-            },
-          });
+            {
+              onSuccess: () => {
+                resetForm();
+                toast({
+                  title: 'Catalog Successfully Updated',
+                  className: 'bg-green-500 text-white',
+                });
+                setTimeout(() => {
+                  router.push('/grower/catalog/');
+                }, 2000);
+              },
+              onError: (error) => {
+                toast({
+                  title: 'Catalog update failed',
+                  description: `There was an error updating the catalog, please try again later. ${error}`,
+                  variant: 'destructive',
+                });
+              },
+            }
+          );
         }
       },
     });
 
   const isButtonDisabled = !isValid || !dirty || isLoadingData;
 
-  console.log('errors', errors);
-
   useEffect(() => {
     if (!!catalog && isSuccessCatalog && !isNew) {
-      // const payload = values;
       setFieldValue('id', catalog.id);
       setFieldValue('header', catalog.header);
       setFieldValue('subHeader', catalog.subHeader);
@@ -111,6 +119,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
       setFieldValue('minPrice', catalog.minPrice);
       setFieldValue('totalQuantity', catalog.totalQuantity);
       setFieldValue('reservedQuantity', catalog.reservedQuantity);
+      setFieldValue('standardPrice', catalog.standardPrice);
     }
   }, [catalog, isNew, isSuccessCatalog]);
 
