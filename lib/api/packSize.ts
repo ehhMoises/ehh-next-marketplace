@@ -30,6 +30,16 @@ export const getPackSizeList = async ({ accessToken }: { accessToken?: string })
   }
 };
 
+export const getPackSizeListByPackStyleId = async (packStyleId: string) => {
+  try {
+    const response = await axios.get(`/pack-styles/${packStyleId}/${context}/`);
+    console.log('response.data', response.data)
+    return response.data.data;
+  } catch (err: unknown) {
+    if (err instanceof AxiosError) throw err?.response?.data;
+  }
+};
+
 export const addPackSize = async (data: IPackSize) => {
   try {
     const response = await axios.post<IPackSize>(`/${context}`, {

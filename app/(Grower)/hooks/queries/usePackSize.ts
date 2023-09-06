@@ -1,5 +1,5 @@
 import { PACK_SIZE_QUERY_KEYS } from '@/constants/pack-size';
-import { getPackSizeById, getPackSizeList } from '@/lib/api/packSize';
+import { getPackSizeById, getPackSizeList, getPackSizeListByPackStyleId } from '@/lib/api/packSize';
 import { useQuery } from '@tanstack/react-query';
 
 const defaultOptions = {
@@ -18,3 +18,9 @@ export const useGetPackSizeByIdQuery = (id: string, queryProps: any) =>
     ...defaultOptions,
     ...queryProps,
   });
+
+export const useGetPackSizesByPackStyleIdQuery = (packStyleId: string, queryProps: any) =>
+  useQuery([PACK_SIZE_QUERY_KEYS.GET_PACK_SIZES_BY_PACK_STYLE_ID, packStyleId], () => getPackSizeListByPackStyleId(packStyleId), {
+    ...defaultOptions,
+    ...queryProps,
+    })

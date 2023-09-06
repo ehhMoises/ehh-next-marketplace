@@ -13,7 +13,7 @@ export const useGetPackStyleQuery = (queryProps: any) =>
     ...queryProps,
   });
 
-  export const useGetPackStyleByIdQuery = (id: string, queryProps: any) =>
+export const useGetPackStyleByIdQuery = (id: string, queryProps: any) =>
   useQuery([PACK_STYLE_QUERY_KEYS.GET_PACK_STYLE_BY_ID, id], () => getPackStyleById(id), {
     ...defaultOptions,
     ...queryProps,

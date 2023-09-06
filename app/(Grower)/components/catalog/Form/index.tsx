@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { initialValues } from './initialValues';
 import { validationSchema } from './validationSchema';
 import { IParamsProps } from '@/app/interfaces';
@@ -18,6 +18,8 @@ import { useCreateCatalogMutation, useUpdateCatalogMutation } from '@/app/(Growe
 import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 import { useGetCatalogByIdQuery } from '@/app/(Grower)/hooks/queries/useStockQuery';
+import { useGetPackSizesByPackStyleIdMutation } from '@/app/(Grower)/hooks/mutations/usePackSizeMutation';
+import { PackSize } from '@/models/packSize';
 
 export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   const isNew = params.id === 'new';
@@ -28,24 +30,31 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
     isLoading: isLoadingCatalog,
     isSuccess: isSuccessCatalog,
     isError: isErrorCatalog,
-  } = useGetCatalogByIdQuery(id, {});
+  } = useGetCatalogByIdQuery(id, {
+    enabled: !isNew,
+  });
   const { data: brands, isLoading: isLoadingBrands, isError: isErrorBrands } = useGetBrandsQuery({});
   const { data: grades, isLoading: isLoadingGrades, isError: isErrorGrades } = useGetGradeQuery({});
   const { data: packStyles, isLoading: isLoadingPackStyles, isError: isErrorPackStyles } = useGetPackStyleQuery({});
-  const { data: packSizes, isLoading: isLoadingPackSizes, isError: isErrorPackSizes } = useGetPackSizesQuery({});
+  // const { data: packSizes, isLoading: isLoadingPackSizes, isError: isErrorPackSizes } = useGetPackSizesQuery({});
+  const [packSizes, setPackSizes] = useState<PackSize[] | undefined>(undefined);
   const { mutate: createCatalog, isLoading: isLoadingCreateCatalog } = useCreateCatalogMutation();
   const { mutate: updateCatalog, isLoading: isLoadingUpdateCatalog } = useUpdateCatalogMutation();
+  const {
+    mutate: getPackSizesByPackStyleId,
+    isLoading: isLoadingPackSizesByPackStyleId,
+    isSuccess: isSuccessPackSizesByPackStyleId,
+  } = useGetPackSizesByPackStyleIdMutation();
 
   const isLoadingData =
     isLoadingBrands ||
     isLoadingGrades ||
     isLoadingPackStyles ||
-    isLoadingPackSizes ||
     isLoadingCreateCatalog ||
     isLoadingUpdateCatalog ||
     isLoadingCatalog;
 
-  const isError = isErrorBrands || isErrorGrades || isErrorPackStyles || isErrorPackSizes || isErrorCatalog;
+  const isError = isErrorBrands || isErrorGrades || isErrorPackStyles || isErrorCatalog;
 
   const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues, setFieldValue } =
     useFormik({
@@ -123,7 +132,20 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
     }
   }, [catalog, isNew, isSuccessCatalog]);
 
-  if (isLoadingData) {
+  const handlePackStyleChange = (packStyleId: string) => {
+    setFieldValue('packStyleId', packStyleId);
+    getPackSizesByPackStyleId(packStyleId, {
+      onSuccess: (packSizes) => {
+        console.log('Pack SIZES', packSizes);
+        setPackSizes(packSizes);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
+  };
+
+  if (isLoadingData && !isNew) {
     return (
       <div className="flex justify-center mt-8">
         <SpinClockwiseLoader loaderSize={AwesomeLoaderSize.LARGE} />
@@ -150,6 +172,9 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
       handleSubmit={handleSubmit}
       getFieldProps={getFieldProps}
       setFieldValue={setFieldValue}
+      handlePackStyleChange={handlePackStyleChange}
+      isSuccessPackSizesByPackStyleId={isSuccessPackSizesByPackStyleId}
+      isLoadingPackSizesByPackStyleId={isLoadingPackSizesByPackStyleId}
       errors={errors}
       touched={touched}
       brands={brands}

@@ -12,7 +12,7 @@ import { CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FC, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { Grade, IGrade } from '@/models/grade';
+import { Grade } from '@/models/grade';
 import { IGrowerCatalog } from './interface';
 import { ResponseHttpBase } from '@/models/http';
 import { Brand } from '@/models/brand';
@@ -23,6 +23,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { StockCatalog } from '@/models/catalog';
+import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
+import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 
 const FormSchema = z.object({
   dob: z.date({
@@ -33,6 +35,7 @@ const FormSchema = z.object({
 interface ICatalogProps {
   handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void;
   getFieldProps: (nameOrOptions: string | FieldConfig<any>) => FieldInputProps<any>;
+  handlePackStyleChange: (packStyleId: string) => void;
   setFieldValue: (
     field: string,
     value: any,
@@ -48,12 +51,15 @@ interface ICatalogProps {
   packSizes: PackSize[] | undefined;
   values: IGrowerCatalog;
   catalog: StockCatalog | undefined;
+  isSuccessPackSizesByPackStyleId: boolean;
+  isLoadingPackSizesByPackStyleId: boolean;
 }
 
 export const CatalogFormComponent: FC<ICatalogProps> = ({
   handleSubmit,
   getFieldProps,
   setFieldValue,
+  handlePackStyleChange,
   touched,
   errors,
   isButtonDisabled,
@@ -64,12 +70,15 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
   packSizes,
   values,
   catalog,
+  isSuccessPackSizesByPackStyleId,
+  isLoadingPackSizesByPackStyleId,
 }) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
   console.log('values', values);
+  console.log('packSizes in FORM', packSizes);
   return (
     <div>
       <div className="bg-orange-500 p-4 text-white">Product Information</div>
@@ -109,7 +118,7 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
               <label htmlFor="packStyle">Pack Style:</label>
               <Select
                 name="packStyle"
-                onValueChange={(value) => setFieldValue('packStyleId', value)}
+                onValueChange={(value) => handlePackStyleChange(value)}
                 value={values.packStyleId}
               >
                 <SelectTrigger>
@@ -132,7 +141,12 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
           )}
 
           {/* Pack Sizes */}
-          {isNew && (
+          {isNew && isLoadingPackSizesByPackStyleId && (
+            <div className="flex justify-center mt-8">
+              <SpinClockwiseLoader loaderSize={AwesomeLoaderSize.LARGE} />
+            </div>
+          )}
+          {isNew && packSizes && packSizes.length ? (
             <div key="packSize" className="mb-4">
               <label htmlFor="packSize">Pack Size:</label>
               <Select
@@ -157,7 +171,11 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
                 <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.packSizeId}</p>
               )}
             </div>
-          )}
+          ) : null}
+
+          {isNew && isSuccessPackSizesByPackStyleId && packSizes && packSizes.length === 0 ? (
+            <div className="mb-2 text-red-400">There is no Pack Sizes associated to the selected Pack Style.</div>
+          ) : null}
 
           {/* GRADE */}
           {isNew && (
