@@ -68,14 +68,21 @@ export const CheckoutTable: FC = () => {
           <Progress value={intermediateTime} className="h-3" />
         </div>
       )}
-      {data?.data && (
-        <DataTable
-          columns={getColumns({
-            onRemoveItemFromCart: removeItemFromCartHandler,
-          })}
-          data={items}
-        />
-      )}
+      {data?.data &&
+        (data.data.length === 0 ? (
+          <div className="flex flex-col items-center justify-center">
+            <div className="mt-10 md:mt-20">
+              <p className="text-5xl text-center text-stone-500">Shopping Cart Empty</p>
+            </div>
+          </div>
+        ) : (
+          <DataTable
+            columns={getColumns({
+              onRemoveItemFromCart: removeItemFromCartHandler,
+            })}
+            data={items}
+          />
+        ))}
     </div>
   );
 };

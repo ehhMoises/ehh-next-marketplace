@@ -28,17 +28,25 @@ export const getColumns = ({
 }): ColumnDef<ShoppingCart>[] => [
   columnHelper.group({
     id: 'checkout-column',
-    header: () => null,
-    footer: (props) => (
-      <div className="flex flex-row justify-end w-ful gap-x-24 pr-8 my-3.5">
-        <p className="text-stone-600 text-lg">Total</p>
-        <p className="text-stone-600 text-lg">$9,100.00</p>
-      </div>
-    ),
+    footer: (props) => {
+      const total = props.table.getRowModel().rows.reduce((total, row) => {
+        const totalSummary = numbro(total).add(
+          numbro(row.original.quantity).multiply(row.original.stock.standardPrice).value()
+        );
+
+        return totalSummary.value();
+      }, 0);
+      return (
+        <div className="flex flex-row justify-end w-ful gap-x-20 pr-48 my-3.5">
+          <p className="text-stone-600 text-lg uppercase">Total</p>
+          <p className="text-stone-600 text-lg">${numbro(total).format(configFormatPrice)}</p>
+        </div>
+      );
+    },
     columns: [
       {
-        accessorKey: 'deliveryDateUtc',
-        header: 'Transaction Number',
+        id: 'stockId',
+        header: 'Stock Id',
         cell: ({ row }) => {
           return <div className="uppercase">{row.original.id.split('-')[4]}</div>;
         },
@@ -96,7 +104,7 @@ export const getColumns = ({
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         cell: ({ row }) => {
           return (
-            <Button variant="ghost" onClick={onRemoveItemFromCart.bind(null, row.original.id)}>
+            <Button className="rounded-sm" variant="ghost" onClick={onRemoveItemFromCart.bind(null, row.original.id)}>
               <FontAwesomeIcon icon={faTrash} />
             </Button>
           );

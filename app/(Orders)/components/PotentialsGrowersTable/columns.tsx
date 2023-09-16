@@ -18,19 +18,21 @@ const formatPotentialGrowersPrice = (value: number) => {
   return `$${price}`;
 };
 
+interface ColumnsCheckoutDef {
+  addStockToCartHandler: (stockId: string) => void;
+  removeCartItemHandler: (stockId: string, cartItemId: string) => void;
+}
+
 export const getColumns = ({
   addStockToCartHandler,
   removeCartItemHandler,
-}: {
-  addStockToCartHandler: (stockId: string) => void;
-  removeCartItemHandler: (stockId: string, cartItemId: string) => void;
-}): ColumnDef<PotentialGrowers>[] => [
+}: ColumnsCheckoutDef): ColumnDef<PotentialGrowers>[] => [
   {
     header: 'Grower',
-    cell: () => {
-      return (
-        <Image className="w-full" src={'/products/apple_granny_255x235.png'} alt="Product" width="50" height="50" />
-      );
+    cell: ({ row }) => {
+      const logoGrower = row.original.account.logoUrl ?? '/only-logo-neutral.png';
+
+      return <Image className="w-full" src={logoGrower} alt="Product" width="50" height="50" />;
     },
   },
   {
@@ -86,7 +88,11 @@ export const getColumns = ({
             <p className="text-stone-500 text-md">{formatPotentialGrowersPrice(total)}</p>
           </div>
           {!row.original.isUnderCart && (
-            <Button className="w-10 h-10" variant={'ghost'} onClick={addStockToCartHandler.bind(null, row.original.id)}>
+            <Button
+              className="w-10 h-10 rounded-sm"
+              variant={'ghost'}
+              onClick={addStockToCartHandler.bind(null, row.original.id)}
+            >
               <FontAwesomeIcon
                 icon={faCartShopping}
                 size={'2x'}
@@ -96,7 +102,7 @@ export const getColumns = ({
           )}
           {row.original.isUnderCart && row.original.cartItemId && (
             <Button
-              className="w-10 h-10"
+              className="w-10 h-10 rounded-sm"
               variant={'link'}
               onClick={removeCartItemHandler.bind(null, row.original.id, row.original.cartItemId)}
             >

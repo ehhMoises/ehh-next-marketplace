@@ -23,6 +23,11 @@ export interface PotentialGrowers {
   startDate: string;
   standardPrice: number;
   availableQuantity: number;
+  account: {
+    id: string;
+    logoUrl: string;
+    name: string;
+  };
   product: {
     brand: {
       id: string;
