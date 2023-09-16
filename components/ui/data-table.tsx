@@ -2,7 +2,7 @@
 
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -19,10 +19,22 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div className="rounded-md border">
       <Table>
-        <TableHeader className="bg-gray-600">
+        <TableHeader className="bg-[#949599]">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow className="hover:bg-muted/10" key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
+                if (typeof header.column.columnDef.header === 'function') {
+                  if (
+                    header.column.columnDef.header({
+                      column: header.column,
+                      header: header,
+                      table,
+                    }) === null
+                  ) {
+                    return '';
+                  }
+                }
+
                 return (
                   <TableHead key={header.id} className="text-white">
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
@@ -35,7 +47,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         <TableBody className="bg-white">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+              <TableRow
+                className={row.index % 2 === 0 ? 'bg-white' : 'bg-[#f9f9f9]'}
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                 ))}
@@ -49,6 +65,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             </TableRow>
           )}
         </TableBody>
+        <TableFooter className="bg-white">
+          {table.getFooterGroups().map((footerGroup) => (
+            <TableRow className="text-black" key={footerGroup.id}>
+              {footerGroup.headers.map((header) => (
+                <th key={header.id} colSpan={header.colSpan}>
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.footer, header.getContext())}
+                </th>
+              ))}
+            </TableRow>
+          ))}
+        </TableFooter>
       </Table>
     </div>
   );

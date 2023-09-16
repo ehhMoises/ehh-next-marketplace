@@ -71,7 +71,6 @@ export default async function OrdersPage({
     notFound();
   }
 
-  console.log('searchParams', searchParams);
   return (
     <Fragment key="PotentialGrowersPage">
       <Suspense fallback={<div>Loading...</div>}>

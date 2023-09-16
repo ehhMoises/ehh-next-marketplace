@@ -26,7 +26,6 @@ export const getColumns = ({
   removeCartItemHandler: (stockId: string, cartItemId: string) => void;
 }): ColumnDef<PotentialGrowers>[] => [
   {
-    accessorKey: 'grower',
     header: 'Grower',
     cell: () => {
       return (
