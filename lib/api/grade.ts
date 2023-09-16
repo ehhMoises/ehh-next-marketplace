@@ -1,6 +1,5 @@
 import { Grade, IGrade } from '@/models/grade';
 import axios, { buildServerSideHeaders } from './index';
-import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 
 const context = 'grades';
@@ -11,7 +10,8 @@ export const getGradeById = async (id: string) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -26,7 +26,8 @@ export const getGrades = async ({ accessToken }: { accessToken?: string }) => {
 
     return data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -38,7 +39,8 @@ export const addGrade = async (data: IGrade) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -50,6 +52,7 @@ export const updateGrade = async (data: Grade) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };

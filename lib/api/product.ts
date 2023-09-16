@@ -25,7 +25,8 @@ export const getCommoditiesProduct = async (accessToken?: string) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -40,7 +41,7 @@ export const getVarietiesProduct = async ({ commodity, accessToken }: { commodit
 
     return data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
   }
 };
 
@@ -58,6 +59,6 @@ export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrow
     return potentialGrowersForPurchaseItems;
   } catch (err: unknown) {
     console.log(err);
-    if (err instanceof AxiosError) throw err?.response?.data;
+    throw err;
   }
 };

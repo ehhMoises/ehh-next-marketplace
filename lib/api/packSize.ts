@@ -1,6 +1,5 @@
 import { IPackSize, PackSize } from '@/models/packSize';
 import axios, { buildServerSideHeaders } from './index';
-import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 
 const context = 'pack-sizes';
@@ -11,7 +10,8 @@ export const getPackSizeById = async (id: string) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -26,17 +26,19 @@ export const getPackSizeList = async ({ accessToken }: { accessToken?: string })
 
     return data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
 export const getPackSizeListByPackStyleId = async (packStyleId: string) => {
   try {
     const response = await axios.get(`/pack-styles/${packStyleId}/${context}/`);
-    console.log('response.data', response.data)
+    console.log('response.data', response.data);
     return response.data.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -48,7 +50,8 @@ export const addPackSize = async (data: IPackSize) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -60,6 +63,7 @@ export const updatePackSize = async (data: PackSize) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };

@@ -1,6 +1,5 @@
 import { Catalog, ICatalog, ICatalogUpdate, StockCatalog } from '@/models/catalog';
 import axios from './index';
-import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 
 const context = 'stock';
@@ -11,7 +10,8 @@ export const getCatalogById = async (id: string) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -20,10 +20,11 @@ export const getCatalogs = async () => {
     const {
       data: { data },
     } = await axios.get<ResponseHttpBase<StockCatalog[]>>(`/${context}`);
-    console.log('Catalog response', data)
+    console.log('Catalog response', data);
     return data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -35,7 +36,8 @@ export const addCatalog = async (data: ICatalog) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -47,6 +49,7 @@ export const updateCatalog = async (data: ICatalogUpdate) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };

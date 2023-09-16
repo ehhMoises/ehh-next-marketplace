@@ -44,4 +44,6 @@ export interface PotentialGrowers {
       name: string;
     };
   };
+  isUnderCart: boolean;
+  cartItemId: string | null;
 }

@@ -1,6 +1,5 @@
 import { IPackStyle, PackStyle } from '@/models/packStyle';
 import axios, { buildServerSideHeaders } from './index';
-import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 import { PackSize } from '@/models/packSize';
 
@@ -12,7 +11,8 @@ export const getPackStyleById = async (id: string) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -27,7 +27,8 @@ export const getPackStyles = async ({ accessToken }: { accessToken?: string }) =
 
     return data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -39,7 +40,8 @@ export const getPackSizeListById = async (id: string) => {
 
     return data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -51,7 +53,8 @@ export const addPackStyle = async (data: IPackStyle) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -63,6 +66,7 @@ export const updatePackStyle = async (data: PackStyle) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };

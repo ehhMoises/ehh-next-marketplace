@@ -5,25 +5,13 @@ import { getPossibleGrowers } from '@/lib/api/product';
 import { cookies } from 'next/headers';
 import { TokenTypes } from '@/lib/constant/cookies';
 import { notFound } from 'next/navigation';
-import { PotentialsGrowersTable } from '../PotentialsGrowersTable';
+import { PotentialsGrowersTable } from '../components/PotentialsGrowersTable';
 import { getPossibleGrowersViaQuickSearch } from '@/lib/api/quick-search';
-
-interface SearchParamsPotentialGrowers {
-  commodity: string;
-  growingMethod: string;
-  variety: string;
-  quantity: string;
-  deliveryDateUtc: string;
-}
-
-interface QuickSearchParamsPotentialGrowers {
-  commodity: string;
-  packStyleId: string;
-  packSizeId: string;
-  quantity: string;
-  deliveryDateUtc: string;
-  grade: string;
-}
+import {
+  QuickSearchParamsPotentialGrowers,
+  SearchParamsPotentialGrowers,
+} from '../lib/interface/searchParamsPotentialGrowers';
+import { getPotentialGrowersByskippingHoldingCartItems } from '../lib/granularPotentialGrowers';
 
 export const metadata: Metadata = {
   title: 'Searching Growers - Marketplace',
@@ -62,7 +50,12 @@ const getPotentialGrowers = async (
       accessToken,
     });
 
-    return response?.data ?? [];
+    const potentialGrowers = await getPotentialGrowersByskippingHoldingCartItems({
+      accessToken,
+      potentialGrowers: response?.data ?? [],
+    });
+
+    return potentialGrowers;
   }
 };
 
@@ -78,10 +71,16 @@ export default async function OrdersPage({
     notFound();
   }
 
+  console.log('searchParams', searchParams);
   return (
     <Fragment key="PotentialGrowersPage">
       <Suspense fallback={<div>Loading...</div>}>
-        <PotentialsGrowersTable potentialGrowers={potentialGrowers} />
+        <PotentialsGrowersTable
+          searchParams={searchParams}
+          potentialGrowers={potentialGrowers}
+          rawDeliveryDateUtc={restSearchParams.deliveryDateUtc}
+          rawQuantity={restSearchParams.quantity}
+        />
       </Suspense>
     </Fragment>
   );

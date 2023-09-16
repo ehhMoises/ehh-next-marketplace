@@ -7,6 +7,7 @@ import numbro from 'numbro';
 import Image from 'next/image';
 import { PotentialGrowers } from '@/models/targetSellers';
 import { format } from 'date-fns';
+import { Button } from '@/components/ui/button';
 
 const formatPotentialGrowersPrice = (value: number) => {
   const price = numbro(value).format({
@@ -17,7 +18,13 @@ const formatPotentialGrowersPrice = (value: number) => {
   return `$${price}`;
 };
 
-export const columns: ColumnDef<PotentialGrowers>[] = [
+export const getColumns = ({
+  addStockToCartHandler,
+  removeCartItemHandler,
+}: {
+  addStockToCartHandler: (stockId: string) => void;
+  removeCartItemHandler: (stockId: string, cartItemId: string) => void;
+}): ColumnDef<PotentialGrowers>[] => [
   {
     accessorKey: 'grower',
     header: 'Grower',
@@ -75,22 +82,32 @@ export const columns: ColumnDef<PotentialGrowers>[] = [
       const total = row.original.availableQuantity * row.original.standardPrice;
 
       return (
-        <div className="flex flex-row gap-x-4">
-          <div className="text-stone-500 text-md">{formatPotentialGrowersPrice(total)}</div>
-          <div>
-            <FontAwesomeIcon
-              icon={faCartShopping}
-              size={'2x'}
-              className="text-stone-500 hover:text-stone-400 transition-colors"
-            />
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="flex items-center">
+            <p className="text-stone-500 text-md">{formatPotentialGrowersPrice(total)}</p>
           </div>
-          <div>
-            <FontAwesomeIcon
-              icon={faTrash}
-              size={'2x'}
-              className="text-stone-500 hover:text-stone-400 transition-colors"
-            />
-          </div>
+          {!row.original.isUnderCart && (
+            <Button className="w-10 h-10" variant={'ghost'} onClick={addStockToCartHandler.bind(null, row.original.id)}>
+              <FontAwesomeIcon
+                icon={faCartShopping}
+                size={'2x'}
+                className="text-stone-500 hover:text-stone-400 transition-colors"
+              />
+            </Button>
+          )}
+          {row.original.isUnderCart && row.original.cartItemId && (
+            <Button
+              className="w-10 h-10"
+              variant={'link'}
+              onClick={removeCartItemHandler.bind(null, row.original.id, row.original.cartItemId)}
+            >
+              <FontAwesomeIcon
+                icon={faTrash}
+                size={'2x'}
+                className="text-stone-500 hover:text-stone-400 transition-colors"
+              />
+            </Button>
+          )}
         </div>
       );
     },

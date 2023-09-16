@@ -1,5 +1,4 @@
 import axios, { buildServerSideHeaders } from './index';
-import { AxiosError } from 'axios';
 import { Brand, IBrand } from '@/models/brand';
 import { ResponseHttpBase } from '@/models/http';
 import { GrowingMethod } from '@/models/growingMethod';
@@ -12,7 +11,8 @@ export const getBrandById = async (id: string) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -24,7 +24,8 @@ export const getBrands = async ({ accessToken }: { accessToken?: string }) => {
     });
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -36,7 +37,8 @@ export const addBrand = async (data: IBrand) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
 
@@ -48,6 +50,7 @@ export const updateBrand = async (data: Brand) => {
 
     return response.data;
   } catch (err: unknown) {
-    if (err instanceof AxiosError) throw err?.response?.data;
+    console.error(err);
+    throw err;
   }
 };
