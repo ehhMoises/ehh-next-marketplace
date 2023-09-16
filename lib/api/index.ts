@@ -58,10 +58,6 @@ export const buildServerSideHeaders = (
     }
   }
 
-  if (originHeaders) {
-    return originHeaders;
-  }
-
   return headers;
 };
 

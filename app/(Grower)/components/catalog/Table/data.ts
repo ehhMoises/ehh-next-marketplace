@@ -1,6 +1,4 @@
-import { IProductCatalogTable } from './columns';
-
-export const ProductCatalogData: IProductCatalogTable[] = [
+export const ProductCatalogData = [
   {
     itemDescription: 'Apple / Granny Smith',
     stockAvailable: 200,

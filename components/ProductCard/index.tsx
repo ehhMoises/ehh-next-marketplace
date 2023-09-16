@@ -18,6 +18,7 @@ interface ProductCardProps {
   commodity: string;
   growingMethod?: GrowingMethod;
   variety: string;
+  image: string;
   onSeePricingModal?: Dispatch<{
     commodity: string;
     variety: string;
@@ -30,6 +31,7 @@ const ProductCard: FC<ProductCardProps> = ({
   brandId,
   commodity,
   variety,
+  image,
   growingMethod,
   onSelectItem,
   onSeePricingModal,
@@ -42,7 +44,7 @@ const ProductCard: FC<ProductCardProps> = ({
         mode !== ProductCardMode.PRESENTATIONAL && mode === ProductCardMode.ON_FILTER
           ? 'cursor-pointer'
           : 'cursor-auto',
-        mode === ProductCardMode.FILTERED ? 'h-[28rem]' : 'h-[23rem]'
+        mode === ProductCardMode.FILTERED ? 'h-[30rem]' : 'h-[23rem]'
       )}
     >
       <div
@@ -60,7 +62,7 @@ const ProductCard: FC<ProductCardProps> = ({
           }
         }}
       >
-        <Image src="/products/apple_granny_255x235.png" alt={commodity ?? ''} width={235} height={235} />
+        <Image src={image} alt={commodity ?? ''} width={400} height={400} />
         {!(mode === ProductCardMode.PRESENTATIONAL || mode === ProductCardMode.ON_FILTER) && (
           <div className="w-full flex flex-row justify-center">
             <Image src="/cart.png" alt="Cart Image" width={50} height={50} />

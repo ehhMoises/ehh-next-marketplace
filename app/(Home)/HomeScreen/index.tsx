@@ -26,6 +26,7 @@ const HomeScreen: FC<{ products: ProductPresentation[] }> = ({ products }) => {
           <ProductCard
             brandId={product.id}
             commodity={product.commodity}
+            image={product.imageUrl.includes('empty') ? '/only-logo-neutral.png' : product.imageUrl}
             variety={product.variety}
             key={product.id}
             mode={ProductCardMode.PRESENTATIONAL}

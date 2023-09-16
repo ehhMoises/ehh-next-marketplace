@@ -2,7 +2,7 @@ import axios, { buildServerSideHeaders } from './index';
 import { AxiosError } from 'axios';
 import { ResponseHttpBase } from '@/models/http';
 import { ProductPresentation } from '@/models/product';
-import { PotentialGrowers, PotentialGrowersBody, QuickSearchPotentialGrowersBody } from '@/models/targetSellers';
+import { PotentialGrowers, PotentialGrowersBody } from '@/models/targetSellers';
 
 const context = 'cards';
 
@@ -29,12 +29,12 @@ export const getCommoditiesProduct = async (accessToken?: string) => {
   }
 };
 
-export const getVarietiesProduct = async ({ brandId, accessToken }: { brandId: string; accessToken?: string }) => {
+export const getVarietiesProduct = async ({ commodity, accessToken }: { commodity: string; accessToken?: string }) => {
   try {
     const headers = buildServerSideHeaders(accessToken);
     const {
       data: { data },
-    } = await axios.get<ResponseHttpBase<ProductPresentation[]>>(`/${context}/commodities/${brandId}/varieties`, {
+    } = await axios.get<ResponseHttpBase<ProductPresentation[]>>(`/${context}/commodities/${commodity}/varieties`, {
       headers,
     });
 
@@ -48,7 +48,7 @@ export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrow
   try {
     const headers = buildServerSideHeaders(accessToken);
     const { data: potentialGrowersForPurchaseItems } = await axios.post<ResponseHttpBase<PotentialGrowers[]>>(
-      `/${context}/seller-search`,
+      `/${context}/stock`,
       { ...data },
       {
         headers,
@@ -58,26 +58,6 @@ export const getPossibleGrowers = async ({ accessToken, ...data }: PotentialGrow
     return potentialGrowersForPurchaseItems;
   } catch (err: unknown) {
     console.log(err);
-    if (err instanceof AxiosError) throw err?.response?.data;
-  }
-};
-
-export const getPossibleGrowersViaQuickSearch = async ({
-  accessToken,
-  ...data
-}: QuickSearchPotentialGrowersBody & { accessToken?: string }) => {
-  try {
-    const headers = buildServerSideHeaders(accessToken);
-    const { data: potentialGrowersForPurchaseItems } = await axios.post<ResponseHttpBase<PotentialGrowers[]>>(
-      `/${context}/quick`,
-      { ...data },
-      {
-        headers,
-      }
-    );
-
-    return potentialGrowersForPurchaseItems;
-  } catch (err: unknown) {
     if (err instanceof AxiosError) throw err?.response?.data;
   }
 };

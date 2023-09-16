@@ -3,25 +3,22 @@
 import { FC } from 'react';
 import { QuickSearchBrand } from './QuickSearchBrand';
 import { Separator } from '@/components/ui/separator';
-import { AdvancedFilterBrand } from './AdvancedFilterBrand';
+// import { AdvancedFilterBrand } from './AdvancedFilterBrand';
 import { useFormik } from 'formik';
 import { Button } from '@/components/ui/button';
 import FilterBrandValidationSchema, { filterInitialValues } from '../lib/filterBrandSchema';
-import { PackSize } from '@/models/packSize';
-import { PackStyle } from '@/models/packStyle';
-import { Grade } from '@/models/grade';
-import { Brand } from '@/models/brand';
-import { GrowingMethod } from '@/models/growingMethod';
+
 import { useRouter } from 'next/navigation';
 
 interface BrandFiltersProps {
-  brands: Brand<GrowingMethod>[];
-  packSizeList: PackSize[];
-  packStyles: PackStyle[];
-  grades: Grade[];
+  brands: string[];
+  varieties: string[];
+  packStyles: string[];
+  packSizeList: string[];
+  grades: string[];
 }
 
-const BrandFilters: FC<BrandFiltersProps> = ({ brands, packSizeList, packStyles, grades }) => {
+const BrandFilters: FC<BrandFiltersProps> = ({ brands, varieties, packSizeList, packStyles, grades }) => {
   const router = useRouter();
   const { setFieldValue, handleSubmit, values, errors, dirty, touched } = useFormik({
     initialValues: filterInitialValues,
@@ -44,6 +41,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ brands, packSizeList, packStyles,
           <form onSubmit={handleSubmit} className="flex flex-col">
             <QuickSearchBrand
               brands={brands}
+              varieties={varieties}
               packSizeList={packSizeList}
               packStyles={packStyles}
               grades={grades}
@@ -60,7 +58,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ brands, packSizeList, packStyles,
           </form>
         </div>
 
-        <div className="border border-stone-300 bg-[#f7f7f7] flex flex-col py-5 px-5">
+        {/* <div className="border border-stone-300 bg-[#f7f7f7] flex flex-col py-5 px-5">
           <div className="flex flex-row justify-between">
             <h2 className="uppercase text-stone-400 font-bold">Filters</h2>
             <span className="uppercase text-stone-400 hover:text-stone-500 transition-colors cursor-pointer">
@@ -70,7 +68,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ brands, packSizeList, packStyles,
           <Separator className="my-3" orientation="horizontal" />
 
           <AdvancedFilterBrand />
-        </div>
+        </div> */}
       </div>
     </section>
   );

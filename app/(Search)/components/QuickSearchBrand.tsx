@@ -11,17 +11,13 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { FormikErrors, FormikTouched } from 'formik';
 import { IFilter, KeysFilterBrand } from '../lib/filterBrandSchema';
-import { PackSize } from '@/models/packSize';
-import { PackStyle } from '@/models/packStyle';
-import { Grade } from '@/models/grade';
-import { Brand } from '@/models/brand';
-import { GrowingMethod } from '@/models/growingMethod';
 
 interface IQuickSearchBrandProps {
-  brands: Brand<GrowingMethod>[];
-  packSizeList: PackSize[];
-  packStyles: PackStyle[];
-  grades: Grade[];
+  brands: string[];
+  varieties: string[];
+  packStyles: string[];
+  packSizeList: string[];
+  grades: string[];
   touched: FormikTouched<IFilter<Date, string>>;
   errors: FormikErrors<IFilter>;
   values: IFilter;
@@ -35,6 +31,7 @@ interface IQuickSearchBrandProps {
 
 const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
   brands,
+  varieties,
   packSizeList,
   packStyles,
   grades,
@@ -53,8 +50,8 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
           <SelectContent>
             <SelectGroup>
               {brands.map((brand) => (
-                <SelectItem key={brand.id} value={brand.commodity}>
-                  <p className="capitalize">{brand.commodity}</p>
+                <SelectItem key={brand} value={brand}>
+                  <p className="capitalize">{brand}</p>
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -65,6 +62,24 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
         )}
       </div>
 
+      <div key="varietySearch">
+        <Select name="variety" onValueChange={(value) => setFieldValue('variety', value)} value={values.variety}>
+          <SelectTrigger>
+            <SelectValue placeholder="Variety" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {varieties.map((variety) => (
+                <SelectItem key={variety} value={variety}>
+                  <p className="capitalize">{variety}</p>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {touched.variety && errors.variety && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.variety}</p>}
+      </div>
+
       <div key="packSizeSearch">
         <Select name="packSize" onValueChange={(value) => setFieldValue('packSize', value)} value={values.packSize}>
           <SelectTrigger>
@@ -73,8 +88,8 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
           <SelectContent>
             <SelectGroup>
               {packSizeList.map((packSize) => (
-                <SelectItem key={packSize.id} value={packSize.id}>
-                  {packSize.name}
+                <SelectItem key={packSize} value={packSize}>
+                  {packSize}
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -91,8 +106,8 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
           <SelectContent>
             <SelectGroup>
               {packStyles.map((packStyle) => (
-                <SelectItem key={packStyle.id} value={packStyle.id}>
-                  {packStyle.name}
+                <SelectItem key={packStyle} value={packStyle}>
+                  {packStyle}
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -111,8 +126,8 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
           <SelectContent>
             <SelectGroup>
               {grades.map((grade) => (
-                <SelectItem key={grade.id} value={grade.id}>
-                  {grade.name}
+                <SelectItem key={grade} value={grade}>
+                  {grade}
                 </SelectItem>
               ))}
             </SelectGroup>

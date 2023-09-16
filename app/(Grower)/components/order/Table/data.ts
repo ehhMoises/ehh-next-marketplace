@@ -1,6 +1,4 @@
-import { Brand } from '@/models/brand';
-
-export const ProductCatalogData: Brand[] = [
+export const ProductCatalogData = [
   {
     id: '1',
     name: 'Apple',

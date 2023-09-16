@@ -11,9 +11,9 @@ export async function POST(req: Request) {
   const accessToken = cookieStore.get(TokenTypes.ACCESS_TOKEN)?.value;
   const body = await req.json();
 
-  if (body.brandId) {
+  if (body.commodity) {
     const filteredProducts = await getVarietiesProduct({
-      brandId: body.brandId,
+      commodity: body.commodity,
       accessToken,
     });
 

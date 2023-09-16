@@ -1,11 +1,12 @@
 import { Fragment, Suspense } from 'react';
 import { Metadata } from 'next';
 import PotentialGrowersSchema from '@/app/(Search)/lib/potentialGrowersSchema';
-import { getPossibleGrowers, getPossibleGrowersViaQuickSearch } from '@/lib/api/product';
+import { getPossibleGrowers } from '@/lib/api/product';
 import { cookies } from 'next/headers';
 import { TokenTypes } from '@/lib/constant/cookies';
 import { notFound } from 'next/navigation';
 import { PotentialsGrowersTable } from '../PotentialsGrowersTable';
+import { getPossibleGrowersViaQuickSearch } from '@/lib/api/quick-search';
 
 interface SearchParamsPotentialGrowers {
   commodity: string;
@@ -42,9 +43,9 @@ const getPotentialGrowers = async (
     const response = await getPossibleGrowersViaQuickSearch({
       commodity: quickSearchPayload.commodity,
       deliveryDateUtc,
-      gradeId: quickSearchPayload.grade,
-      packSizeId: quickSearchPayload.packSizeId,
-      packStyleId: quickSearchPayload.packStyleId,
+      grade: quickSearchPayload.grade,
+      packSize: quickSearchPayload.packSizeId,
+      packStyle: quickSearchPayload.packStyleId,
       quantity: Number.parseInt(quickSearchPayload.quantity, 10),
       accessToken,
     });

@@ -15,13 +15,14 @@ import { useRouter } from 'next/navigation';
 import { AlertCircle } from 'lucide-react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { GrowingMethod } from '@/models/growingMethod';
 
 export const BrandTable: FC = () => {
   const { data: brands, isLoading: isLoadingBrands, isError } = useGetBrandsQuery({});
 
   const router = useRouter();
 
-  const columns: ColumnDef<Brand>[] = [
+  const columns: ColumnDef<Brand<GrowingMethod>>[] = [
     {
       accessorKey: 'id',
       header: 'Id',
@@ -51,7 +52,7 @@ export const BrandTable: FC = () => {
       header: 'Plu',
     },
     {
-      accessorKey: 'growingMethod',
+      accessorKey: 'growingMethod.name',
       header: 'Growing Method',
     },
     {
@@ -107,9 +108,15 @@ export const BrandTable: FC = () => {
   }
 
   return (
-    <div>
-      <div className="bg-orange-500 p-4 text-white">Brand Table</div>
-      <DataTable columns={columns} data={brands?.data || []} />
+    <div className="p-4 pt-0">
+      <div className="flex justify-end mb-4">
+        <Button onClick={() => router.push('/grower/brands/new')}>Create</Button>
+      </div>
+
+      <div>
+        <div className="bg-orange-500 p-4 text-white">Brand Table</div>
+        <DataTable columns={columns} data={brands?.data || []} />
+      </div>
     </div>
   );
 };

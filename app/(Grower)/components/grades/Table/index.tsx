@@ -85,9 +85,15 @@ export const GradeTable: FC = () => {
   }
 
   return (
-    <div>
-      <div className="bg-orange-500 p-4 text-white">Pack Style Table</div>
-      <DataTable columns={columns} data={grades || []} />
+    <div className="p-4 pt-0">
+      <div className="flex justify-end mb-4">
+        <Button onClick={() => router.push('/grower/grades/new')}>Create</Button>
+      </div>
+
+      <div>
+        <div className="bg-orange-500 p-4 text-white">Pack Style Table</div>
+        <DataTable columns={columns} data={grades || []} />
+      </div>
     </div>
   );
 };

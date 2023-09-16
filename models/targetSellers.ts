@@ -10,9 +10,9 @@ export interface PotentialGrowersBody {
 
 export interface QuickSearchPotentialGrowersBody {
   commodity: string;
-  packStyleId: string;
-  packSizeId: string;
-  gradeId: string;
+  packStyle: string;
+  packSize: string;
+  grade: string;
   quantity: number;
   deliveryDateUtc: string;
 }
@@ -45,10 +45,3 @@ export interface PotentialGrowers {
     };
   };
 }
-
-// {
-//   "data": [
-
-//   ],
-//   "count": 1
-// }

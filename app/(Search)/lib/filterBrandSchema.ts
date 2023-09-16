@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 
 export interface IFilter<DeliverDateType = Date, QuantityType = string> {
   commodity?: string;
+  variety?: string;
   packSize?: string;
   packStyle?: string;
   quantity?: QuantityType;
@@ -11,6 +12,7 @@ export interface IFilter<DeliverDateType = Date, QuantityType = string> {
 
 const FilterBrandValidationSchema = Yup.object().shape({
   commodity: Yup.string().required("Commodity it's Required"),
+  variety: Yup.string().required("Variety it's Required"),
   packSize: Yup.string().required("Pack Size it's Required"),
   packStyle: Yup.string().required("Pack Style it's Required"),
   quantity: Yup.string().required("Quantity Needed it's Required"),
@@ -20,6 +22,7 @@ const FilterBrandValidationSchema = Yup.object().shape({
 
 export const filterInitialValues: IFilter = {
   commodity: undefined,
+  variety: undefined,
   packSize: undefined,
   packStyle: undefined,
   grade: undefined,

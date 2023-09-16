@@ -1,26 +1,18 @@
-'use client';
-
-import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
+import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { NavigationGrower } from '../../components/Navigation';
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 import { StockTable } from '../../components/catalog/Table';
+import { applyAuthorizationOperations } from '@/lib/auth-checking';
 
-const GrowerCatalog: FC = () => {
-  const router = useRouter();
+const GrowerCatalog: FC = async () => {
+  const me = await applyAuthorizationOperations();
+
   return (
     <main className="flex min-h-screen">
       <section className="flex flex-col w-full">
-        <MainNavigationHeader />
+        <MainNavigationHeader me={me} />
         <NavigationGrower />
-        <div className="p-4 pt-0">
-          <div className="flex justify-end mb-4">
-            <Button onClick={() => router.push('/grower/catalog/new')}>Create</Button>
-          </div>
-
-          <StockTable />
-        </div>
+        <StockTable />
       </section>
     </main>
   );

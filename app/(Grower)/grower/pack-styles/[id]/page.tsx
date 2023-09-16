@@ -1,13 +1,17 @@
+import { FC } from 'react';
 import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
 import { PackStyleForm } from '@/app/(Grower)/components/pack-styles/Form';
 import { IParamsProps } from '@/app/interfaces';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
-import { FC } from 'react';
-const PackStyleDetail: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
+import { applyAuthorizationOperations } from '@/lib/auth-checking';
+
+const PackStyleDetail: FC<IParamsProps> = async ({ params }: { params: { id: string } }) => {
+  const me = await applyAuthorizationOperations();
+
   return (
     <main className="flex min-h-screen">
       <section className="flex flex-col w-full">
-        <MainNavigationHeader />
+        <MainNavigationHeader me={me} />
         <NavigationGrower />
         <PackStyleForm params={params} />
       </section>

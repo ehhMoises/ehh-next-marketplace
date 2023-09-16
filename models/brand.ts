@@ -1,5 +1,3 @@
-import { GrowingMethod } from "./growingMethod";
-
 export interface IBrand<GrowingMethodType = number> {
   name: string;
   description: string;
@@ -10,7 +8,7 @@ export interface IBrand<GrowingMethodType = number> {
   growingMethod: GrowingMethodType;
 }
 
-export interface Brand<GrowingMethodType = number> extends IBrand {
+export interface Brand<GrowingMethodType = number> extends IBrand<GrowingMethodType> {
   id: string;
   isActive: boolean;
 }

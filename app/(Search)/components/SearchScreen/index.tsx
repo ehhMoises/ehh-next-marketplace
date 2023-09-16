@@ -2,30 +2,26 @@
 
 import { FC, Fragment, useEffect, useState } from 'react';
 import SortBrand from '@/app/(Home)/SortBrand';
-import { PackSize } from '@/models/packSize';
-import { PackStyle } from '@/models/packStyle';
-import { Grade } from '@/models/grade';
 import ProductCard from '@/components/ProductCard';
 import Cookies from 'js-cookie';
 import { PRODUCT_CARD_MODE_KEY } from '@/lib/constant/cookies';
 import { ProductCardMode } from '@/lib/constant/ui';
 import { cn } from '@/lib/utils';
-import { ProductPresentation } from '@/models/product';
 import LoaderSearch from '../LoaderSearch';
 import BrandFilters from '../BrandFilters';
 import { OrderModal } from '../OrderModal';
-import { Brand } from '@/models/brand';
-import { GrowingMethod } from '@/models/growingMethod';
+import { ProductPresentation } from '@/models/product';
 
 interface SearchScreenProps {
-  brands: Brand<GrowingMethod>[];
-  packStyles: PackStyle[];
-  packSizeList: PackSize[];
-  grades: Grade[];
+  brands: string[];
+  varieties: string[];
+  packStyles: string[];
+  packSizeList: string[];
+  grades: string[];
   products: ProductPresentation[];
 }
 
-const SearchScreen: FC<SearchScreenProps> = ({ brands, packStyles, packSizeList, grades, products }) => {
+const SearchScreen: FC<SearchScreenProps> = ({ brands, varieties, packStyles, packSizeList, grades, products }) => {
   const [selectedProductDetailedCard, setSelectedProductDetailedCard] = useState<{
     commodity: string;
     variety: string;
@@ -44,11 +40,11 @@ const SearchScreen: FC<SearchScreenProps> = ({ brands, packStyles, packSizeList,
     Cookies.set(PRODUCT_CARD_MODE_KEY, ProductCardMode.ON_FILTER, { sameSite: 'Lax' });
   }, []);
 
-  const searchBrandsHandler = async ({ brandId }: { brandId: string; commodity: string; variety: string }) => {
+  const searchBrandsHandler = async ({ commodity }: { brandId: string; commodity: string; variety: string }) => {
     if (currentCardsMode === ProductCardMode.ON_FILTER) {
       setLoadingSearch(true);
       const formData = new FormData();
-      formData.set('brandId', brandId);
+      formData.set('commodity', commodity);
 
       const jsonData: { [key: string]: FormDataEntryValue } = {};
       formData.forEach((value, key) => {
@@ -86,13 +82,18 @@ const SearchScreen: FC<SearchScreenProps> = ({ brands, packStyles, packSizeList,
       />
 
       <section className="grid grid-cols-1 xl:grid-cols-4 mt-10 mx-3 sm:mx-10 gap-x-0 xl:gap-x-6">
-        <BrandFilters brands={brands} packSizeList={packSizeList} packStyles={packStyles} grades={grades} />
+        <BrandFilters
+          brands={brands}
+          varieties={varieties}
+          packSizeList={packSizeList}
+          packStyles={packStyles}
+          grades={grades}
+        />
 
         <div
           className={cn(
-            'grid grid-col-1 sm:grid-cols-2 gap-5 col-span-3 mt-3 xl:mt-0',
-            loadingSearch ? 'lg:grid-cols-1' : 'lg:grid-cols-3',
-            currentCardsMode === ProductCardMode.FILTERED ? 'h-[28rem]' : 'h-[23rem]'
+            'grid grid-col-1 sm:grid-cols-2 gap-5 col-span-3 mt-3 xl:mt-0 min-h-[25rem]',
+            loadingSearch ? 'lg:grid-cols-1' : 'lg:grid-cols-3'
           )}
         >
           {loadingSearch ? (
@@ -108,6 +109,7 @@ const SearchScreen: FC<SearchScreenProps> = ({ brands, packStyles, packSizeList,
                 commodity={product.commodity}
                 variety={product.variety}
                 growingMethod={product.growingMethod}
+                image={product.imageUrl.includes('empty') ? '/only-logo-neutral.png' : product.imageUrl}
                 key={product.id}
                 onSelectItem={searchBrandsHandler}
                 mode={currentCardsMode}

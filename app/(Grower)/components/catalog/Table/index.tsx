@@ -24,14 +24,6 @@ export const StockTable: FC = () => {
       header: 'Id',
     },
     {
-      accessorKey: 'header',
-      header: 'Header',
-    },
-    {
-      accessorKey: 'subHeader',
-      header: 'Sub Header',
-    },
-    {
       accessorKey: 'startDate',
       header: 'Start Date',
     },
@@ -90,9 +82,15 @@ export const StockTable: FC = () => {
   }
 
   return (
-    <div>
-      <div className="bg-orange-500 p-4 text-white">Product Catalog</div>
-      <DataTable columns={columns} data={catalogs || []} />
+    <div className="p-4 pt-0">
+      <div className="flex justify-end mb-4">
+        <Button onClick={() => router.push('/grower/catalog/new')}>Create</Button>
+      </div>
+
+      <div>
+        <div className="bg-orange-500 p-4 text-white">Product Catalog</div>
+        <DataTable columns={columns} data={catalogs || []} />
+      </div>
     </div>
   );
 };

@@ -105,9 +105,15 @@ export const PackSizeTable: FC = () => {
   }
 
   return (
-    <div>
-      <div className="bg-orange-500 p-4 text-white">Pack Size Table</div>
-      <DataTable columns={columns} data={packSizes || []} />
+    <div className="p-4 pt-0">
+      <div className="flex justify-end mb-4">
+        <Button onClick={() => router.push('/grower/pack-sizes/new')}>Create</Button>
+      </div>
+
+      <div>
+        <div className="bg-orange-500 p-4 text-white">Pack Size Table</div>
+        <DataTable columns={columns} data={packSizes || []} />
+      </div>
     </div>
   );
 };
