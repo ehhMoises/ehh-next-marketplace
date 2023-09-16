@@ -12,13 +12,15 @@ import { useRemoveItemCartMutation } from '../../lib/hooks/mutations/useRemoveIt
 import useCookie from '@/lib/hooks/useCookie';
 import { QUERY_SEARCH_POTENTIAL_GROWERS } from '@/lib/constant/cookies';
 import { useToast } from '@/components/ui/use-toast';
+import { useSaveOrderMutation } from '../../lib/hooks/mutations/useSaveOrderMutation';
 
 export const CheckoutTable: FC = () => {
   const router = useRouter();
   const { mutateAsync: removeItemFromCart, isLoading: isRemovingItemCart } = useRemoveItemCartMutation();
+  const { mutateAsync: saveOrder, isLoading: isSavingOrder } = useSaveOrderMutation();
   const { data, isLoading: isLoadingItems, isFetching: isFetchingItems } = useShoppingCartItemsQuery();
   const items = data?.data ?? [];
-  const isLoading = isLoadingItems || isFetchingItems || isRemovingItemCart;
+  const isLoading = isLoadingItems || isFetchingItems || isRemovingItemCart || isSavingOrder;
   const intermediateTime = useTimeIntermediate(isLoading);
   const querySearchPotentialGrowers = useCookie(QUERY_SEARCH_POTENTIAL_GROWERS);
   const { toast } = useToast();
@@ -32,6 +34,15 @@ export const CheckoutTable: FC = () => {
       title: 'Item Successfully Removed from Cart',
       className: 'bg-slate-500 text-white',
     });
+  };
+
+  const saveOrderHandler = async () => {
+    await saveOrder({});
+    toast({
+      title: 'Order Successfully Saved!',
+      className: 'bg-slate-500 text-white',
+    });
+    router.replace('/retailer/orders');
   };
 
   return (
@@ -58,9 +69,11 @@ export const CheckoutTable: FC = () => {
           >
             Keep Shopping
           </Button>
-          <Button className="px-10 rounded-sm" onClick={() => router.push('/retailer/orders')}>
-            Save Order
-          </Button>
+          {!!data?.data.length && (
+            <Button className="px-10 rounded-sm" onClick={saveOrderHandler}>
+              Save Order
+            </Button>
+          )}
         </div>
       </div>
       {isLoading && (

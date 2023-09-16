@@ -37,20 +37,13 @@ export const getColumns = ({
         return totalSummary.value();
       }, 0);
       return (
-        <div className="flex flex-row justify-end w-ful gap-x-20 pr-48 my-3.5">
+        <div className="flex flex-row justify-end w-ful gap-x-20 pr-64 my-3.5">
           <p className="text-stone-600 text-lg uppercase">Total</p>
           <p className="text-stone-600 text-lg">${numbro(total).format(configFormatPrice)}</p>
         </div>
       );
     },
     columns: [
-      {
-        id: 'stockId',
-        header: 'Stock Id',
-        cell: ({ row }) => {
-          return <div className="uppercase">{row.original.id.split('-')[4]}</div>;
-        },
-      },
       {
         header: 'Product Description and Grower',
         cell: ({ row }) => {
