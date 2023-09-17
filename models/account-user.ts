@@ -72,3 +72,11 @@ export interface IAccountMe {
     name: StatusType;
   };
 }
+
+export interface IAccountBody {
+  name: string;
+  description: string;
+  logoUrl: string;
+  contactName: string;
+  contactPhone: string;
+}

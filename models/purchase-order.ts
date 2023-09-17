@@ -12,6 +12,16 @@ export enum StatusOrderTypeId {
   Completed = 400,
 }
 
+export interface PurchaseOrderList {
+  id: number;
+  transactionNumber: number;
+  deliveryDateUtc: string;
+  status: {
+    id: StatusOrderTypeId;
+    name: StatusOrderType;
+  };
+}
+
 export interface PurchaseOrderDetail {
   id: string;
   transactionNumber: number;
