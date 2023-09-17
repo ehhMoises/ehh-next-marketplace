@@ -69,7 +69,7 @@ export const StockTable: FC = () => {
           variant="ghost"
           title="Edit"
           onClick={() => {
-            router.push(`/grower/catalog/${row.getValue('id')}`);
+            router.push(`/grower/catalog/${row.original.id}`);
           }}
         >
           <FontAwesomeIcon icon={faPen} size="xl" className="text-stone-500 hover:text-stone-400 transition-colors" />
