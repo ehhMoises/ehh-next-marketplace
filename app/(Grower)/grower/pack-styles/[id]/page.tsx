@@ -10,7 +10,12 @@ const PackStyleDetail: FC<IParamsProps> = async ({ params }: { params: { id: str
 
   return (
     <main className="flex min-h-screen">
-      <section className="flex flex-col w-full">
+      <section
+        className="flex flex-col w-full"
+        style={{
+          background: 'no-repeat center/100% url("/fruits/marketplace-dashboard-bg.png")',
+        }}
+      >
         <MainNavigationHeader me={me} />
         <NavigationGrower />
         <PackStyleForm params={params} />

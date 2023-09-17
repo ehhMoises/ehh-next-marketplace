@@ -1,10 +1,10 @@
-import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
+import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { NavigationGrower } from '../../components/Navigation';
-import { BrandTable } from '../../components/brands/Table';
+// import { StockTable } from '../../components/catalog/Table';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
 
-const BrandPage: FC = async () => {
+const GrowerCatalog: FC = async () => {
   const me = await applyAuthorizationOperations();
 
   return (
@@ -17,10 +17,10 @@ const BrandPage: FC = async () => {
       >
         <MainNavigationHeader me={me} />
         <NavigationGrower />
-        <BrandTable />
+        Moises
       </section>
     </main>
   );
 };
 
-export default BrandPage;
+export default GrowerCatalog;

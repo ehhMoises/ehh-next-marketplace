@@ -12,7 +12,12 @@ const HomeRetailer: FC = async () => {
 
   return (
     <main className="flex min-h-screen">
-      <section className="flex flex-col w-full">
+      <section
+        className="flex flex-col w-full"
+        style={{
+          background: 'no-repeat center/100% url("/fruits/marketplace-dashboard-bg.png")',
+        }}
+      >
         <MainNavigationHeader me={me} />
         <NavigationGrower />
         <div className="p-4 pt-0">

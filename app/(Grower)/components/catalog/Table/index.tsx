@@ -13,35 +13,52 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { useGetCatalgsQuery } from '@/app/(Grower)/hooks/queries/useStockQuery';
 import { StockCatalog } from '@/models/catalog';
+import { format } from 'date-fns';
+import numbro from 'numbro';
+
+const configFormatPrice: numbro.Format = {
+  thousandSeparated: true,
+  mantissa: 2,
+};
 
 export const StockTable: FC = () => {
-  const { data: catalogs, isLoading: isLoadingCatalogs, isError, isSuccess: isSuccessCatalog } = useGetCatalgsQuery({});
-
+  const { data: catalogs, isLoading: isLoadingCatalogs, isError } = useGetCatalgsQuery({});
   const router = useRouter();
+
   const columns: ColumnDef<StockCatalog>[] = [
     {
-      accessorKey: 'id',
-      header: 'Id',
+      header: 'Overview',
+      cell: ({ row }) => {
+        return (
+          <div className="flex flex-col">
+            <h4 className="font-bold text-md text-stone-700">{row.original.header}</h4>
+
+            <div>
+              <p>{row.original.subHeader}</p>
+            </div>
+          </div>
+        );
+      },
     },
     {
-      accessorKey: 'startDate',
       header: 'Start Date',
+      cell: ({ row }) => <div>{format(new Date(row.original.startDate), 'PPP')}</div>,
     },
     {
-      accessorKey: 'endDate',
       header: 'End Date',
+      cell: ({ row }) => <div>{format(new Date(row.original.endDate), 'PPP')}</div>,
     },
     {
-      accessorKey: 'minPrice',
       header: 'Min Price',
+      cell: ({ row }) => <div>${numbro(row.original.minPrice).format(configFormatPrice)}</div>,
     },
     {
-      accessorKey: 'reservedQuantity',
       header: 'Reserved Quantity',
+      cell: ({ row }) => <div>{row.original.reservedQuantity}</div>,
     },
     {
-      accessorKey: 'totalQuantity',
       header: 'Total Quantity',
+      cell: ({ row }) => <div>${numbro(row.original.totalQuantity).format(configFormatPrice)}</div>,
     },
     {
       id: 'action',
