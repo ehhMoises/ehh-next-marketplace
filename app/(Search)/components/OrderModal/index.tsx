@@ -40,7 +40,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
     onSubmit: (values) => {
       const deliveryDate = new Date(values?.deliveryDateUtc ?? '').getTime();
       router.push(
-        `/orders?commodity=${commodity}&growingMethod=${growingMethodId}&variety=${variety}&quantity=${values.quantity}&deliveryDateUtc=${deliveryDate}`
+        `/orders?commodity=${commodity}&growingMethod=${growingMethodId}&variety=${variety}&quantity=${values.quantity}&shipToLocation=${values.shipToLocation}&deliveryDateUtc=${deliveryDate}`
       );
     },
   });
@@ -142,6 +142,24 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
                 <p className="text-zinc-300 mt-3 text-xl">{errors.deliveryDateUtc}</p>
               )}
             </Popover>
+          </div>
+
+          <div className="grid grid-cols-1">
+            <Input
+              id="shipToLocation"
+              name="shipToLocation"
+              placeholder="Ship To Location"
+              type="text"
+              className={cn(
+                style.input,
+                'w-full h-20 bg-opacity-80 bg-transparent border-2 text-white text-xl text-center'
+              )}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            {touched.shipToLocation && errors.shipToLocation && dirty && (
+              <p className="text-zinc-300 mt-3 text-xl">{errors.shipToLocation}</p>
+            )}
           </div>
         </div>
         <DialogFooter>

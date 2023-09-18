@@ -37,7 +37,7 @@ export const getColumns = ({
         return totalSummary.value();
       }, 0);
       return (
-        <div className="flex flex-row justify-end w-ful gap-x-20 pr-64 my-3.5">
+        <div className="flex flex-row justify-end w-ful gap-x-16 pr-32 my-3.5">
           <p className="text-stone-600 text-lg uppercase">Total</p>
           <p className="text-stone-600 text-lg">${numbro(total).format(configFormatPrice)}</p>
         </div>
@@ -58,6 +58,18 @@ export const getColumns = ({
               <div>
                 <p className="font-bold text-gray-500">{row.original.stock.account.name}</p>
               </div>
+            </div>
+          );
+        },
+      },
+      {
+        header: 'Ship To Location',
+        cell: ({ row }) => {
+          const splittedAddress = row.original.shipToLocation.split(',');
+          return (
+            <div className="w-full xl:w-80">
+              <p className="text-stone-500 text-md font-bold">{splittedAddress[0]}</p>
+              <p>{splittedAddress[1]}</p>
             </div>
           );
         },

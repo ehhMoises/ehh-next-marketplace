@@ -16,9 +16,10 @@ interface BrandFiltersProps {
   packStyles: string[];
   packSizeList: string[];
   grades: string[];
+  addresses: string[];
 }
 
-const BrandFilters: FC<BrandFiltersProps> = ({ brands, varieties, packSizeList, packStyles, grades }) => {
+const BrandFilters: FC<BrandFiltersProps> = ({ brands, varieties, packSizeList, packStyles, grades, addresses }) => {
   const router = useRouter();
   const { setFieldValue, handleSubmit, values, errors, dirty, touched } = useFormik({
     initialValues: filterInitialValues,
@@ -26,7 +27,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ brands, varieties, packSizeList, 
     onSubmit: async (values) => {
       const deliveryDate = new Date(values?.deliverDate ?? '').getTime();
       router.push(
-        `/orders?commodity=${values?.commodity}&packStyleId=${values?.packStyle}&packSizeId=${values?.packSize}&quantity=${values?.quantity}&deliveryDateUtc=${deliveryDate}&grade=${values?.grade}&mode=quick-search`
+        `/orders?commodity=${values?.commodity}&packStyleId=${values?.packStyle}&packSizeId=${values?.packSize}&quantity=${values?.quantity}&deliveryDateUtc=${deliveryDate}&grade=${values?.grade}&shipToLocation=${values?.shipToLocation}&mode=quick-search`
       );
     },
   });
@@ -45,6 +46,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ brands, varieties, packSizeList, 
               packSizeList={packSizeList}
               packStyles={packStyles}
               grades={grades}
+              addresses={addresses}
               values={values}
               setFieldValue={setFieldValue}
               touched={touched}

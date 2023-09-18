@@ -2,11 +2,13 @@ export interface NewCartItemBody {
   stockId: string;
   quantity: number;
   deliveryDateUtc: string;
+  shipToLocation: string;
 }
 
 export interface ShoppingCart {
   id: string;
   quantity: number;
+  shipToLocation: string;
   deliveryDateUtc: string;
   stock: {
     id: string;

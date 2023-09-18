@@ -6,6 +6,7 @@ const PotentialGrowersSchema = Yup.object().shape({
   growingMethod: Yup.number().required('Growing Method is Required'),
   quantity: Yup.number().required('Quantity is Required').min(1),
   deliveryDateUtc: Yup.string().required('Deliver Date is Required'),
+  shipToLocation: Yup.string().required('Ship To Location is Required'),
 });
 
 export const getPotentialGrowersInitalValues = ({
@@ -22,6 +23,7 @@ export const getPotentialGrowersInitalValues = ({
   variety,
   quantity: undefined,
   deliveryDateUtc: undefined,
+  shipToLocation: undefined,
 });
 
 export type PotentialGrowers = Yup.InferType<typeof PotentialGrowersSchema>;

@@ -14,4 +14,5 @@ export interface QuickSearchOptions {
   packStyles: string[];
   packSizes: string[];
   grades: string[];
+  addresses: string[];
 }

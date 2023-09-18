@@ -19,7 +19,7 @@ const formatPotentialGrowersPrice = (value: number) => {
 };
 
 interface ColumnsCheckoutDef {
-  addStockToCartHandler: (stockId: string) => void;
+  addStockToCartHandler: (stockId: string, shipToLocation: string) => void;
   removeCartItemHandler: (stockId: string, cartItemId: string) => void;
 }
 
@@ -30,7 +30,7 @@ export const getColumns = ({
   {
     header: 'Grower',
     cell: ({ row }) => {
-      const logoGrower = row.original.account.logoUrl ?? '/only-logo-neutral.png';
+      const logoGrower = row.original.account.logoUrl?.length ? row.original.account.logoUrl : '/only-logo-neutral.png';
 
       return <Image className="w-full" src={logoGrower} alt="Product" width="50" height="50" />;
     },
@@ -49,6 +49,18 @@ export const getColumns = ({
         <p className="text-md">{row.original.product.grade.name}</p>
       </div>
     ),
+  },
+  {
+    header: 'Ship To Location',
+    cell: ({ row }) => {
+      const splittedAddress = row.original.shipToLocation.split(',');
+      return (
+        <div className="w-full xl:w-80">
+          <p className="text-stone-500 text-md font-bold">{splittedAddress[0]}</p>
+          <p>{splittedAddress[1]}</p>
+        </div>
+      );
+    },
   },
   {
     header: 'Deliver Date',
@@ -91,7 +103,7 @@ export const getColumns = ({
             <Button
               className="w-10 h-10 rounded-sm"
               variant={'ghost'}
-              onClick={addStockToCartHandler.bind(null, row.original.id)}
+              onClick={addStockToCartHandler.bind(null, row.original.id, row.original.shipToLocation)}
             >
               <FontAwesomeIcon
                 icon={faCartShopping}

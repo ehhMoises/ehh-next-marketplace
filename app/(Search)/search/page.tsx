@@ -6,6 +6,7 @@ import { TokenTypes } from '@/lib/constant/cookies';
 import SearchScreen from '../components/SearchScreen';
 import { getQuickSearchOptions } from '@/lib/api/quick-search';
 import { getCommoditiesProduct } from '@/lib/api/product';
+import LoaderSearch from '../components/LoaderSearch';
 
 export const metadata: Metadata = {
   title: 'Filter Brands Retailer - Marketplace',
@@ -25,15 +26,28 @@ const getData = async (): Promise<QuickSearchOptions & { products: ProductPresen
     packStyles: options?.packStyles ?? [],
     grades: options?.grades ?? [],
     products,
+    addresses: options?.addresses ?? [],
+    // addresses: [
+    //   '841 Thompson Plain, Rowland Height 65013 Donnelly Mount 93724 Rowland Heights North Dakota',
+    //   '389 Bradtke Shore Burgloch 71 91035 Morissettestad New Hampshire',
+    // ],
   };
 };
 
 export default async function SearchPage() {
-  const { commodities, grades, packSizes, packStyles, varieties, products } = await getData();
+  const { commodities, grades, packSizes, packStyles, varieties, products, addresses } = await getData();
 
   return (
     <section className="flex flex-col w-full">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center w-full mt-10 lg:mt-40">
+            <div>
+              <LoaderSearch />
+            </div>
+          </div>
+        }
+      >
         <SearchScreen
           brands={commodities}
           varieties={varieties}
@@ -41,6 +55,7 @@ export default async function SearchPage() {
           grades={grades}
           packStyles={packStyles}
           packSizeList={packSizes}
+          addresses={addresses}
         />
       </Suspense>
     </section>

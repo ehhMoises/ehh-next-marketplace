@@ -18,6 +18,7 @@ interface IQuickSearchBrandProps {
   packStyles: string[];
   packSizeList: string[];
   grades: string[];
+  addresses: string[];
   touched: FormikTouched<IFilter<Date, string>>;
   errors: FormikErrors<IFilter>;
   values: IFilter;
@@ -35,6 +36,7 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
   packSizeList,
   packStyles,
   grades,
+  addresses,
   values,
   setFieldValue,
   touched,
@@ -178,6 +180,30 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
         </div>
         {touched.deliverDate && errors.deliverDate && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.deliverDate}</p>
+        )}
+      </div>
+
+      <div key="shipToLocationSearch">
+        <Select
+          name="shipToLocation"
+          onValueChange={(value) => setFieldValue('shipToLocation', value)}
+          value={values.shipToLocation}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Ship To Location" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {addresses.map((address, index) => (
+                <SelectItem key={`${address}.${index}`} value={address}>
+                  {address}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {touched.shipToLocation && errors.shipToLocation && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.shipToLocation}</p>
         )}
       </div>
     </section>

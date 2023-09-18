@@ -4,6 +4,7 @@ export interface SearchParamsPotentialGrowers {
   variety: string;
   quantity: string;
   deliveryDateUtc: string;
+  shipToLocation: string;
 }
 
 export interface QuickSearchParamsPotentialGrowers {
@@ -12,5 +13,6 @@ export interface QuickSearchParamsPotentialGrowers {
   packSizeId: string;
   quantity: string;
   deliveryDateUtc: string;
+  shipToLocation: string;
   grade: string;
 }

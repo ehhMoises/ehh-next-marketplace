@@ -6,6 +6,7 @@ export interface PotentialGrowersBody {
   growingMethod: number;
   quantity: number;
   deliveryDateUtc: string;
+  shipToLocation: string;
 }
 
 export interface QuickSearchPotentialGrowersBody {
@@ -15,6 +16,7 @@ export interface QuickSearchPotentialGrowersBody {
   grade: string;
   quantity: number;
   deliveryDateUtc: string;
+  shipToLocation: string;
 }
 
 export interface PotentialGrowers {
@@ -22,6 +24,7 @@ export interface PotentialGrowers {
   accountId: string;
   startDate: string;
   standardPrice: number;
+  shipToLocation: string;
   availableQuantity: number;
   account: {
     id: string;

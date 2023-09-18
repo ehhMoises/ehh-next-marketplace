@@ -18,10 +18,19 @@ interface SearchScreenProps {
   packStyles: string[];
   packSizeList: string[];
   grades: string[];
+  addresses: string[];
   products: ProductPresentation[];
 }
 
-const SearchScreen: FC<SearchScreenProps> = ({ brands, varieties, packStyles, packSizeList, grades, products }) => {
+const SearchScreen: FC<SearchScreenProps> = ({
+  brands,
+  varieties,
+  packStyles,
+  packSizeList,
+  grades,
+  addresses,
+  products,
+}) => {
   const [selectedProductDetailedCard, setSelectedProductDetailedCard] = useState<{
     commodity: string;
     variety: string;
@@ -88,6 +97,7 @@ const SearchScreen: FC<SearchScreenProps> = ({ brands, varieties, packStyles, pa
           packSizeList={packSizeList}
           packStyles={packStyles}
           grades={grades}
+          addresses={addresses}
         />
 
         <div

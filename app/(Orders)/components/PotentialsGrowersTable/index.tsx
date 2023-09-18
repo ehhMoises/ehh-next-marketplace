@@ -42,13 +42,14 @@ export const PotentialsGrowersTable: FC<PotentialsGrowersProps> = ({
   const isLoadingProgress = isLoading || isRemovingItemCart;
   const { toast } = useToast();
 
-  const addStockToCartHandler = async (stockId: string) => {
+  const addStockToCartHandler = async (stockId: string, shipToLocation: string) => {
     const deliveryDateUtc = new Date(Number.parseInt(rawDeliveryDateUtc, 10)).toISOString();
     const quantity = Number.parseInt(rawQuantity, 10);
 
     await addCartItem({
       stockId,
       deliveryDateUtc,
+      shipToLocation,
       quantity,
     });
 

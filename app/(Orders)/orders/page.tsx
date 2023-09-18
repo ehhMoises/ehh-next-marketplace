@@ -12,6 +12,7 @@ import {
   SearchParamsPotentialGrowers,
 } from '../lib/interface/searchParamsPotentialGrowers';
 import { getPotentialGrowersByskippingHoldingCartItems } from '../lib/granularPotentialGrowers';
+import LoaderSearch from '@/app/(Search)/components/LoaderSearch';
 
 export const metadata: Metadata = {
   title: 'Searching Growers - Marketplace',
@@ -35,6 +36,7 @@ const getPotentialGrowers = async (
       packSize: quickSearchPayload.packSizeId,
       packStyle: quickSearchPayload.packStyleId,
       quantity: Number.parseInt(quickSearchPayload.quantity, 10),
+      shipToLocation: quickSearchPayload.shipToLocation,
       accessToken,
     });
 
@@ -73,7 +75,15 @@ export default async function OrdersPage({
 
   return (
     <Fragment key="PotentialGrowersPage">
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center w-full mt-10 lg:mt-40">
+            <div>
+              <LoaderSearch />
+            </div>
+          </div>
+        }
+      >
         <PotentialsGrowersTable
           searchParams={searchParams}
           potentialGrowers={potentialGrowers}
