@@ -6,13 +6,9 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { AccountType } from '@/models/account-user';
 
-export const applyAuthorizationOperations = async () => {
+export const applyAuthorizationOperations = async (isHomePage: boolean = false) => {
   const cookieStore = cookies();
   const accessToken = cookieStore.get(TokenTypes.ACCESS_TOKEN)?.value;
-
-  if (!accessToken) {
-    return undefined;
-  }
 
   try {
     const me = await getUserMe({ accessToken });
@@ -39,7 +35,7 @@ export const applyAuthorizationOperations = async () => {
     }
 
     if (error instanceof AxiosError) {
-      if (error.response?.status === 401) {
+      if (error.response?.status === 401 && !isHomePage) {
         redirect('/');
       }
     }

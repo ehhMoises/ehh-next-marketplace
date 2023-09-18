@@ -14,7 +14,7 @@ const getData = async (): Promise<ProductPresentation[]> => {
 
 export default async function Home() {
   const placeHolderProducts = await getData();
-  const me = await applyAuthorizationOperations();
+  const me = await applyAuthorizationOperations(true);
 
   return (
     <Fragment key="home">

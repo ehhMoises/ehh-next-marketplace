@@ -3,18 +3,18 @@
 import { FC, Fragment, useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCT_CARD_MODE_KEY } from '@/lib/constant/cookies';
-import Cookies from 'js-cookie';
 import { ProductCardMode } from '@/lib/constant/ui';
 import { ProductPresentation } from '@/models/product';
 import { SortingCommodityType } from '@/models/user-interface';
 import SortBrand from '@/components/SortBrand';
 import { sortingPlaceholderCommodity } from '@/lib/utils';
+import { setCookie } from '@/lib/cookie';
 
 const HomeScreen: FC<{ products: ProductPresentation[] }> = ({ products }) => {
   const [availableProducts, setAvailableProducts] = useState(products);
 
   useEffect(() => {
-    Cookies.set(PRODUCT_CARD_MODE_KEY, ProductCardMode.PRESENTATIONAL, { sameSite: 'Lax' });
+    setCookie(PRODUCT_CARD_MODE_KEY, ProductCardMode.PRESENTATIONAL);
   }, []);
 
   const sortCommodityHandler = (sortType: SortingCommodityType) => {
