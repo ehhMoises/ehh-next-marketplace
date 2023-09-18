@@ -10,6 +10,10 @@ export const applyAuthorizationOperations = async () => {
   const cookieStore = cookies();
   const accessToken = cookieStore.get(TokenTypes.ACCESS_TOKEN)?.value;
 
+  if (!accessToken) {
+    return undefined;
+  }
+
   try {
     const me = await getUserMe({ accessToken });
 

@@ -1,28 +1,32 @@
 'use client';
 
-import { FC, Fragment, useEffect } from 'react';
-import SortBrand from '../SortBrand';
+import { FC, Fragment, useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCT_CARD_MODE_KEY } from '@/lib/constant/cookies';
 import Cookies from 'js-cookie';
 import { ProductCardMode } from '@/lib/constant/ui';
 import { ProductPresentation } from '@/models/product';
+import { SortingCommodityType } from '@/models/user-interface';
+import SortBrand from '@/components/SortBrand';
+import { sortingPlaceholderCommodity } from '@/lib/utils';
 
 const HomeScreen: FC<{ products: ProductPresentation[] }> = ({ products }) => {
+  const [availableProducts, setAvailableProducts] = useState(products);
+
   useEffect(() => {
     Cookies.set(PRODUCT_CARD_MODE_KEY, ProductCardMode.PRESENTATIONAL, { sameSite: 'Lax' });
   }, []);
 
+  const sortCommodityHandler = (sortType: SortingCommodityType) => {
+    setAvailableProducts(sortingPlaceholderCommodity(products, sortType));
+  };
+
   return (
     <Fragment key="HomeScreen">
-      <SortBrand
-        onSelectSorting={(data) => {
-          console.log('data', data);
-        }}
-      />
+      <SortBrand onSelectSorting={sortCommodityHandler} />
 
       <section className="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10 mx-10">
-        {products.map((product) => (
+        {availableProducts.map((product) => (
           <ProductCard
             brandId={product.id}
             commodity={product.commodity}

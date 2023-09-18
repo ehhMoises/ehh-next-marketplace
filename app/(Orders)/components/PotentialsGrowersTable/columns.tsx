@@ -66,7 +66,7 @@ export const getColumns = ({
     header: 'Deliver Date',
     cell: ({ row }) => (
       <div>
-        <p className="text-stone-500 text-md">{format(new Date(row.original.startDate), 'MM/dd/yyyy')}</p>
+        <p className="text-stone-500 text-md">{format(new Date(row.original.startDate), 'PPP')}</p>
       </div>
     ),
   },

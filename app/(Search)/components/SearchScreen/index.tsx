@@ -1,16 +1,17 @@
 'use client';
 
 import { FC, Fragment, useEffect, useState } from 'react';
-import SortBrand from '@/app/(Home)/SortBrand';
 import ProductCard from '@/components/ProductCard';
 import Cookies from 'js-cookie';
 import { PRODUCT_CARD_MODE_KEY } from '@/lib/constant/cookies';
 import { ProductCardMode } from '@/lib/constant/ui';
-import { cn } from '@/lib/utils';
+import { cn, sortingCommodity } from '@/lib/utils';
 import LoaderSearch from '../LoaderSearch';
 import BrandFilters from '../BrandFilters';
 import { OrderModal } from '../OrderModal';
 import { ProductPresentation } from '@/models/product';
+import { SortingCommodityType } from '@/models/user-interface';
+import SortBrand from '@/components/SortBrand';
 
 interface SearchScreenProps {
   brands: string[];
@@ -75,6 +76,14 @@ const SearchScreen: FC<SearchScreenProps> = ({
     }
   };
 
+  const sortCommodityHandler = (data: SortingCommodityType) => {
+    if (currentCardsMode === ProductCardMode.FILTERED) {
+      setAvailableProducts((prevAvailableProducts) => sortingCommodity(prevAvailableProducts, data));
+    } else if (currentCardsMode === ProductCardMode.ON_FILTER) {
+      setAvailableProducts(sortingCommodity(products, data));
+    }
+  };
+
   return (
     <Fragment key="SearchScreen">
       <OrderModal
@@ -84,11 +93,7 @@ const SearchScreen: FC<SearchScreenProps> = ({
           setOpenModal(isOpen);
         }}
       />
-      <SortBrand
-        onSelectSorting={(data) => {
-          console.log('data', data);
-        }}
-      />
+      <SortBrand onSelectSorting={sortCommodityHandler} />
 
       <section className="grid grid-cols-1 xl:grid-cols-4 mt-10 mx-3 sm:mx-10 gap-x-0 xl:gap-x-6">
         <BrandFilters

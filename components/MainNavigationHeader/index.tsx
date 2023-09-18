@@ -29,7 +29,7 @@ interface MainNavigationHeaderProps {
 }
 
 const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
-  const { data: shoppingCartItems } = useShoppingCartItemsQuery();
+  const { data: shoppingCartItems } = useShoppingCartItemsQuery(me);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpInModalOpen, setIsSignUpInModalOpen] = useState(false);
   const accessToken = useCookie(TokenTypes.ACCESS_TOKEN);
