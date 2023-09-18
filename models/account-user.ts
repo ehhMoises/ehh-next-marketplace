@@ -80,3 +80,23 @@ export interface IAccountBody {
   contactName: string;
   contactPhone: string;
 }
+
+export interface IAddressAccountBody {
+  id: string | null;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+export interface IAddressAccount {
+  id: string;
+  accountId: string;
+  fullAddress: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  zip: string;
+}

@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
-import { NavigationGrower } from '../../components/Navigation';
-// import { StockTable } from '../../components/catalog/Table';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
+import { NavigationGrower } from '../../components/Navigation';
+import { GrowerProfileFormComponent } from '../../components/profile/GrowerProfileForm';
 
-const GrowerCatalog: FC = async () => {
+const GrowerCatalogDetail: FC = async () => {
   const me = await applyAuthorizationOperations();
 
   return (
@@ -12,15 +12,17 @@ const GrowerCatalog: FC = async () => {
       <section
         className="flex flex-col w-full"
         style={{
-          background: 'no-repeat center/100% url("/fruits/marketplace-dashboard-bg.png")',
+          background: 'repeat center/100% url("/fruits/marketplace-dashboard-bg.png")',
         }}
       >
         <MainNavigationHeader me={me} />
         <NavigationGrower />
-        Moises
+        <div className="p-4 pt-0">
+          <GrowerProfileFormComponent />
+        </div>
       </section>
     </main>
   );
 };
 
-export default GrowerCatalog;
+export default GrowerCatalogDetail;

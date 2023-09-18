@@ -19,25 +19,27 @@ import { Brand } from '@/models/brand';
 import { GrowingMethod } from '@/models/growingMethod';
 import { PackStyle } from '@/models/packStyle';
 import { PackSize } from '@/models/packSize';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+// import { useForm } from 'react-hook-form';
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import * as z from 'zod';
 import { StockCatalog } from '@/models/catalog';
 import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 
-const FormSchema = z.object({
-  dob: z.date({
-    required_error: 'A date of birth is required.',
-  }),
-});
+// const FormSchema = z.object({
+//   dob: z.date({
+//     required_error: 'A date of birth is required.',
+//   }),
+// });
 
 interface ICatalogProps {
   handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getFieldProps: (nameOrOptions: string | FieldConfig<any>) => FieldInputProps<any>;
   handlePackStyleChange: (packStyleId: string) => void;
   setFieldValue: (
     field: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<IGrowerCatalog>>;
@@ -74,9 +76,9 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
   isLoadingPackSizesByPackStyleId,
 }) => {
   const router = useRouter();
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
+  // const form = useForm<z.infer<typeof FormSchema>>({
+  //   resolver: zodResolver(FormSchema),
+  // });
   console.log('values', values);
   console.log('packSizes in FORM', packSizes);
   return (
