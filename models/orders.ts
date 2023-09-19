@@ -1,6 +1,8 @@
+import { StatusOrderType, StatusOrderTypeId } from './purchase-order';
+
 export type IOrdersTableStatus = {
-  id: number;
-  name: string;
+  id: StatusOrderTypeId;
+  name: StatusOrderType;
 };
 
 export type IMyOrdersTable = {
