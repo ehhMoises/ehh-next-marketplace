@@ -1,11 +1,9 @@
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
 import { NavigationGrower } from '../../components/Navigation';
-import { data } from '../../lib/data';
 import { OrdersCards } from '@/app/(Retailer)/components/OrdersCards';
-import { MyOrdersTable } from '../../components/MyOrdersTable';
-import { RetailerChart } from '@/app/(Retailer)/components/Chart';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
+import { MyOrdersTable } from '@/components/MyOrdersTable';
 
 const HomeRetailer: FC = async () => {
   const me = await applyAuthorizationOperations();
@@ -20,18 +18,9 @@ const HomeRetailer: FC = async () => {
       >
         <MainNavigationHeader me={me} />
         <NavigationGrower />
-        <div className="p-4 pt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-            {data.map((item, index) => (
-              <OrdersCards key={index} {...item} />
-            ))}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-            <MyOrdersTable />
-            <div className="bg-white p-4 flex justify-center">
-              <RetailerChart />
-            </div>
-          </div>
+        <div className="px-4">
+          <OrdersCards />
+          <MyOrdersTable />
         </div>
       </section>
     </main>

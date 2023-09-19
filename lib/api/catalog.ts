@@ -20,7 +20,6 @@ export const getCatalogs = async () => {
     const {
       data: { data },
     } = await axios.get<ResponseHttpBase<StockCatalog[]>>(`/${context}`);
-    console.log('Catalog response', data);
     return data;
   } catch (err: unknown) {
     console.error(err);

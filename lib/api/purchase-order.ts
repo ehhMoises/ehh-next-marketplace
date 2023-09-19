@@ -20,6 +20,16 @@ export const saveOrder = async ({ accessToken }: { accessToken?: string }) => {
   }
 };
 
+export const getOrders = async () => {
+  try {
+    const response = await axios.get(`/${context}`);
+    return response.data;
+  } catch (err: unknown) {
+    console.error(err);
+    throw err;
+  }
+};
+
 export const getOrderList = async ({ accessToken }: { accessToken?: string }) => {
   try {
     const headers = buildServerSideHeaders(accessToken);
