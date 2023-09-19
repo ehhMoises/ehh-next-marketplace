@@ -43,7 +43,7 @@ const getPotentialGrowers = async (
     return response?.data ?? [];
   } else {
     const potentialGrowersPayload = await PotentialGrowersSchema.validate({
-      ...searchParams,
+      ...(searchParams as SearchParamsPotentialGrowers),
       deliveryDateUtc,
     });
 

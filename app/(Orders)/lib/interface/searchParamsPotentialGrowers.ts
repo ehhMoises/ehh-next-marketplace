@@ -5,6 +5,7 @@ export interface SearchParamsPotentialGrowers {
   quantity: string;
   deliveryDateUtc: string;
   shipToLocation: string;
+  freightPayment: string;
 }
 
 export interface QuickSearchParamsPotentialGrowers {

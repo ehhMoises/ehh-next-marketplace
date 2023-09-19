@@ -15,6 +15,8 @@ import { Calendar } from '../../../../components/ui/calendar';
 import useBreakpoint, { Breakpoints } from '@/lib/hooks/useBreakpoint';
 import { useFormik } from 'formik';
 import PotentialGrowersSchema, { getPotentialGrowersInitalValues } from '../../lib/potentialGrowersSchema';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { objectToURL } from '@/lib/urlParser';
 
 interface OrderModalProps {
   openModal: boolean;
@@ -30,20 +32,29 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
   const { isMd } = useBreakpoint(Breakpoints.MD);
   const router = useRouter();
 
-  const { setFieldValue, handleChange, handleBlur, handleSubmit, errors, values, touched, dirty } = useFormik({
-    initialValues: getPotentialGrowersInitalValues({
-      commodity,
-      growingMethod: growingMethodId,
-      variety,
-    }),
-    validationSchema: PotentialGrowersSchema,
-    onSubmit: (values) => {
-      const deliveryDate = new Date(values?.deliveryDateUtc ?? '').getTime();
-      router.push(
-        `/orders?commodity=${commodity}&growingMethod=${growingMethodId}&variety=${variety}&quantity=${values.quantity}&shipToLocation=${values.shipToLocation}&deliveryDateUtc=${deliveryDate}`
-      );
-    },
-  });
+  const { setFieldValue, handleChange, handleBlur, handleSubmit, setFieldTouched, errors, values, touched, dirty } =
+    useFormik({
+      initialValues: getPotentialGrowersInitalValues({
+        commodity,
+        growingMethod: growingMethodId,
+        variety,
+      }),
+      validationSchema: PotentialGrowersSchema,
+      onSubmit: (values) => {
+        const deliveryDate = new Date(values?.deliveryDateUtc ?? '').getTime();
+        const ordersRequestUrl = objectToURL('/orders?', {
+          commodity,
+          growingMethod: growingMethodId.toString(),
+          variety: variety,
+          quantity: values.quantity?.toString(),
+          shipToLocation: values.shipToLocation,
+          freightPayment: values.freightPayment?.toString(),
+          deliveryDateUtc: deliveryDate.toString(),
+        });
+
+        router.push(ordersRequestUrl);
+      },
+    });
 
   useEffect(() => {
     setFieldValue('commodity', commodity);
@@ -67,9 +78,12 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
     <ModalTransparent
       open={openModal}
       onOpenChange={onOpenModal}
-      className={cn('sm:max-w-[720px] min-h-[30rem]', is2xl || isXl ? 'mt-0' : 'mt-16')}
+      className={cn('sm:max-w-[720px] min-h-[30rem] overflow-y-auto')}
+      style={{
+        height: 'calc(100vh - 100px)',
+      }}
       title={
-        <DialogTitle className="text-white text-[2.5rem] text-center mt-4">
+        <DialogTitle className="text-white text-[2rem] text-center mt-4">
           To ensure accurate pricing enter order specifics below
         </DialogTitle>
       }
@@ -85,7 +99,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
               type="number"
               className={cn(
                 style.input,
-                'w-full h-20 bg-opacity-80 bg-transparent border-2 text-white text-xl text-center'
+                'w-full h-16 bg-opacity-80 bg-transparent border-2 text-white text-xl text-center'
               )}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -101,7 +115,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
                   variant={'outline'}
                   className={cn(
                     style.input,
-                    'w-full h-20 bg-opacity-80 bg-transparent border-2 text-white  text-center'
+                    'w-full h-16 bg-opacity-80 bg-transparent border-2 text-white  text-center'
                   )}
                 >
                   <div className="w-10/12 flex flex-col items-center">
@@ -152,7 +166,7 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
               type="text"
               className={cn(
                 style.input,
-                'w-full h-20 bg-opacity-80 bg-transparent border-2 text-white text-xl text-center'
+                'w-full h-16 bg-opacity-80 bg-transparent border-2 text-white text-xl text-center'
               )}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -161,10 +175,44 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
               <p className="text-zinc-300 mt-3 text-xl">{errors.shipToLocation}</p>
             )}
           </div>
+
+          <div className="grid grid-cols-1">
+            <Select name="freightPayment" onValueChange={(value) => setFieldValue('freightPayment', value)}>
+              <SelectTrigger className="h-16 flex justify-center bg-transparent text-white text-lg">
+                <SelectValue placeholder={<span className="text-xl text-center">Freight Payment Type</span>} />
+              </SelectTrigger>
+              <SelectContent
+                className="w-full bg-opacity-25 border-2 text-xl text-center"
+                onFocus={() => {
+                  setFieldTouched('freightPayment', true);
+                }}
+              >
+                <SelectGroup>
+                  {[
+                    {
+                      id: 100,
+                      name: 'FOB Origin',
+                    },
+                    {
+                      id: 200,
+                      name: 'FOB Destination',
+                    },
+                  ].map((freightType) => (
+                    <SelectItem className="text-xl text-center" key={freightType.id} value={freightType.id.toString()}>
+                      {freightType.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {touched.freightPayment && errors.freightPayment && dirty && (
+              <p className="text-zinc-300 mt-3 text-xl">{errors.freightPayment}</p>
+            )}
+          </div>
         </div>
         <DialogFooter>
           <div className="px-0 md:px-10 w-full">
-            <Button className="w-full h-20" type="submit">
+            <Button className="w-full h-16" type="submit">
               <span className="text-xl">Submit</span>
             </Button>
             <p className="p-4 text-white text-center">All fields are required</p>
