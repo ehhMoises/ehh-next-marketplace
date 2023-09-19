@@ -13,9 +13,13 @@ const useSignIn = () => {
   const { mutateAsync, isLoading, isSuccess, isError, reset, error } = useMutation(signIn);
   const [isCheckingSignIn, setIsCheckingSignIn] = useState(false);
 
+  const updateIsCheckingSigIn = (isChecking: boolean) => {
+    setIsCheckingSignIn(isChecking);
+  };
+
   const login = async ({ email, password }: { email: string; password: string }) => {
     try {
-      setIsCheckingSignIn(true);
+      updateIsCheckingSigIn(true);
       const tokens = await mutateAsync({
         email,
         password,
@@ -23,7 +27,7 @@ const useSignIn = () => {
       const me = await getUserMe({ accessToken: tokens?.idToken });
 
       if (tokens && tokens.idToken && tokens.refreshToken) {
-        setIsCheckingSignIn(false);
+        updateIsCheckingSigIn(false);
         if (me.account.type.name === AccountType.Buyer) {
           router.replace('/search');
         } else {
@@ -31,6 +35,7 @@ const useSignIn = () => {
         }
       }
     } catch (err) {
+      updateIsCheckingSigIn(false);
       console.log(err);
     }
   };

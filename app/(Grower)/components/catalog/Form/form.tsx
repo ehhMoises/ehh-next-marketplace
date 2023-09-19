@@ -273,15 +273,30 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
             )}
           </div>
 
-          {/* Min Price */}
-          <div className="pb-4">
-            <Label htmlFor="minPrice">Min Price:</Label>
-            <Input type="number" placeholder="minPrice" id="minPrice" {...getFieldProps('minPrice')} />
-            {touched.minPrice && errors.minPrice && (
-              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.minPrice}</p>
-            )}
-          </div>
+          <div className="pb-4 flex flex-col sm:flex-row gap-y-4 sm:gap-y-0 gap-x-0 sm:gap-x-4">
+            {/* Min Price */}
+            <div className="w-full">
+              <Label htmlFor="minPrice">Min Price:</Label>
+              <Input type="number" placeholder="Enter Minimum Price" id="minPrice" {...getFieldProps('minPrice')} />
+              {touched.minPrice && errors.minPrice && (
+                <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.minPrice}</p>
+              )}
+            </div>
 
+            {/* Standard Price */}
+            <div className="w-full">
+              <Label htmlFor="standardPrice">Standard Price:</Label>
+              <Input
+                type="number"
+                placeholder="Enter Standard Price"
+                id="standardPrice"
+                {...getFieldProps('standardPrice')}
+              />
+              {touched.standardPrice && errors.standardPrice && (
+                <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.standardPrice}</p>
+              )}
+            </div>
+          </div>
           {/* Total Quantity */}
           <div className="pb-4">
             <Label htmlFor="totalQuantity">Total Quantity:</Label>
@@ -302,15 +317,6 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
             />
             {touched.reservedQuantity && errors.reservedQuantity && (
               <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.reservedQuantity}</p>
-            )}
-          </div>
-
-          {/* Standard Price */}
-          <div className="pb-4">
-            <Label htmlFor="standardPrice">Standard Price:</Label>
-            <Input type="number" placeholder="standardPrice" id="standardPrice" {...getFieldProps('standardPrice')} />
-            {touched.standardPrice && errors.standardPrice && (
-              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.standardPrice}</p>
             )}
           </div>
 

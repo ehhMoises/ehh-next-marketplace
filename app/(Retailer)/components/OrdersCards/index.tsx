@@ -33,7 +33,7 @@ export const OrdersCards: FC = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-      <Accordion type="single" collapsible typeof="single">
+      <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">Completed</AccordionTrigger>
           <AccordionContent className="pt-4 text-orange-500">
@@ -42,7 +42,7 @@ export const OrdersCards: FC = () => {
         </AccordionItem>
       </Accordion>
 
-      <Accordion type="single" collapsible typeof="single">
+      <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">In Transit</AccordionTrigger>
           <AccordionContent className="pt-4 text-orange-500">
@@ -51,7 +51,7 @@ export const OrdersCards: FC = () => {
         </AccordionItem>
       </Accordion>
 
-      <Accordion type="single" collapsible typeof="single">
+      <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">Fulfillment</AccordionTrigger>
           <AccordionContent className="pt-4 text-orange-500">
@@ -60,7 +60,7 @@ export const OrdersCards: FC = () => {
         </AccordionItem>
       </Accordion>
 
-      <Accordion type="single" collapsible typeof="single">
+      <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">Pending</AccordionTrigger>
           <AccordionContent className="pt-4 text-orange-500">

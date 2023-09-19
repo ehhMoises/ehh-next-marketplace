@@ -14,15 +14,15 @@ import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../ui/button';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { IMyOrdersTable } from '@/models/orders';
 import { useRouter } from 'next/navigation';
+import { PurchaseOrderList } from '@/models/purchase-order';
 
 export const MyOrdersTable: FC = () => {
   const { data, isLoading, isError } = useGetOrdersQuery({});
 
   const router = useRouter();
 
-  const columns: ColumnDef<IMyOrdersTable>[] = [
+  const columns: ColumnDef<PurchaseOrderList>[] = [
     {
       accessorKey: 'id',
       header: 'Id',
@@ -34,7 +34,7 @@ export const MyOrdersTable: FC = () => {
     {
       accessorKey: 'deliveryDateUtc',
       header: 'Deliver Date',
-      cell: ({ row }) => <div>{format(new Date(row.getValue('deliveryDateUtc')), 'PPP')}</div>,
+      cell: ({ row }) => <div>{format(new Date(row.original.deliveryDateUtc), 'PPP')}</div>,
     },
     {
       accessorKey: 'status',
@@ -87,8 +87,8 @@ export const MyOrdersTable: FC = () => {
   }
 
   return (
-    <Accordion type="single" collapsible className="mt-4">
-      <AccordionItem value="item-1">
+    <Accordion type="single" typeof="single" className="mt-4" defaultValue="orders-table-item" collapsible>
+      <AccordionItem value="orders-table-item">
         <AccordionTrigger className="bg-orange-500 p-4 text-white">My Orders Table</AccordionTrigger>
         <AccordionContent>
           <DataTable columns={columns} data={data.data} />

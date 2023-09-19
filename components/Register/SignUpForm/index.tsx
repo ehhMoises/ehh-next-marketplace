@@ -135,6 +135,17 @@ const SignUpForm: FC<SignUpFormProps> = ({ onNewUserCreated, onSelectConfirmatio
       </div>
 
       <div className="flex flex-col gap-y-2">
+        <div className="px-0 sm:px-10 w-full">
+          <Button type="submit" className="w-full h-16" disabled={isSigningUp}>
+            {isSigningUp && (
+              <div className="flex justify-center w-full items-center pl-8 pt-3">
+                <SpinClockwiseLoader loaderSize={AwesomeLoaderSize.MEDIUM} color="white" />
+              </div>
+            )}
+            {!isSigningUp && <span className="text-xl">Sign Up</span>}
+          </Button>
+        </div>
+
         <div className="w-full flex flex-row justify-center">
           <Button
             type="button"
@@ -144,18 +155,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ onNewUserCreated, onSelectConfirmatio
               onSelectConfirmationCode();
             }}
           >
-            Confirmation Code
-          </Button>
-        </div>
-
-        <div className="px-0 sm:px-10 w-full">
-          <Button type="submit" className="w-full h-16" disabled={isSigningUp}>
-            {isSigningUp && (
-              <div className="flex justify-center w-full items-center pl-8 pt-3">
-                <SpinClockwiseLoader loaderSize={AwesomeLoaderSize.MEDIUM} color="white" />
-              </div>
-            )}
-            {!isSigningUp && <span className="text-xl">Sign Up</span>}
+            I already have a confirmation code
           </Button>
         </div>
       </div>
