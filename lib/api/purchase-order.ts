@@ -30,6 +30,16 @@ export const getOrders = async () => {
   }
 };
 
+export const getOrderById = async (id: string) => {
+  try {
+    const response = await axios.get(`/${context}/${id}`);
+    return response.data;
+  } catch (err: unknown) {
+    console.error(err);
+    throw err;
+  }
+};
+
 export const getOrderList = async ({ accessToken }: { accessToken?: string }) => {
   try {
     const headers = buildServerSideHeaders(accessToken);
@@ -49,6 +59,33 @@ export const getOrderDetail = async ({ accessToken, orderId }: { orderId: string
     const headers = buildServerSideHeaders(accessToken);
     const response = await axios.get<PurchaseOrderDetail>(`/${context}/${orderId}`, {
       headers,
+    });
+
+    return response.data;
+  } catch (err: unknown) {
+    console.error(err);
+    throw err;
+  }
+};
+
+// TODO: Check this
+export const addOrder = async (data: any) => {
+  try {
+    const response = await axios.post(`/${context}`, {
+      ...data,
+    });
+
+    return response.data;
+  } catch (err: unknown) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const updateOrder = async (data: any) => {
+  try {
+    const response = await axios.put(`/${context}/${data.id}`, {
+      ...data,
     });
 
     return response.data;

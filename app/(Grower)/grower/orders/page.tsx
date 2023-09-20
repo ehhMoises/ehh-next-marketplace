@@ -3,6 +3,7 @@ import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
 import { IParamsProps } from '@/app/interfaces';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
+import { MyOrdersTable } from '@/components/OrdersTable';
 
 const OrderPage: FC<IParamsProps> = async ({ params }: { params: { id: string } }) => {
   const me = await applyAuthorizationOperations();
@@ -18,7 +19,9 @@ const OrderPage: FC<IParamsProps> = async ({ params }: { params: { id: string } 
       >
         <MainNavigationHeader me={me} />
         <NavigationGrower />
-        <div className="p-4 pt-0">Order detail</div>
+        <div className="p-4 pt-0">
+          <MyOrdersTable />
+        </div>
       </section>
     </main>
   );

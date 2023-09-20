@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { NavigationGrower } from '../../components/Navigation';
 import { OrdersCards } from '@/app/(Retailer)/components/OrdersCards';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
-import { MyOrdersTable } from '@/components/MyOrdersTable';
+import { MyOrdersTable } from '@/components/OrdersTable';
 
 const HomeRetailer: FC = async () => {
   const me = await applyAuthorizationOperations();

@@ -18,6 +18,7 @@ export const NavigationGrower: FC = () => {
       >
         Home
       </Link>
+
       <Link
         href="/grower/brands"
         className={cn(
@@ -27,6 +28,7 @@ export const NavigationGrower: FC = () => {
       >
         Brands
       </Link>
+
       <Link
         href="/grower/pack-styles"
         className={cn(
@@ -36,6 +38,7 @@ export const NavigationGrower: FC = () => {
       >
         Pack Styles
       </Link>
+
       <Link
         href="/grower/pack-sizes"
         className={cn(
@@ -45,14 +48,7 @@ export const NavigationGrower: FC = () => {
       >
         Pack Sizes
       </Link>
-      {/* <Link
-        href="/grower/grades"
-        className={
-          pathname === '/grower/grades' ? 'py-3.5 px-8 bg-white text-stone-900' : 'py-3.5 px-8 hover:bg-stone-500'
-        }
-      >
-        Grades
-      </Link> */}
+
       <Link
         href="/grower/catalog"
         className={cn(
@@ -72,21 +68,16 @@ export const NavigationGrower: FC = () => {
       >
         Profile
       </Link>
-      {/* <Link
+
+      <Link
         href="/grower/orders"
-        cn(
+        className={cn(
           'transition-colors',
-          pathname === '/grower/profile' ? 'py-3.5 px-8 bg-white text-stone-900' : 'py-3.5 px-8 hover:bg-stone-500'
-        )
+          pathname === '/grower/orders' ? 'py-3.5 px-8 bg-white text-stone-900' : 'py-3.5 px-8 hover:bg-stone-500'
+        )}
       >
         Orders
-      </Link> */}
-      {/* <Link
-        href="/grower/retailer"
-        className={pathname === '/grower/retailer' ? 'py-3.5 px-8 bg-white text-stone-900' : 'py-3.5 px-8 hover:bg-stone-500'}
-      >
-        Retailer
-      </Link> */}
+      </Link>
     </div>
   );
 };

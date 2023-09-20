@@ -1,9 +1,9 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { DataTable } from '@/components/ui/data-table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useGetOrdersQuery } from '@/app/(Grower)/hooks/queries/ordersQuery';
+import { useGetOrdersQuery } from '@/app/(Grower)/hooks/queries/useOrdersQuery';
 import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -14,13 +14,43 @@ import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../ui/button';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { PurchaseOrderList } from '@/models/purchase-order';
 
 export const MyOrdersTable: FC = () => {
   const { data, isLoading, isError } = useGetOrdersQuery({});
+  const [dataSource, setDataSource] = useState<PurchaseOrderList[]>([]);
+  const [currentRootPath, setCurrentRootPath] = useState('');
 
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname) {
+      if (pathname === '/grower/home') {
+        setCurrentRootPath('/grower/orders');
+      }
+      if (pathname === '/retailer/home') {
+        setCurrentRootPath('/retailer/orders');
+      }
+      if (pathname === '/grower/orders') {
+        setCurrentRootPath('/grower/orders');
+      }
+      if (pathname === '/retailer/orders') {
+        setCurrentRootPath('/retailer/orders');
+      }
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (data && data.data && data.data.length) {
+      if (pathname === '/grower/home' || pathname === '/retailer/home') {
+        setDataSource(data.data.slice(0, 5));
+      } else {
+        setDataSource(data.data);
+      }
+    }
+  }, [data]);
 
   const columns: ColumnDef<PurchaseOrderList>[] = [
     {
@@ -40,7 +70,6 @@ export const MyOrdersTable: FC = () => {
       accessorKey: 'status',
       header: 'Status',
       cell: ({ row }) => {
-        console.log('Row', row);
         return (
           <Badge variant="outline" className={`py-1 px-4 w-full flex justify-center `}>
             {row.original.status.name}
@@ -57,7 +86,7 @@ export const MyOrdersTable: FC = () => {
           variant="ghost"
           title="Edit"
           onClick={() => {
-            router.push(`/orders/${row.getValue('id')}`);
+            router.push(`${currentRootPath}/${row.getValue('id')}`);
           }}
         >
           <FontAwesomeIcon icon={faPen} size="xl" className="text-stone-500 hover:text-stone-400 transition-colors" />
@@ -80,7 +109,7 @@ export const MyOrdersTable: FC = () => {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
-          <AlertDescription>There was an error loading Dashboard, please try again later.</AlertDescription>
+          <AlertDescription>There was an error loading Orders Table, please try again later.</AlertDescription>
         </Alert>
       </div>
     );
@@ -91,7 +120,7 @@ export const MyOrdersTable: FC = () => {
       <AccordionItem value="orders-table-item">
         <AccordionTrigger className="bg-orange-500 p-4 text-white">My Orders Table</AccordionTrigger>
         <AccordionContent>
-          <DataTable columns={columns} data={data.data} />
+          <DataTable columns={columns} data={dataSource} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
