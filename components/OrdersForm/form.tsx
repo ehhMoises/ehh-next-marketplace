@@ -4,7 +4,6 @@ import { FieldConfig, FieldInputProps, FormikErrors, FormikTouched, useFormik } 
 import { FC, FormEvent } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { PurchaseOrderDetail } from '@/models/purchase-order';
@@ -16,6 +15,8 @@ interface IOrderProps {
   errors: FormikErrors<PurchaseOrderDetail>;
   isButtonDisabled: boolean;
   isNew: boolean;
+  values: PurchaseOrderDetail;
+  currentRootPath: string;
 }
 
 export const OrderFormComponent: FC<IOrderProps> = ({
@@ -25,27 +26,51 @@ export const OrderFormComponent: FC<IOrderProps> = ({
   errors,
   isButtonDisabled,
   isNew,
+  values,
+  currentRootPath,
 }) => {
   const router = useRouter();
   return (
     <div className="p-4">
-      <div className="bg-orange-500 p-4 text-white">Pack Style</div>
+      <div className="bg-orange-500 p-4 text-white">Order Detail</div>
+      <div className="bg-gray-300 flex flex-col p-4">
+        <div className="font-bold">{values.buyerAccount.name}</div>
+      </div>
       <div className="p-4 bg-white">
         <form onSubmit={handleSubmit}>
-          {/* <div className="pb-4">
-            <Label htmlFor="name">Name:</Label>
-            <Input id="name" {...getFieldProps('name')} placeholder="Name" />
-            {touched.name && errors.name && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.name}</p>}
+          <div className="pb-4">
+            <Label htmlFor="name">Transaction Number:</Label>
+            <Input id="name" {...getFieldProps('transactionNumber')} placeholder="transactionNumber" disabled />
+            {touched.transactionNumber && errors.transactionNumber && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.transactionNumber}</p>
+            )}
           </div>
           <div className="pb-4">
-            <Label htmlFor="description">Description:</Label>
-            <Textarea placeholder="Type your description here." id="description" {...getFieldProps('description')} />
-            {touched.description && errors.description && (
-              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.description}</p>
+            <Label htmlFor="deliveryDateUtc">Delivery Date:</Label>
+            <Input id="deliveryDateUtc" {...getFieldProps('deliveryDateUtc')} disabled />
+            {touched.deliveryDateUtc && errors.deliveryDateUtc && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.deliveryDateUtc}</p>
             )}
-          </div> */}
+          </div>
+          <div className="pb-4">
+            <Label htmlFor="status">Status:</Label>
+            <Input id="status" {...getFieldProps('status.name')} disabled />
+          </div>
+          <div className="pb-4">
+            <Label htmlFor="status">Quantity:</Label>
+            <Input id="status" type="number" {...getFieldProps('quantity')} />
+          </div>
+          <div className="pb-4">
+            <Label htmlFor="status">Price:</Label>
+            <Input id="status" type="number" {...getFieldProps('price')} />
+            {touched.price && errors.price && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.price}</p>}
+          </div>
+          <div className="pb-4">
+            <Label htmlFor="status">Total Count:</Label>
+            <Input id="status" {...getFieldProps('total')} disabled />
+          </div>
           <div className="flex justify-end mt-4">
-            <Button type="button" variant="outline" onClick={() => router.push('/grower/pack-styles')} className="mr-4">
+            <Button type="button" variant="outline" onClick={() => router.push(currentRootPath)} className="mr-4">
               Cancel
             </Button>
             <Button type="submit" disabled={isButtonDisabled}>

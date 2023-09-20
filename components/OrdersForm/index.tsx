@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormik } from 'formik';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { initialValues } from './initialValues';
 import { validationSchema } from './validationSchema';
 import { IParamsProps } from '@/app/interfaces';
@@ -9,16 +9,35 @@ import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { OrderFormComponent } from './form';
 import { useGetOrderByIdQuery } from '@/app/(Grower)/hooks/queries/useOrdersQuery';
 import { useCreateOrderMutation, useUpdateOrderMutation } from '@/app/(Grower)/hooks/mutations/useOrderMutation';
 
 export const OrdersForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
+  const [currentRootPath, setCurrentRootPath] = useState('');
   const isNew = params.id === 'new';
   const id = params.id;
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname) {
+      if (pathname === '/grower/home') {
+        setCurrentRootPath('/grower/orders');
+      }
+      if (pathname === '/retailer/home') {
+        setCurrentRootPath('/retailer/orders');
+      }
+      if (pathname === '/grower/orders') {
+        setCurrentRootPath('/grower/orders');
+      }
+      if (pathname === '/retailer/orders') {
+        setCurrentRootPath('/retailer/orders');
+      }
+    }
+  }, [pathname]);
 
   // Get Order
   const {
@@ -52,7 +71,7 @@ export const OrdersForm: FC<IParamsProps> = ({ params }: { params: { id: string 
               className: 'bg-green-500 text-white',
             });
             setTimeout(() => {
-              router.push('/grower/pack-styles/');
+              router.push(currentRootPath);
             }, 2000);
           },
           onError: (error: any) => {
@@ -65,7 +84,7 @@ export const OrdersForm: FC<IParamsProps> = ({ params }: { params: { id: string 
         });
       } else {
         updateOrder(
-          { ...values, id, isActive: true },
+          { ...values, id },
           {
             onSuccess: () => {
               resetForm();
@@ -74,7 +93,7 @@ export const OrdersForm: FC<IParamsProps> = ({ params }: { params: { id: string 
                 className: 'bg-green-500 text-white',
               });
               setTimeout(() => {
-                router.push('/grower/pack-styles/');
+                router.push(currentRootPath);
               }, 2000);
             },
             onError: (error: any) => {
@@ -126,6 +145,8 @@ export const OrdersForm: FC<IParamsProps> = ({ params }: { params: { id: string 
       errors={errors}
       isButtonDisabled={isButtonDisabled}
       isNew={isNew}
+      values={values}
+      currentRootPath={currentRootPath}
     />
   );
 };
