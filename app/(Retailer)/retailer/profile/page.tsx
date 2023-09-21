@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
-import { NavigationGrower } from '../../components/Navigation';
 import { ProfileFormComponent } from '@/components/ProfileForm';
+import { NavigationMenuRetailer } from '../../components/Navigation';
 
-const GrowerCatalogDetail: FC = async () => {
+const ProfileRetailer: FC = async () => {
   const me = await applyAuthorizationOperations();
 
   return (
@@ -16,13 +16,13 @@ const GrowerCatalogDetail: FC = async () => {
         }}
       >
         <MainNavigationHeader me={me} />
-        <NavigationGrower />
+        <NavigationMenuRetailer />
         <div className="p-4 pt-0">
-          <ProfileFormComponent titleForm="Farm Profile" />
+          <ProfileFormComponent titleForm="Retailer Profile" />
         </div>
       </section>
     </main>
   );
 };
 
-export default GrowerCatalogDetail;
+export default ProfileRetailer;

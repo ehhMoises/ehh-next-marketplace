@@ -17,7 +17,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const { initialValues, validationSchema } = utilsProfileForm;
 
-export const ProfileFormComponent: FC = () => {
+export const ProfileFormComponent: FC<{ titleForm: string }> = ({ titleForm }) => {
   const { toast } = useToast();
   const { account, addresses, isLoadingAccount, isLoadingAddresses } = useGetProfileQuery();
   const {
@@ -83,7 +83,7 @@ export const ProfileFormComponent: FC = () => {
 
   return (
     <section>
-      <div className="bg-orange-500 p-4 text-white">Farm Profile</div>
+      <div className="bg-orange-500 p-4 text-white">{titleForm}</div>
 
       <div className="p-4 bg-[#efefef]">
         <form className="flex flex-col gap-y-5 w-full xl:w-6/12" onSubmit={handleSubmit}>

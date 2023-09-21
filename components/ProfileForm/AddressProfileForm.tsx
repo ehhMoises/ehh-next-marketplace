@@ -74,7 +74,7 @@ export const AddressProfileForm: FC<AddressProfileFormProps> = ({
             </AccordionTrigger>
 
             <AccordionContent className={styles['AccordionContent']}>
-              <div className="flex flex-col gap-y-5 mt-3.5 px-2" key={index}>
+              <div className="flex flex-col gap-y-5 mt-3.5 px-2 pt-2 pb-5" key={index}>
                 <div className="grid grid-cols-1">
                   <div className="flex flex-col sm:flex-row w-full items-center">
                     <Label className="w-full sm:w-3/12 text-[#6c6d6f] font-bold text-[1.1rem]" htmlFor="address-line-1">
