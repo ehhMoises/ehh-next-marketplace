@@ -2,7 +2,7 @@ import { FC } from 'react';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
 import { NavigationGrower } from '../../components/Navigation';
-import { GrowerProfileFormComponent } from '../../components/profile/GrowerProfileForm';
+import { ProfileFormComponent } from '@/components/ProfileForm';
 
 const GrowerCatalogDetail: FC = async () => {
   const me = await applyAuthorizationOperations();
@@ -18,7 +18,7 @@ const GrowerCatalogDetail: FC = async () => {
         <MainNavigationHeader me={me} />
         <NavigationGrower />
         <div className="p-4 pt-0">
-          <GrowerProfileFormComponent />
+          <ProfileFormComponent />
         </div>
       </section>
     </main>

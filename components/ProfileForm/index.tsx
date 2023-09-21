@@ -6,7 +6,7 @@ import utilsProfileForm from './profileForm.utils';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { AddressGrowerForm } from './AddressGrowerForm';
+import { AddressProfileForm } from './AddressProfileForm';
 import { IAddressAccountBody } from '@/models/account-user';
 import { Button } from '@/components/ui/button';
 import { useGetProfileQuery } from '@/lib/hooks/useProfileQuery';
@@ -17,7 +17,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const { initialValues, validationSchema } = utilsProfileForm;
 
-export const GrowerProfileFormComponent: FC = () => {
+export const ProfileFormComponent: FC = () => {
   const { toast } = useToast();
   const { account, addresses, isLoadingAccount, isLoadingAddresses } = useGetProfileQuery();
   const {
@@ -144,7 +144,7 @@ export const GrowerProfileFormComponent: FC = () => {
             <Separator className="my-2.5 bg-stone-300" />
             {isLoading && <Skeleton className="w-full  h-[8rem] bg-stone-400 rounded-sm" />}
             {!isLoading && (
-              <AddressGrowerForm
+              <AddressProfileForm
                 addresses={values.addresses}
                 setValues={setValues}
                 getFieldProps={getFieldProps}

@@ -12,7 +12,7 @@ import { ChevronRight } from 'lucide-react';
 import styles from './AddressAccordionStyles.module.css';
 import { cn } from '@/lib/utils';
 
-interface AddressGrowerFormProps {
+interface AddressProfileFormProps {
   addresses: IAddressAccountBody[];
   setValues: (
     values: React.SetStateAction<GrowerProfileFormValues>,
@@ -24,7 +24,7 @@ interface AddressGrowerFormProps {
   touched?: FormikTouched<IAddressAccountBody>[] | undefined;
 }
 
-export const AddressGrowerForm: FC<AddressGrowerFormProps> = ({
+export const AddressProfileForm: FC<AddressProfileFormProps> = ({
   addresses,
   setValues,
   getFieldProps,

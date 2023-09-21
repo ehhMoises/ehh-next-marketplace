@@ -3,17 +3,14 @@
 import { FC, useEffect, useState } from 'react';
 import { DataTable } from '@/components/ui/data-table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useGetOrdersQuery } from '@/app/(Grower)/hooks/queries/useOrdersQuery';
 import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
-import { format } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { usePathname, useRouter } from 'next/navigation';
-import { PurchaseOrderList } from '@/models/purchase-order';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useGetUsersQuery } from '@/app/(Grower)/hooks/queries/useUsersQuery';
@@ -21,7 +18,6 @@ import { IUser } from '@/models/users';
 
 export const UsersTable: FC = () => {
   const { data: users, isLoading: isLoadingUsers, isError: isErrorUsers } = useGetUsersQuery({});
-  const [dataSource, setDataSource] = useState<PurchaseOrderList[]>([]);
   const [currentRootPath, setCurrentRootPath] = useState('');
 
   console.log('users', users);
