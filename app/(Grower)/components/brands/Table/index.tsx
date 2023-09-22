@@ -114,7 +114,7 @@ export const BrandTable: FC = () => {
       </div>
 
       <div>
-        <div className="bg-orange-500 p-4 text-white">Brand Table</div>
+        <div className="bg-marketplace p-4 text-white">Brand Table</div>
         <DataTable columns={columns} data={brands?.data || []} />
       </div>
     </div>

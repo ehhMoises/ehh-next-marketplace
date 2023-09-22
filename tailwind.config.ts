@@ -37,6 +37,8 @@ const config: Config = {
     extend: {
       colors: {
         marketplace: '#e9581d',
+        ['marketplace-accent-1']: '#949599',
+        ['marketplace-accent-2']: '#efefef',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

@@ -19,7 +19,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   return (
     <div className="rounded-md border">
       <Table>
-        <TableHeader className="bg-[#949599]">
+        <TableHeader className="bg-marketplace-accent-1">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow className="hover:bg-muted/10" key={headerGroup.id}>
               {headerGroup.headers.map((header) => {

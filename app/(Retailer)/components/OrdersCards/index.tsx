@@ -36,7 +36,7 @@ export const OrdersCards: FC = () => {
       <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">Completed</AccordionTrigger>
-          <AccordionContent className="pt-4 text-orange-500">
+          <AccordionContent className="pt-4 text-marketplace">
             <p className="text-3xl text-orange-600">{data.completed}</p>
           </AccordionContent>
         </AccordionItem>
@@ -45,7 +45,7 @@ export const OrdersCards: FC = () => {
       <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">In Transit</AccordionTrigger>
-          <AccordionContent className="pt-4 text-orange-500">
+          <AccordionContent className="pt-4 text-marketplace">
             <p className="text-3xl text-orange-600">{data.inTransit}</p>
           </AccordionContent>
         </AccordionItem>
@@ -54,7 +54,7 @@ export const OrdersCards: FC = () => {
       <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">Fulfillment</AccordionTrigger>
-          <AccordionContent className="pt-4 text-orange-500">
+          <AccordionContent className="pt-4 text-marketplace">
             <p className="text-3xl text-orange-600">{data.fulfillment}</p>
           </AccordionContent>
         </AccordionItem>
@@ -63,7 +63,7 @@ export const OrdersCards: FC = () => {
       <Accordion type="single" collapsible typeof="single" defaultValue="item-1">
         <AccordionItem value="item-1" className="bg-white p-4">
           <AccordionTrigger className="text-xl uppercase">Pending</AccordionTrigger>
-          <AccordionContent className="pt-4 text-orange-500">
+          <AccordionContent className="pt-4 text-marketplace">
             <p className="text-3xl text-orange-600">{data.pending}</p>
           </AccordionContent>
         </AccordionItem>

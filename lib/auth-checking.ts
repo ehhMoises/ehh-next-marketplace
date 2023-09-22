@@ -16,11 +16,24 @@ export const applyAuthorizationOperations = async (isHomePage: boolean = false) 
     if (me) {
       const headersList = headers();
       const headerURL = headersList.get('x-url') || '';
+      const host = headersList.get('x-hostname') || '';
 
       if (headerURL.includes('/grower') && me.account.type.name === AccountType.Buyer) {
         throw new Error('RETAILER_INCORRECT_SECTION');
-      } else if (headerURL.includes('/retailer') && me.account.type.name === AccountType.Grower) {
-        throw new Error('GROWER_INCORRECT_SECTION');
+      } else if (me.account.type.name === AccountType.Grower) {
+        const growersHeadersUrlToPrevent = ['/retailer', '/search', '/orders', '/checkout'];
+        const urlMatch = headerURL.split(host)[1];
+        const isOrderMatchUrl = urlMatch.includes('/grower/orders');
+        const growerMatchForbiddenURL = growersHeadersUrlToPrevent.some((currentHeaderUrl) => {
+          if (currentHeaderUrl.includes('/orders') && isOrderMatchUrl) {
+            return false;
+          }
+
+          return headerURL.includes(currentHeaderUrl);
+        });
+        if (growerMatchForbiddenURL) {
+          throw new Error('GROWER_INCORRECT_SECTION');
+        }
       }
     }
 

@@ -14,7 +14,11 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 interface IPackSizeProps {
   handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void;
   getFieldProps: (nameOrOptions: string | FieldConfig<any>) => FieldInputProps<any>;
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void> | Promise<FormikErrors<IPackSize>>
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<void> | Promise<FormikErrors<IPackSize>>;
   touched: FormikTouched<IPackSize>;
   errors: FormikErrors<IPackSize>;
   isButtonDisabled: boolean;
@@ -37,8 +41,8 @@ export const PackSizeFormComponent: FC<IPackSizeProps> = ({
   const router = useRouter();
   return (
     <div className="p-4">
-      <div className="bg-orange-500 p-4 text-white">Pack Size</div>
-      <div className="p-4 bg-white">
+      <div className="bg-marketplace p-4 text-white">Pack Size</div>
+      <div className="p-4 bg-marketplace-accent-2">
         <form onSubmit={handleSubmit}>
           <div className="pb-4">
             <Label htmlFor="name">Name:</Label>

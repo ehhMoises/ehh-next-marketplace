@@ -1,6 +1,6 @@
 import { queryClient } from '@/app/provider';
 import { ORDERS_QUERY_KEYS } from '@/constants/orders';
-import { addOrder, updateOrder } from '@/lib/api/purchase-order';
+import { addOrder, updateOrder, updateStatusOrder } from '@/lib/api/purchase-order';
 import { useMutation } from '@tanstack/react-query';
 
 export const useCreateOrderMutation = () =>
@@ -16,6 +16,19 @@ export const useCreateOrderMutation = () =>
 export const useUpdateOrderMutation = () =>
   useMutation({
     mutationFn: updateOrder,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ORDERS_QUERY_KEYS.GET_ORDERS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [ORDERS_QUERY_KEYS.GET_ORDER_DETAIL],
+      });
+    },
+  });
+
+export const useUpdateStatusOrderMutation = () =>
+  useMutation({
+    mutationFn: updateStatusOrder,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [ORDERS_QUERY_KEYS.GET_ORDERS],

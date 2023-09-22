@@ -3,6 +3,7 @@ export enum StatusOrderType {
   InProcess = 'InProcess',
   Delivered = 'Delivered',
   Completed = 'Completed',
+  Cancelled = 'Cancelled',
 }
 
 export enum StatusOrderTypeId {
@@ -10,6 +11,7 @@ export enum StatusOrderTypeId {
   InProcess = 200,
   Delivered = 300,
   Completed = 400,
+  Cancelled = 500,
 }
 
 export interface PurchaseOrderList {
@@ -59,3 +61,11 @@ export interface PurchaseOrderDetail {
   };
   total: number;
 }
+
+export const OrderStatusLabels: Record<StatusOrderType, string> = {
+  Pending: 'Pending',
+  InProcess: 'In Process',
+  Delivered: 'Delivered',
+  Completed: 'Completed',
+  Cancelled: 'Cancelled',
+};

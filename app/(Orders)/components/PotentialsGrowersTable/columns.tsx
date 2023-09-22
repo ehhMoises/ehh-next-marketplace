@@ -9,11 +9,12 @@ import { PotentialGrowers } from '@/models/targetSellers';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 
+const numberFormat: numbro.Format = {
+  thousandSeparated: true,
+  mantissa: 2,
+};
 const formatPotentialGrowersPrice = (value: number) => {
-  const price = numbro(value).format({
-    thousandSeparated: true,
-    mantissa: 2,
-  });
+  const price = numbro(value).format(numberFormat);
 
   return `$${price}`;
 };
@@ -75,7 +76,12 @@ export const getColumns = ({
     header: 'Quantity',
     cell: ({ row }) => (
       <div>
-        <p className="text-stone-500 text-md">{formatPotentialGrowersPrice(row.original.availableQuantity)}</p>
+        <p className="text-stone-500 text-md">
+          {numbro(row.original.availableQuantity).format({
+            thousandSeparated: true,
+            mantissa: 0,
+          })}
+        </p>
       </div>
     ),
   },

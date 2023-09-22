@@ -82,10 +82,23 @@ export const addOrder = async (data: any) => {
   }
 };
 
-export const updateOrder = async (data: any) => {
+export const updateOrder = async (data: PurchaseOrderDetail) => {
   try {
     const response = await axios.put(`/${context}/${data.id}`, {
       ...data,
+    });
+
+    return response.data;
+  } catch (err: unknown) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const updateStatusOrder = async (data: PurchaseOrderDetail) => {
+  try {
+    const response = await axios.put(`/${context}/${data.id}/status`, {
+      status: Number.parseInt(data.status.id.toString(), 10),
     });
 
     return response.data;

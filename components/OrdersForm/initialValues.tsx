@@ -1,4 +1,4 @@
-import { PurchaseOrderDetail, StatusOrderType } from '@/models/purchase-order';
+import { PurchaseOrderDetail, StatusOrderType, StatusOrderTypeId } from '@/models/purchase-order';
 
 export const initialValues: PurchaseOrderDetail = {
   id: '',
@@ -36,4 +36,20 @@ export const initialValues: PurchaseOrderDetail = {
     name: StatusOrderType.Pending,
   },
   total: 0,
+};
+
+export const OrderStatusLabels: Record<StatusOrderType, string> = {
+  Pending: 'Pending',
+  InProcess: 'In Process',
+  Delivered: 'Delivered',
+  Completed: 'Completed',
+  Cancelled: 'Cancelled',
+};
+
+export const OrderStatusName: Record<StatusOrderTypeId, StatusOrderType> = {
+  [StatusOrderTypeId.Pending]: StatusOrderType.Pending,
+  [StatusOrderTypeId.InProcess]: StatusOrderType.InProcess,
+  [StatusOrderTypeId.Delivered]: StatusOrderType.Delivered,
+  [StatusOrderTypeId.Completed]: StatusOrderType.Completed,
+  [StatusOrderTypeId.Cancelled]: StatusOrderType.Cancelled,
 };

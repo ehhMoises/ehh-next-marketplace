@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../ui/button';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { usePathname, useRouter } from 'next/navigation';
-import { PurchaseOrderList } from '@/models/purchase-order';
+import { OrderStatusLabels, PurchaseOrderList } from '@/models/purchase-order';
 
 export const MyOrdersTable: FC = () => {
   const { data, isLoading, isError } = useGetOrdersQuery({});
@@ -71,8 +71,8 @@ export const MyOrdersTable: FC = () => {
       header: 'Status',
       cell: ({ row }) => {
         return (
-          <Badge variant="outline" className={`py-1 px-4 w-full flex justify-center `}>
-            {row.original.status.name}
+          <Badge variant="outline" className="py-1 px-4 w-full flex justify-center uppercase">
+            {OrderStatusLabels[row.original.status.name]}
           </Badge>
         );
       },
@@ -118,7 +118,7 @@ export const MyOrdersTable: FC = () => {
   return (
     <Accordion type="single" typeof="single" className="mt-4" defaultValue="orders-table-item" collapsible>
       <AccordionItem value="orders-table-item">
-        <AccordionTrigger className="bg-orange-500 p-4 text-white">My Orders Table</AccordionTrigger>
+        <AccordionTrigger className="bg-marketplace p-4 text-white">My Orders Table</AccordionTrigger>
         <AccordionContent>
           <DataTable columns={columns} data={dataSource} />
         </AccordionContent>
