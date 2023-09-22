@@ -38,14 +38,6 @@ export const initialValues: PurchaseOrderDetail = {
   total: 0,
 };
 
-export const OrderStatusLabels: Record<StatusOrderType, string> = {
-  Pending: 'Pending',
-  InProcess: 'In Process',
-  Delivered: 'Delivered',
-  Completed: 'Completed',
-  Cancelled: 'Cancelled',
-};
-
 export const OrderStatusName: Record<StatusOrderTypeId, StatusOrderType> = {
   [StatusOrderTypeId.Pending]: StatusOrderType.Pending,
   [StatusOrderTypeId.InProcess]: StatusOrderType.InProcess,
