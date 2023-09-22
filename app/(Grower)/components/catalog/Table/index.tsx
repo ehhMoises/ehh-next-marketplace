@@ -88,7 +88,7 @@ export const StockTable: FC = () => {
 
   if (isError) {
     return (
-      <div className="bg-white rounded-lg">
+      <div className="bg-white rounded-lg m-4">
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>

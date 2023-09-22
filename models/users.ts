@@ -4,8 +4,9 @@ export interface IUser {
   id: string;
   accountId: string;
   email: string;
+  password: string;
   name: string;
   position: string | null;
-  status: IEnum;
-  type: IEnum;
+  type: IEnum | number;
+  status: IEnum | number;
 }

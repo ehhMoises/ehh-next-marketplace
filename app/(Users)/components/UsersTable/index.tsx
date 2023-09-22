@@ -3,7 +3,6 @@
 import { FC, useEffect, useState } from 'react';
 import { DataTable } from '@/components/ui/data-table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useGetOrdersQuery } from '@/app/(Grower)/hooks/queries/useOrdersQuery';
 import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -21,7 +20,6 @@ import { IUser } from '@/models/users';
 
 export const UsersTable: FC = () => {
   const { data: users, isLoading: isLoadingUsers, isError: isErrorUsers } = useGetUsersQuery({});
-  const [dataSource, setDataSource] = useState<PurchaseOrderList[]>([]);
   const [currentRootPath, setCurrentRootPath] = useState('');
 
   console.log('users', users);
@@ -94,7 +92,7 @@ export const UsersTable: FC = () => {
           variant="ghost"
           title="Edit"
           onClick={() => {
-            router.push(`${currentRootPath}/${row.getValue('id')}`);
+            router.push(`/users/home/${row.getValue('id')}`);
           }}
         >
           <FontAwesomeIcon icon={faPen} size="xl" className="text-stone-500 hover:text-stone-400 transition-colors" />
@@ -113,20 +111,20 @@ export const UsersTable: FC = () => {
 
   if (isErrorUsers) {
     return (
-      <div className="bg-white rounded-lg">
+      <div className="bg-white rounded-lg m-4">
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
-          <AlertDescription>There was an error loading Orders Table, please try again later.</AlertDescription>
+          <AlertDescription>There was an error loading Users Table, please try again later.</AlertDescription>
         </Alert>
       </div>
     );
   }
 
   return (
-    <Accordion type="single" typeof="single" className="mt-4" defaultValue="orders-table-item" collapsible>
-      <AccordionItem value="orders-table-item">
-        <AccordionTrigger className="bg-orange-500 p-4 text-white">My Orders Table</AccordionTrigger>
+    <Accordion type="single" typeof="single" className="mt-4" defaultValue="users-table-item" collapsible>
+      <AccordionItem value="users-table-item">
+        <AccordionTrigger className="bg-orange-500 p-4 text-white">Users</AccordionTrigger>
         <AccordionContent>
           <DataTable columns={columns} data={users.data} />
         </AccordionContent>

@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
-import { BrandsForm } from '@/app/(Grower)/components/brands/Form';
 import { IParamsProps } from '@/app/interfaces';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
+import { UsersForm } from '@/app/(Users)/components/Form';
 
 const OrderDetail: FC<IParamsProps> = async ({ params }: { params: { id: string } }) => {
   const me = await applyAuthorizationOperations();
@@ -18,7 +18,7 @@ const OrderDetail: FC<IParamsProps> = async ({ params }: { params: { id: string 
       >
         <MainNavigationHeader me={me} />
         <NavigationGrower />
-        <BrandsForm params={params} />
+        <UsersForm params={params} />
       </section>
     </main>
   );
