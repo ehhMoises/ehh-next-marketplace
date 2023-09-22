@@ -83,12 +83,12 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
   console.log('packSizes in FORM', packSizes);
   return (
     <div>
-      <div className="bg-orange-500 p-4 text-white">Product Information</div>
+      <div className="bg-marketplace p-4 text-white">Product Information</div>
       <div className="bg-gray-300 flex flex-col p-4">
         <div className="font-bold">{catalog?.header}</div>
         <div>{catalog?.subHeader}</div>
       </div>
-      <div className="p-4 bg-white">
+      <div className="p-4 bg-marketplace-accent-2">
         <form onSubmit={handleSubmit}>
           {/* BRAND */}
           {isNew && (

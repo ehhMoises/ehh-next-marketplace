@@ -91,7 +91,7 @@ export const PackStyleTable: FC = () => {
       </div>
 
       <div>
-        <div className="bg-orange-500 p-4 text-white">Pack Style Table</div>
+        <div className="bg-marketplace p-4 text-white">Pack Style Table</div>
         <DataTable columns={columns} data={packStyles || []} />
       </div>
     </div>

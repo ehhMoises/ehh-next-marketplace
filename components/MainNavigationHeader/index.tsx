@@ -45,6 +45,10 @@ const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
     router.push(`/retailer/${key}`);
   };
 
+  const goToSearchHandler = () => {
+    router.push('/search');
+  };
+
   const signOutHandler = () => {
     removeAllCookies();
     router.push('/sign-out');
@@ -126,6 +130,7 @@ const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
                     <DropdownMenuCheckboxItem onClick={() => buyerRoutesHandler('profile')}>
                       Profile
                     </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={goToSearchHandler}>Search</DropdownMenuCheckboxItem>
                     <DropdownMenuSeparator />
                   </Fragment>
                 ))}

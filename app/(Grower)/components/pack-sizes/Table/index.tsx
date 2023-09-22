@@ -111,7 +111,7 @@ export const PackSizeTable: FC = () => {
       </div>
 
       <div>
-        <div className="bg-orange-500 p-4 text-white">Pack Size Table</div>
+        <div className="bg-marketplace p-4 text-white">Pack Size Table</div>
         <DataTable columns={columns} data={packSizes || []} />
       </div>
     </div>

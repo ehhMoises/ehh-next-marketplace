@@ -1,11 +1,10 @@
-import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
-import { NavigationMenuRetailer } from '../../components/Navigation';
-import { OrdersCards } from '../../components/OrdersCards';
+import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
-import { MyOrdersTable } from '@/components/OrdersTable';
+import { ProfileFormComponent } from '@/components/ProfileForm';
+import { NavigationMenuRetailer } from '../../components/Navigation';
 
-const HomeRetailer: FC = async () => {
+const ProfileRetailer: FC = async () => {
   const me = await applyAuthorizationOperations();
 
   return (
@@ -18,13 +17,12 @@ const HomeRetailer: FC = async () => {
       >
         <MainNavigationHeader me={me} />
         <NavigationMenuRetailer />
-        <div className="px-4">
-          <OrdersCards />
-          <MyOrdersTable />
+        <div className="p-4 pt-0">
+          <ProfileFormComponent titleForm="Retailer Profile" />
         </div>
       </section>
     </main>
   );
 };
 
-export default HomeRetailer;
+export default ProfileRetailer;

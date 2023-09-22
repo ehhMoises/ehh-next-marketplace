@@ -8,7 +8,7 @@ import { ProductCatalogData } from './data';
 export const ProductCatalogTable: FC = () => {
   return (
     <div>
-      <div className="bg-orange-500 p-4 text-white">Product Catalog Table</div>
+      <div className="bg-marketplace p-4 text-white">Product Catalog Table</div>
       <DataTable columns={columns} data={ProductCatalogData} />
     </div>
   );

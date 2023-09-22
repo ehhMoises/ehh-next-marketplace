@@ -7,6 +7,7 @@ import { OrdersForm } from '@/components/OrdersForm';
 
 const OrderDetail: FC<IParamsProps> = async ({ params }: { params: { id: string } }) => {
   const me = await applyAuthorizationOperations();
+  const accountType = me?.account.type.name;
 
   return (
     <main className="flex min-h-screen">
@@ -19,7 +20,7 @@ const OrderDetail: FC<IParamsProps> = async ({ params }: { params: { id: string 
         <MainNavigationHeader me={me} />
         <NavigationGrower />
         <div className="p-4 pt-0">
-          <OrdersForm params={params} />
+          <OrdersForm params={params} accountType={accountType} />
         </div>
       </section>
     </main>
