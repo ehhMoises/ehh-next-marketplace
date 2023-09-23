@@ -15,10 +15,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useGetUsersQuery } from '@/app/(Grower)/hooks/queries/useUsersQuery';
 import { IUser } from '@/models/users';
+import { IEnum } from '@/models/enum';
 
 export const UsersTable: FC = () => {
   const { data: users, isLoading: isLoadingUsers, isError: isErrorUsers } = useGetUsersQuery({});
-  const [currentRootPath, setCurrentRootPath] = useState('');
+  const [, setCurrentRootPath] = useState('');
 
   console.log('users', users);
 
@@ -65,7 +66,7 @@ export const UsersTable: FC = () => {
       cell: ({ row }) => {
         return (
           <Badge variant="outline" className={`py-1 px-4 w-full flex justify-center `}>
-            {row.original.status.name}
+            {(row.original.status as IEnum).name}
           </Badge>
         );
       },
@@ -76,7 +77,7 @@ export const UsersTable: FC = () => {
       cell: ({ row }) => {
         return (
           <Badge variant="outline" className={`py-1 px-4 w-full flex justify-center `}>
-            {row.original.type.name}
+            {(row.original.type as IEnum).name}
           </Badge>
         );
       },
