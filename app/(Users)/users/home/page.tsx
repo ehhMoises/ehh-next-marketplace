@@ -1,10 +1,10 @@
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
-import { OrdersCards } from '@/app/(Retailer)/components/OrdersCards';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
-import { MyOrdersTable } from '@/components/OrdersTable';
 import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
 import { UsersTable } from '../../components/UsersTable';
+import { AccountType } from '@/models/account-user';
+import { NavigationMenuRetailer } from '@/app/(Retailer)/components/Navigation';
 
 const HomeRetailer: FC = async () => {
   const me = await applyAuthorizationOperations();
@@ -18,7 +18,8 @@ const HomeRetailer: FC = async () => {
         }}
       >
         <MainNavigationHeader me={me} />
-        <NavigationGrower />
+
+        {me?.account.type.name === AccountType.Grower ? <NavigationGrower /> : <NavigationMenuRetailer />}
         <div className="px-4">
           <UsersTable />
         </div>

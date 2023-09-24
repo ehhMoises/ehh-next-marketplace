@@ -1,14 +1,13 @@
 import { FC } from 'react';
-import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
 import { IParamsProps } from '@/app/interfaces';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
-import { UsersForm } from '@/app/(Users)/components/Form';
+import { OrdersForm } from '@/components/OrdersForm';
 import { NavigationMenuRetailer } from '@/app/(Retailer)/components/Navigation';
-import { AccountType } from '@/models/account-user';
 
 const OrderDetail: FC<IParamsProps> = async ({ params }: { params: { id: string } }) => {
   const me = await applyAuthorizationOperations();
+  const accountType = me?.account.type.name;
 
   return (
     <main className="flex min-h-screen">
@@ -19,8 +18,10 @@ const OrderDetail: FC<IParamsProps> = async ({ params }: { params: { id: string 
         }}
       >
         <MainNavigationHeader me={me} />
-        {me?.account.type.name === AccountType.Grower ? <NavigationGrower /> : <NavigationMenuRetailer />}
-        <UsersForm params={params} />
+        <NavigationMenuRetailer />
+        <div className="p-4 pt-0">
+          <OrdersForm params={params} accountType={accountType} />
+        </div>
       </section>
     </main>
   );

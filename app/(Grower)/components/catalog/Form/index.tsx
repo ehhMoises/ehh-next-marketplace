@@ -12,7 +12,7 @@ import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
-import { useGetPackSizesQuery } from '@/app/(Grower)/hooks/queries/usePackSize';
+// import { useGetPackSizesQuery } from '@/app/(Grower)/hooks/queries/usePackSize';
 import { CatalogFormComponent } from './form';
 import { useCreateCatalogMutation, useUpdateCatalogMutation } from '@/app/(Grower)/hooks/mutations/useStockMutation';
 import { toast } from '@/components/ui/use-toast';
@@ -56,17 +56,46 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
 
   const isError = isErrorBrands || isErrorGrades || isErrorPackStyles || isErrorCatalog;
 
-  const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setValues, setFieldValue } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit: () => {
-        if (isNew) {
-          createCatalog(values, {
+  const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setFieldValue } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: () => {
+      if (isNew) {
+        createCatalog(values, {
+          onSuccess: () => {
+            resetForm();
+            toast({
+              title: 'Catalog Successfully Created',
+              className: 'bg-green-500 text-white',
+            });
+            setTimeout(() => {
+              router.push('/grower/catalog/');
+            }, 2000);
+          },
+          onError: (error) => {
+            toast({
+              title: 'Catalog creation failed',
+              description: `There was an error creating the catalog, please try again later. ${error}`,
+              variant: 'destructive',
+            });
+          },
+        });
+      } else {
+        updateCatalog(
+          {
+            id,
+            startDate: values.startDate,
+            endDate: values.endDate,
+            standardPrice: values.standardPrice,
+            minPrice: values.minPrice,
+            totalQuantity: values.totalQuantity,
+            reservedQuantity: values.reservedQuantity,
+          },
+          {
             onSuccess: () => {
               resetForm();
               toast({
-                title: 'Catalog Successfully Created',
+                title: 'Catalog Successfully Updated',
                 className: 'bg-green-500 text-white',
               });
               setTimeout(() => {
@@ -75,46 +104,16 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
             },
             onError: (error) => {
               toast({
-                title: 'Catalog creation failed',
-                description: `There was an error creating the catalog, please try again later. ${error}`,
+                title: 'Catalog update failed',
+                description: `There was an error updating the catalog, please try again later. ${error}`,
                 variant: 'destructive',
               });
             },
-          });
-        } else {
-          updateCatalog(
-            {
-              id,
-              startDate: values.startDate,
-              endDate: values.endDate,
-              standardPrice: values.standardPrice,
-              minPrice: values.minPrice,
-              totalQuantity: values.totalQuantity,
-              reservedQuantity: values.reservedQuantity,
-            },
-            {
-              onSuccess: () => {
-                resetForm();
-                toast({
-                  title: 'Catalog Successfully Updated',
-                  className: 'bg-green-500 text-white',
-                });
-                setTimeout(() => {
-                  router.push('/grower/catalog/');
-                }, 2000);
-              },
-              onError: (error) => {
-                toast({
-                  title: 'Catalog update failed',
-                  description: `There was an error updating the catalog, please try again later. ${error}`,
-                  variant: 'destructive',
-                });
-              },
-            }
-          );
-        }
-      },
-    });
+          }
+        );
+      }
+    },
+  });
 
   const isButtonDisabled = !isValid || !dirty || isLoadingData;
 

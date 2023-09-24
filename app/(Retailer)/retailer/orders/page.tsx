@@ -1,8 +1,8 @@
-import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
+import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { NavigationMenuRetailer } from '../../components/Navigation';
-import { ProductCatalogTable } from '../../components/ProductCatalogTable';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
+import { MyOrdersTable } from '@/components/OrdersTable';
 
 const OrdersRetailer: FC = async () => {
   const me = await applyAuthorizationOperations();
@@ -18,7 +18,7 @@ const OrdersRetailer: FC = async () => {
         <MainNavigationHeader me={me} />
         <NavigationMenuRetailer />
         <div className="p-4 pt-0">
-          <ProductCatalogTable />
+          <MyOrdersTable />
         </div>
       </section>
     </main>
