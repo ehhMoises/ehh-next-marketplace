@@ -7,7 +7,6 @@ import { MyOrdersTable } from '@/components/OrdersTable';
 
 const OrderPage: FC<IParamsProps> = async ({ params }: { params: { id: string } }) => {
   const me = await applyAuthorizationOperations();
-  console.log('params', params);
 
   return (
     <main className="flex min-h-screen">

@@ -34,7 +34,6 @@ export const getPackSizeList = async ({ accessToken }: { accessToken?: string })
 export const getPackSizeListByPackStyleId = async (packStyleId: string) => {
   try {
     const response = await axios.get(`/pack-styles/${packStyleId}/${context}/`);
-    console.log('response.data', response.data);
     return response.data.data;
   } catch (err: unknown) {
     console.error(err);

@@ -79,8 +79,6 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
   // const form = useForm<z.infer<typeof FormSchema>>({
   //   resolver: zodResolver(FormSchema),
   // });
-  console.log('values', values);
-  console.log('packSizes in FORM', packSizes);
   return (
     <div>
       <div className="bg-marketplace p-4 text-white">Product Information</div>

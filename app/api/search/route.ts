@@ -6,8 +6,6 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const cookieStore = cookies();
-  // console.log(cookieStore.get(PRODUCT_CARD_MODE_KEY));
-
   const accessToken = cookieStore.get(TokenTypes.ACCESS_TOKEN)?.value;
   const body = await req.json();
 

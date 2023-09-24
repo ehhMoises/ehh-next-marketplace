@@ -136,7 +136,6 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
     setFieldValue('packStyleId', packStyleId);
     getPackSizesByPackStyleId(packStyleId, {
       onSuccess: (packSizes) => {
-        console.log('Pack SIZES', packSizes);
         setPackSizes(packSizes);
       },
       onError: (error) => {

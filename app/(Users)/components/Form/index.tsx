@@ -107,7 +107,6 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
 
   useEffect(() => {
     if (!!user && isSuccessUser && !isNew) {
-      console.log('user', user);
       setValues(user);
       setFieldValue('status', String(user.status.id));
       setFieldValue('type', String(user.type.id));
@@ -115,9 +114,6 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
   }, [isNew, isSuccessUser]);
 
   const isButtonDisabled = !isValid || !dirty || isLoadingCreateUser || isLoadingUpdateUser;
-
-  console.log('values', values);
-  console.log('errors', errors);
 
   if (isLoadingUser && !isNew) {
     return (

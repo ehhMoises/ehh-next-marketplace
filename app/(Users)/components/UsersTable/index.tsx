@@ -21,8 +21,6 @@ export const UsersTable: FC = () => {
   const { data: users, isLoading: isLoadingUsers, isError: isErrorUsers } = useGetUsersQuery({});
   const [, setCurrentRootPath] = useState('');
 
-  console.log('users', users);
-
   const router = useRouter();
   const pathname = usePathname();
 
