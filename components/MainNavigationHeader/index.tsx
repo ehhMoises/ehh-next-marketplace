@@ -2,7 +2,7 @@
 
 import { FC, Fragment, useState } from 'react';
 import Image from 'next/image';
-import { ChevronDown, LogOut } from 'lucide-react';
+import { ChevronDown, ChevronUp, LogOut } from 'lucide-react';
 import SignIn from '../SignIn';
 import Register from '../Register';
 import {
@@ -29,11 +29,12 @@ interface MainNavigationHeaderProps {
 }
 
 const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
+  const router = useRouter();
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { data: shoppingCartItems } = useShoppingCartItemsQuery(me);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
   const [isSignUpInModalOpen, setIsSignUpInModalOpen] = useState(false);
   const accessToken = useCookie(TokenTypes.ACCESS_TOKEN);
-  const router = useRouter();
   const canPurchaseOnShoppingCart =
     shoppingCartItems && shoppingCartItems.count > 0 && me?.account.type.name === AccountType.Buyer;
 
@@ -91,16 +92,20 @@ const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
         </div>
 
         <div className="flex flex-col items-center gap-y-4">
-          <DropdownMenu>
+          <DropdownMenu
+            onOpenChange={(open) => {
+              setIsOpenMenu(open);
+            }}
+          >
             <DropdownMenuTrigger asChild>
               <div className="flex flex-row cursor-pointer h-min">
                 <p className="text-stone-500 hover:text-stone-600 transition-colors inline-block ">
                   {me && accessToken ? `Hello ${me.name}` : 'Sign in or register'}
                 </p>
-                <ChevronDown width={16} />
+                {isOpenMenu ? <ChevronUp width={16} /> : <ChevronDown width={16} />}
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent className="w-56 mr-2">
               {accessToken &&
                 (me?.account.type.name === AccountType.Grower ? (
                   <Fragment key="GrowerStage">
@@ -153,8 +158,8 @@ const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
                 </Fragment>
               )}
               {me && (
-                <DropdownMenuCheckboxItem onClick={signOutHandler} className="gap-x-2">
-                  Sign Out
+                <DropdownMenuCheckboxItem onClick={signOutHandler} className="gap-x-2 flex flex-row justify-between">
+                  <p>Sign Out</p>
                   <LogOut size={16} className="text-stone-400" />
                 </DropdownMenuCheckboxItem>
               )}
