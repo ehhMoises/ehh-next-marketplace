@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
   });
   const growers = await getPossibleGrowers({
     ...payload,
+    freightPayment: Number.parseInt(payload.freightPayment, 10),
     accessToken,
   });
   return NextResponse.json({
