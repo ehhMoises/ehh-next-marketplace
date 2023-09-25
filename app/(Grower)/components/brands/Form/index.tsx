@@ -56,7 +56,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
                 resetForm();
                 toast({
                   title: 'Brand Successfully Created',
-                  className: 'bg-green-500 text-white',
+                  className: 'bg-marketplace/90 text-white',
                 });
                 setTimeout(() => {
                   router.push('/grower/brands/');
@@ -79,7 +79,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
                 resetForm();
                 toast({
                   title: 'Brand Successfully Updated',
-                  className: 'bg-green-500 text-white',
+                  className: 'bg-marketplace/90 text-white',
                 });
                 setTimeout(() => {
                   router.push('/grower/brands/');

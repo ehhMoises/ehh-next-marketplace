@@ -73,7 +73,7 @@ export const OrdersForm: FC<IParamsProps & { accountType?: AccountType }> = ({ p
               resetForm();
               toast({
                 title: 'Order Successfully Created',
-                className: 'bg-green-500 text-white',
+                className: 'bg-marketplace/90 text-white',
               });
               setTimeout(() => {
                 router.push(currentRootPath);
@@ -97,7 +97,7 @@ export const OrdersForm: FC<IParamsProps & { accountType?: AccountType }> = ({ p
             resetForm();
             toast({
               title: 'Order Successfully Updated',
-              className: 'bg-green-500 text-white',
+              className: 'bg-marketplace/90 text-white',
             });
             setTimeout(() => {
               router.push(currentRootPath);

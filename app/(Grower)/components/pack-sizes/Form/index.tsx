@@ -57,7 +57,7 @@ export const PackSizeForm: FC<IParamsProps> = ({ params }: { params: { id: strin
               resetForm();
               toast({
                 title: 'Pack Size Successfully Created',
-                className: 'bg-green-500 text-white',
+                className: 'bg-marketplace/90 text-white',
               });
               setTimeout(() => {
                 router.push('/grower/pack-sizes/');
@@ -79,7 +79,7 @@ export const PackSizeForm: FC<IParamsProps> = ({ params }: { params: { id: strin
                 resetForm();
                 toast({
                   title: 'Pack Size Successfully Updated',
-                  className: 'bg-green-500 text-white',
+                  className: 'bg-marketplace/90 text-white',
                 });
                 setTimeout(() => {
                   router.push('/grower/pack-sizes/');
@@ -102,7 +102,7 @@ export const PackSizeForm: FC<IParamsProps> = ({ params }: { params: { id: strin
     if (!!packSize && isSuccessPackSize && !isNew) {
       setValues(packSize);
     }
-  }, [packSize, isNew, isSuccessPackSize]);
+  }, [packSize, isNew, isSuccessPackSize, setValues]);
 
   const isButtonDisabled = !isValid || !dirty || isLoadingCreatePackSize || isLoadingUpdatePackSize;
 

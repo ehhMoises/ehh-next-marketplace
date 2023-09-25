@@ -20,18 +20,14 @@ const { initialValues, validationSchema } = utilsProfileForm;
 export const ProfileFormComponent: FC<{ titleForm: string }> = ({ titleForm }) => {
   const { toast } = useToast();
   const { account, addresses, isLoadingAccount, isLoadingAddresses } = useGetProfileQuery();
-  const {
-    applyMutation,
-    isLoading: isLoadingProfileFormMutation,
-    isSuccess: isSuccessProfileFormMutation,
-  } = useProfileMutation();
+  const { applyMutation, isLoading: isLoadingProfileFormMutation } = useProfileMutation();
   const isLoading = isLoadingAccount || isLoadingAddresses || isLoadingProfileFormMutation;
   const { handleSubmit, getFieldProps, values, setValues, setFieldValue, errors, touched, handleChange, handleBlur } =
     useFormik({
       initialValues,
       validationSchema,
       onSubmit: async (resultFormValues) => {
-        await applyMutation({
+        const isSuccessProfileFormMutation = await applyMutation({
           account: {
             name: resultFormValues.name,
             contactName: resultFormValues.contactName,
@@ -45,7 +41,7 @@ export const ProfileFormComponent: FC<{ titleForm: string }> = ({ titleForm }) =
         if (isSuccessProfileFormMutation) {
           toast({
             title: 'Profile Successfully Updated',
-            className: 'bg-slate-500 text-white',
+            className: 'bg-marketplace/90 text-white',
           });
         }
       },

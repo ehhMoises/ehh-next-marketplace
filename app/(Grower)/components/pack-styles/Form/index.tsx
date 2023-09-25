@@ -52,7 +52,7 @@ export const PackStyleForm: FC<IParamsProps> = ({ params }: { params: { id: stri
             resetForm();
             toast({
               title: 'Pack Style Successfully Created',
-              className: 'bg-green-500 text-white',
+              className: 'bg-marketplace/90 text-white',
             });
             setTimeout(() => {
               router.push('/grower/pack-styles/');
@@ -74,7 +74,7 @@ export const PackStyleForm: FC<IParamsProps> = ({ params }: { params: { id: stri
               resetForm();
               toast({
                 title: 'Pack Style Successfully Updated',
-                className: 'bg-green-500 text-white',
+                className: 'bg-marketplace/90 text-white',
               });
               setTimeout(() => {
                 router.push('/grower/pack-styles/');

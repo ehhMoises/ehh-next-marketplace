@@ -64,7 +64,7 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
               resetForm();
               toast({
                 title: 'User Successfully Created',
-                className: 'bg-green-500 text-white',
+                className: 'bg-marketplace/90 text-white',
               });
               setTimeout(() => {
                 router.push('/users/home/');
@@ -86,7 +86,7 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
                 resetForm();
                 toast({
                   title: 'User Successfully Updated',
-                  className: 'bg-green-500 text-white',
+                  className: 'bg-marketplace/90 text-white',
                 });
                 setTimeout(() => {
                   router.push('/users/home/');

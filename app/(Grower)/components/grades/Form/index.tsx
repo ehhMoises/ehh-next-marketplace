@@ -49,7 +49,7 @@ export const Grade: FC<IParamsProps> = ({ params }: { params: { id: string } }) 
             resetForm();
             toast({
               title: 'Grade Successfully Created',
-              className: 'bg-green-500 text-white',
+              className: 'bg-marketplace/90 text-white',
             });
             setTimeout(() => {
               router.push('/grower/grades/');
@@ -71,7 +71,7 @@ export const Grade: FC<IParamsProps> = ({ params }: { params: { id: string } }) 
               resetForm();
               toast({
                 title: 'Grade Successfully Updated',
-                className: 'bg-green-500 text-white',
+                className: 'bg-marketplace/90 text-white',
               });
               setTimeout(() => {
                 router.push('/grower/grades/');
@@ -94,7 +94,7 @@ export const Grade: FC<IParamsProps> = ({ params }: { params: { id: string } }) 
     if (!!grade && isSuccessGrade && !isNew) {
       setValues(grade);
     }
-  }, [Grade, isNew, isSuccessGrade]);
+  }, [grade, isNew, isSuccessGrade, setValues]);
 
   const isButtonDisabled = !isValid || !dirty || isLoadingCreateGrade || isLoadingUpdateGrade;
 

@@ -65,6 +65,7 @@ export const useProfileMutation = () => {
   };
 
   const applyMutation = async ({ account, addresses }: { account: IAccountBody; addresses: IAddressAccountBody[] }) => {
+    let isSuccess = false;
     try {
       await Promise.all([
         applyUpdateAccount({
@@ -72,7 +73,11 @@ export const useProfileMutation = () => {
         }),
         mutateAddresses(addresses),
       ]);
+      isSuccess = true;
+
+      return isSuccess;
     } catch (err) {
+      isSuccess = false;
       console.error(err);
     }
   };
@@ -86,6 +91,8 @@ export const useProfileMutation = () => {
       updateAddress: errorUpdateAddressAccount,
     },
     isLoading: isLoadingUpdateAccount || isLoadingCreatedAddressAccount || isLoadingUpdatedAddressAccount,
-    isSuccess: isSuccessUpdateAccount || isSuccessCreatedAddressAccount || isSuccessUpdatedAddressAccount,
+    isSuccessUpdateAccount,
+    isSuccessCreatedAddressAccount,
+    isSuccessUpdatedAddressAccount,
   };
 };

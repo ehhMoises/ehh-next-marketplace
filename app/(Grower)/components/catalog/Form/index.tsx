@@ -66,7 +66,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
             resetForm();
             toast({
               title: 'Catalog Successfully Created',
-              className: 'bg-green-500 text-white',
+              className: 'bg-marketplace/90 text-white',
             });
             setTimeout(() => {
               router.push('/grower/catalog/');
@@ -96,7 +96,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
               resetForm();
               toast({
                 title: 'Catalog Successfully Updated',
-                className: 'bg-green-500 text-white',
+                className: 'bg-marketplace/90 text-white',
               });
               setTimeout(() => {
                 router.push('/grower/catalog/');
