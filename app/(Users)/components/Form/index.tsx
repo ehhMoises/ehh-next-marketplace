@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { FC, useEffect } from 'react';
 import { initialValues } from './initialValues';
 import { validationSchema } from './validationSchema';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';

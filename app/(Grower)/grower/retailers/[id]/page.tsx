@@ -1,5 +1,5 @@
 import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { FC } from 'react';
 const RetailerDetail: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {

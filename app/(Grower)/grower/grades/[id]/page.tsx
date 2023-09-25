@@ -1,7 +1,7 @@
 import { FC } from 'react';
 // import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
 // import { Grade } from '@/app/(Grower)/components/grades/Form';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import { redirect } from 'next/navigation';
 // import MainNavigationHeader from '@/components/MainNavigationHeader';
 // import { applyAuthorizationOperations } from '@/lib/auth-checking';

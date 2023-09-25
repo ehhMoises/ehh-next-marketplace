@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
 import { UsersForm } from '@/app/(Users)/components/Form';

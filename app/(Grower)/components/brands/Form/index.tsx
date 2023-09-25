@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { FC, useEffect } from 'react';
 import { initialValues } from './initialValues';
 import { validationSchema } from './validationSchema';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import { useGetGrowingMethodsQuery } from '@/app/(Grower)/hooks/queries/useGrowingMethodsQuery';
 import { useGetBrandByIdQuery } from '@/app/(Grower)/hooks/queries/useBrandsQuery';
 import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
@@ -52,7 +52,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
           createBrand(
             { ...values, growingMethod: +values.growingMethod },
             {
-              onSuccess: (data) => {
+              onSuccess: () => {
                 resetForm();
                 toast({
                   title: 'Brand Successfully Created',
@@ -75,7 +75,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
           updateBrand(
             { ...values, growingMethod: +values.growingMethod, id, isActive: true },
             {
-              onSuccess: (data) => {
+              onSuccess: () => {
                 resetForm();
                 toast({
                   title: 'Brand Successfully Updated',
@@ -107,7 +107,7 @@ export const BrandsForm: FC<IParamsProps> = ({ params }: { params: { id: string 
       setValues(payload);
       setFieldValue('growingMethod', brand.growingMethod.id);
     }
-  }, [brand, isNew, isSuccessBrand]);
+  }, [brand, isNew, isSuccessBrand, setFieldValue, setValues]);
 
   const isButtonDisabled = !isValid || !dirty || isLoadingCreateBrand || isLoadingUpdateBrand;
 

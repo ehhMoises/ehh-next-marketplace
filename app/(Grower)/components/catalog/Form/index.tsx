@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { FC, useEffect, useState } from 'react';
 import { initialValues } from './initialValues';
 import { validationSchema } from './validationSchema';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import { useGetBrandsQuery } from '@/app/(Grower)/hooks/queries/useBrandsQuery';
 import { useGetGradeQuery } from '@/app/(Grower)/hooks/queries/useGradeQuery';
 import { useGetPackStyleQuery } from '@/app/(Grower)/hooks/queries/usePackStyle';
@@ -129,7 +129,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
       setFieldValue('reservedQuantity', catalog.reservedQuantity);
       setFieldValue('standardPrice', catalog.standardPrice);
     }
-  }, [catalog, isNew, isSuccessCatalog]);
+  }, [catalog, isNew, isSuccessCatalog, setFieldValue]);
 
   const handlePackStyleChange = (packStyleId: string) => {
     setFieldValue('packStyleId', packStyleId);

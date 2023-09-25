@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
 import { OrdersForm } from '@/components/OrdersForm';

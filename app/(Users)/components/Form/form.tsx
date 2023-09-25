@@ -1,6 +1,6 @@
 'use client';
 
-import { FieldConfig, FieldInputProps, FormikErrors, FormikTouched, useFormik } from 'formik';
+import { FieldConfig, FieldInputProps, FormikErrors, FormikTouched } from 'formik';
 import { FC, FormEvent } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,9 +19,11 @@ interface IUserFormComponentProps {
   isButtonDisabled: boolean;
   isNew: boolean;
   handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getFieldProps: (nameOrOptions: string | FieldConfig<any>) => FieldInputProps<any>;
   setFieldValue: (
     field: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any,
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<IUser>>;

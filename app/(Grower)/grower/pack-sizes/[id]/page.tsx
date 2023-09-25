@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { NavigationGrower } from '@/app/(Grower)/components/Navigation';
 import { PackSizeForm } from '@/app/(Grower)/components/pack-sizes/Form';
-import { IParamsProps } from '@/app/interfaces';
+import { IParamsProps } from '@/models/paramsPage';
 import MainNavigationHeader from '@/components/MainNavigationHeader';
 import { applyAuthorizationOperations } from '@/lib/auth-checking';
 
