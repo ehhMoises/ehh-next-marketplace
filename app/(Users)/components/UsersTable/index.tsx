@@ -121,7 +121,7 @@ export const UsersTable: FC = () => {
   return (
     <Accordion type="single" typeof="single" className="mt-4" defaultValue="users-table-item" collapsible>
       <AccordionItem value="users-table-item">
-        <AccordionTrigger className="bg-orange-500 p-4 text-white">Users</AccordionTrigger>
+        <AccordionTrigger className="bg-marketplace p-4 text-white">Users</AccordionTrigger>
         <AccordionContent>
           <DataTable columns={columns} data={users.data} />
         </AccordionContent>

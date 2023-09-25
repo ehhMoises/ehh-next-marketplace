@@ -42,7 +42,7 @@ export const UserFormComponent: FC<IUserFormComponentProps> = ({
   const router = useRouter();
   return (
     <div className="p-4">
-      <div className="bg-orange-500 p-4 text-white">User Information</div>
+      <div className="bg-marketplace p-4 text-white">User Information</div>
       <div className="p-4 bg-white">
         <form onSubmit={handleSubmit}>
           <div className="pb-4">
