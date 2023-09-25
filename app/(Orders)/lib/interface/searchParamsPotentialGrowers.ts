@@ -16,4 +16,5 @@ export interface QuickSearchParamsPotentialGrowers {
   deliveryDateUtc: string;
   shipToLocation: string;
   grade: string;
+  freightPayment: string;
 }

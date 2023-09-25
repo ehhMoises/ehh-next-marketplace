@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { FormikErrors, FormikTouched } from 'formik';
 import { IFilter, KeysFilterBrand } from '../lib/filterBrandSchema';
+import { FreightPaymentsType, FreightPaymentsTypeId } from '@/models/product';
+import { LabelsOptionFreightPayment } from '@/lib/constant/ui';
 
 interface IQuickSearchBrandProps {
   brands: string[];
@@ -204,6 +206,37 @@ const QuickSearchBrand: FC<IQuickSearchBrandProps> = ({
         </Select>
         {touched.shipToLocation && errors.shipToLocation && (
           <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.shipToLocation}</p>
+        )}
+      </div>
+
+      <div key="freightPaymentSearch">
+        <Select
+          name="freightPayment"
+          onValueChange={(value) => setFieldValue('freightPayment', value)}
+          value={values.freightPayment}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Freight Payment" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {Object.keys(FreightPaymentsType).map((freightType) => {
+                const freightTypeId = parseInt(
+                  FreightPaymentsTypeId[freightType as unknown as FreightPaymentsTypeId],
+                  10
+                );
+
+                return (
+                  <SelectItem key={freightTypeId} value={freightTypeId.toString()}>
+                    {LabelsOptionFreightPayment[freightTypeId]}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        {touched.freightPayment && errors.freightPayment && (
+          <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.freightPayment}</p>
         )}
       </div>
     </section>

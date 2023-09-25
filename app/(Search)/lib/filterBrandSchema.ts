@@ -9,6 +9,7 @@ export interface IFilter<DeliverDateType = Date, QuantityType = string> {
   grade?: string;
   deliverDate?: DeliverDateType;
   shipToLocation?: string;
+  freightPayment?: string;
 }
 
 const FilterBrandValidationSchema = Yup.object().shape({
@@ -20,6 +21,7 @@ const FilterBrandValidationSchema = Yup.object().shape({
   grade: Yup.string().required("Grade it's Required"),
   deliverDate: Yup.date().required("Deliver Date it's Required"),
   shipToLocation: Yup.string().required("Ship to Location it's Required"),
+  freightPayment: Yup.string().required("Freight Payment it's Required"),
 });
 
 export const filterInitialValues: IFilter = {
@@ -31,6 +33,7 @@ export const filterInitialValues: IFilter = {
   quantity: undefined,
   deliverDate: undefined,
   shipToLocation: undefined,
+  freightPayment: undefined,
 };
 
 export type FilterBrand = Yup.InferType<typeof FilterBrandValidationSchema>;

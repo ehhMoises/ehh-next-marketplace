@@ -27,7 +27,7 @@ const BrandFilters: FC<BrandFiltersProps> = ({ brands, varieties, packSizeList, 
     onSubmit: async (values) => {
       const deliveryDate = new Date(values?.deliverDate ?? '').getTime();
       router.push(
-        `/orders?commodity=${values?.commodity}&packStyleId=${values?.packStyle}&packSizeId=${values?.packSize}&quantity=${values?.quantity}&deliveryDateUtc=${deliveryDate}&grade=${values?.grade}&shipToLocation=${values?.shipToLocation}&mode=quick-search`
+        `/orders?commodity=${values?.commodity}&packStyleId=${values?.packStyle}&packSizeId=${values?.packSize}&quantity=${values?.quantity}&deliveryDateUtc=${deliveryDate}&grade=${values?.grade}&shipToLocation=${values?.shipToLocation}&freightPayment=${values?.freightPayment}&mode=quick-search`
       );
     },
   });

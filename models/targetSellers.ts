@@ -5,6 +5,7 @@ export interface PotentialGrowersBody {
   variety: string;
   growingMethod: number;
   quantity: number;
+  freightPayment: number;
   deliveryDateUtc: string;
   shipToLocation: string;
 }
@@ -15,6 +16,7 @@ export interface QuickSearchPotentialGrowersBody {
   packSize: string;
   grade: string;
   quantity: number;
+  freightPayment: number;
   deliveryDateUtc: string;
   shipToLocation: string;
 }

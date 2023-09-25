@@ -27,10 +27,6 @@ const getData = async (): Promise<QuickSearchOptions & { products: ProductPresen
     grades: options?.grades ?? [],
     products,
     addresses: options?.addresses ?? [],
-    // addresses: [
-    //   '841 Thompson Plain, Rowland Height 65013 Donnelly Mount 93724 Rowland Heights North Dakota',
-    //   '389 Bradtke Shore Burgloch 71 91035 Morissettestad New Hampshire',
-    // ],
   };
 };
 

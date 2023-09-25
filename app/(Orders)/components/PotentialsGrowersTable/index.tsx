@@ -23,6 +23,7 @@ interface PotentialsGrowersProps {
   potentialGrowers: PotentialGrowers[];
   rawDeliveryDateUtc: string;
   rawQuantity: string;
+  rawFreightPayment: string;
   searchParams: (SearchParamsPotentialGrowers | QuickSearchParamsPotentialGrowers) & {
     mode: string;
   };
@@ -32,27 +33,28 @@ export const PotentialsGrowersTable: FC<PotentialsGrowersProps> = ({
   potentialGrowers,
   rawDeliveryDateUtc,
   rawQuantity,
+  rawFreightPayment,
   searchParams,
 }) => {
+  const router = useRouter();
   const [currentPotentialGrowers, setCurrentPotentialGrowers] = useState<PotentialGrowers[]>(potentialGrowers);
   const { mutateAsync: addCartItem, isLoading } = useCreateShoppingCartMutation();
   const { mutateAsync: removeItemFromCart, isLoading: isRemovingItemCart } = useRemoveItemCartMutation();
-  const router = useRouter();
   const intermediateTime = useTimeIntermediate(isLoading);
   const isLoadingProgress = isLoading || isRemovingItemCart;
   const { toast } = useToast();
 
   const addStockToCartHandler = async (stockId: string, shipToLocation: string) => {
+    const freightPayment = Number.parseInt(rawFreightPayment, 10);
     const deliveryDateUtc = new Date(Number.parseInt(rawDeliveryDateUtc, 10)).toISOString();
     const quantity = Number.parseInt(rawQuantity, 10);
-
     await addCartItem({
       stockId,
       deliveryDateUtc,
       shipToLocation,
       quantity,
+      freightPayment,
     });
-
     setCurrentPotentialGrowers((prevPotentialGrowers) =>
       prevPotentialGrowers.filter((prevPotentialGrower) => prevPotentialGrower.id !== stockId)
     );

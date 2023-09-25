@@ -36,6 +36,7 @@ const getPotentialGrowers = async (
       packSize: quickSearchPayload.packSizeId,
       packStyle: quickSearchPayload.packStyleId,
       quantity: Number.parseInt(quickSearchPayload.quantity, 10),
+      freightPayment: Number.parseInt(quickSearchPayload.freightPayment, 10),
       shipToLocation: quickSearchPayload.shipToLocation,
       accessToken,
     });
@@ -49,6 +50,7 @@ const getPotentialGrowers = async (
 
     const response = await getPossibleGrowers({
       ...potentialGrowersPayload,
+      freightPayment: Number.parseInt(potentialGrowersPayload.freightPayment, 10),
       accessToken,
     });
 
@@ -89,6 +91,7 @@ export default async function OrdersPage({
           potentialGrowers={potentialGrowers}
           rawDeliveryDateUtc={restSearchParams.deliveryDateUtc}
           rawQuantity={restSearchParams.quantity}
+          rawFreightPayment={restSearchParams.freightPayment}
         />
       </Suspense>
     </Fragment>

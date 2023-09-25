@@ -3,6 +3,7 @@ export interface NewCartItemBody {
   quantity: number;
   deliveryDateUtc: string;
   shipToLocation: string;
+  freightPayment: number;
 }
 
 export interface ShoppingCart {

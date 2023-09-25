@@ -17,6 +17,8 @@ import { useFormik } from 'formik';
 import PotentialGrowersSchema, { getPotentialGrowersInitalValues } from '../../lib/potentialGrowersSchema';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { objectToURL } from '@/lib/urlParser';
+import { FreightPaymentsType, FreightPaymentsTypeId } from '@/models/product';
+import { LabelsOptionFreightPayment } from '@/lib/constant/ui';
 
 interface OrderModalProps {
   openModal: boolean;
@@ -188,20 +190,18 @@ export const OrderModal: FC<OrderModalProps> = ({ commodity, growingMethodId, va
                 }}
               >
                 <SelectGroup>
-                  {[
-                    {
-                      id: 100,
-                      name: 'FOB Origin',
-                    },
-                    {
-                      id: 200,
-                      name: 'FOB Destination',
-                    },
-                  ].map((freightType) => (
-                    <SelectItem className="text-xl text-center" key={freightType.id} value={freightType.id.toString()}>
-                      {freightType.name}
-                    </SelectItem>
-                  ))}
+                  {Object.keys(FreightPaymentsType).map((freightType) => {
+                    const freightTypeId = parseInt(
+                      FreightPaymentsTypeId[freightType as unknown as FreightPaymentsTypeId],
+                      10
+                    );
+
+                    return (
+                      <SelectItem className="text-xl text-center" key={freightTypeId} value={freightTypeId.toString()}>
+                        {LabelsOptionFreightPayment[freightTypeId]}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectGroup>
               </SelectContent>
             </Select>
