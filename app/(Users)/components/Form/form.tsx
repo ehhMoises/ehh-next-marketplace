@@ -59,15 +59,13 @@ export const UserFormComponent: FC<IUserFormComponentProps> = ({
             {touched.email && errors.email && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.email}</p>}
           </div>
 
-          {isNew && (
-            <div className="pb-4">
-              <Label htmlFor="password">Password:</Label>
-              <Input typeof="password" id="password" {...getFieldProps('password')} placeholder="password" />
-              {touched.password && errors.password && (
-                <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.password}</p>
-              )}
-            </div>
-          )}
+          <div className="pb-4">
+            <Label htmlFor="password">Password:</Label>
+            <Input type="password" id="password" {...getFieldProps('password')} placeholder="password" />
+            {touched.password && errors.password && (
+              <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.password}</p>
+            )}
+          </div>
 
           <div className="pb-4">
             <Label htmlFor="position">Position:</Label>

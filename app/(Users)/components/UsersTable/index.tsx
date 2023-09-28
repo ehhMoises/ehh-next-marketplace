@@ -119,13 +119,18 @@ export const UsersTable: FC = () => {
   }
 
   return (
-    <Accordion type="single" typeof="single" className="mt-4" defaultValue="users-table-item" collapsible>
-      <AccordionItem value="users-table-item">
-        <AccordionTrigger className="bg-marketplace p-4 text-white">Users</AccordionTrigger>
-        <AccordionContent>
-          <DataTable columns={columns} data={users.data} />
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <div>
+      <div className="flex justify-end mb-4">
+        <Button onClick={() => router.push('/users/home/new')}>Create</Button>
+      </div>
+      <Accordion type="single" typeof="single" className="mt-4" defaultValue="users-table-item" collapsible>
+        <AccordionItem value="users-table-item">
+          <AccordionTrigger className="bg-marketplace p-4 text-white">Users</AccordionTrigger>
+          <AccordionContent>
+            <DataTable columns={columns} data={users.data} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
   );
 };

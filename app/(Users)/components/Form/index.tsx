@@ -59,7 +59,15 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
       validationSchema,
       onSubmit: () => {
         if (isNew) {
-          createUser(values, {
+          const payload = {
+            email: values.email,
+            name: values.name,
+            password: values.password,
+            position: values.position,
+            status: +values.status,
+            type: +values.type,
+          };
+          createUser(payload, {
             onSuccess: (data) => {
               resetForm();
               toast({

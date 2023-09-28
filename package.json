@@ -64,6 +64,7 @@
     "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.6",
     "yup": "^1.2.0",
+    "yup-password": "^0.2.2",
     "zod": "^3.22.2"
   },
   "devDependencies": {

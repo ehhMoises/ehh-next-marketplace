@@ -120,6 +120,9 @@ const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
                     <DropdownMenuCheckboxItem onClick={() => growerRoutesHandler('profile')}>
                       Profile
                     </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={() => router.push('/users/home')}>
+                      Users
+                    </DropdownMenuCheckboxItem>
                     <DropdownMenuSeparator />
                   </Fragment>
                 ) : (
@@ -134,6 +137,9 @@ const MainNavigationHeader: FC<MainNavigationHeaderProps> = ({ me }) => {
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem onClick={() => buyerRoutesHandler('profile')}>
                       Profile
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem onClick={() => router.push('/users/home')}>
+                      Users
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuCheckboxItem onClick={goToSearchHandler}>Search</DropdownMenuCheckboxItem>
                     <DropdownMenuSeparator />

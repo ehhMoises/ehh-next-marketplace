@@ -78,16 +78,6 @@ export const NavigationGrower: FC = () => {
       >
         Orders
       </Link>
-
-      <Link
-        href="/users/home"
-        className={cn(
-          'transition-colors',
-          pathname === '/users/home' ? 'py-3.5 px-8 bg-white text-stone-900' : 'py-3.5 px-8 hover:bg-stone-500'
-        )}
-      >
-        Users
-      </Link>
     </div>
   );
 };

@@ -1,17 +1,22 @@
 import * as Yup from 'yup';
+import yupPassword from 'yup-password';
+
+// Add the yupPassword plugin to Yup
+yupPassword(Yup);
 
 export const validationSchema = Yup.object().shape({
-  id: Yup.string().required('Id is required'),
-  accountId: Yup.string().required('Account Id is required'),
+  id: Yup.string(),
+  accountId: Yup.string(),
   name: Yup.string().required('Name is required'),
-  email: Yup.string().required('Email is required'),
-  password: Yup.string(),
+  email: Yup.string().email('Email is invalid').required('Email is required'),
+  password: Yup.string()
+    .password()
+    .minLowercase(5)
+    .minUppercase(1)
+    .minNumbers(1)
+    .minSymbols(1)
+    .required('Password is required'),
   position: Yup.string(),
   status: Yup.number().required('Status is required'),
   type: Yup.number().required('Type is required'),
 });
-
-// providerNumber: Yup.string().when('providerName', {
-//   is: (providerName: string) => !isEmpty(providerName),
-//   then: Yup.string().required('Provider number is required'),
-// }),
