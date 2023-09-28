@@ -94,28 +94,31 @@ export const UserFormComponent: FC<IUserFormComponentProps> = ({
             {touched.type && errors.type && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.type}</p>}
           </div>
 
-          <div key="userStatus" className="mb-4">
-            <Label htmlFor="growing-method">Status:</Label>
-            <Select
-              name="status"
-              onValueChange={(value) => setFieldValue('status', value)}
-              value={String(values.status)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {userStatuses?.map((item) => (
-                    <SelectItem key={item.id} value={String(item.id)}>
-                      <p className="capitalize">{item.name}</p>
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            {touched.status && errors.status && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.status}</p>}
-          </div>
+          {!isNew && (
+            <div key="userStatus" className="mb-4">
+              <Label htmlFor="growing-method">Status:</Label>
+              <Select
+                name="status"
+                onValueChange={(value) => setFieldValue('status', value)}
+                value={String(values.status)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {userStatuses?.map((item) => (
+                      <SelectItem key={item.id} value={String(item.id)}>
+                        <p className="capitalize">{item.name}</p>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {touched.status && errors.status && <p className="text-red-400 ml-1.5 mt-0.5 text-sm">{errors.status}</p>}
+            </div>
+          )}
+
           <div className="flex justify-end mt-4">
             <Button type="button" variant="outline" onClick={() => router.push('/users/home')} className="mr-4">
               Cancel
