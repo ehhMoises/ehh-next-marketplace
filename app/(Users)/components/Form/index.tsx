@@ -18,6 +18,8 @@ import {
 } from '@/app/(Grower)/hooks/queries/useUsersQuery';
 import { useCreateUserdMutation, useUpdateUserMutation } from '@/app/(Grower)/hooks/mutations/useUserMutation';
 import { UserFormComponent } from './form';
+import { IEnum } from '@/models/enum';
+import { StatusType } from '@/models/account-user';
 
 export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   const isNew = params.id === 'new';
@@ -25,14 +27,22 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
   const router = useRouter();
 
   // Get User Types
-  const { data: userTypes, isLoading: isLoadingUserTypes, isError: isErrorUserTypes } = useGetUserTypesQuery({});
+  const {
+    data: userTypes,
+    // isLoading: isLoadingUserTypes,
+    // isError: isErrorUserTypes
+  } = useGetUserTypesQuery({});
 
   // Get User
   const {
     data: userStatuses,
-    isLoading: isLoadingUserStatuses,
-    isError: isErrorUserStatuses,
-  } = useGetUserStatusesQuery({});
+    // isLoading: isLoadingUserStatuses,
+    // isError: isErrorUserStatuses,
+  } = useGetUserStatusesQuery({
+    select: (statuses: IEnum[]) => {
+      return statuses.filter((status) => status.name !== StatusType.Unconfirmed);
+    },
+  });
 
   // Get User by Id
   const {
@@ -67,7 +77,7 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
             type: +values.type,
           };
           createUser(payload, {
-            onSuccess: (data) => {
+            onSuccess: () => {
               resetForm();
               toast({
                 title: 'User Successfully Created',
@@ -89,7 +99,7 @@ export const UsersForm: FC<IParamsProps> = ({ params }: { params: { id: string }
           updateUser(
             { ...values, status: +values.status, type: +values.type, id },
             {
-              onSuccess: (data) => {
+              onSuccess: () => {
                 resetForm();
                 toast({
                   title: 'User Successfully Updated',

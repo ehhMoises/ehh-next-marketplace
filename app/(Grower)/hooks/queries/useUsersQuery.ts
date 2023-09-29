@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { USERS_QUERY_KEYS } from '@/constants/users';
 import { getUserById, getUserStatuses, getUserTypes, getUsers } from '@/lib/api/users';
 import { useQuery } from '@tanstack/react-query';
@@ -18,13 +19,13 @@ export const useGetUsersByIdQuery = (id: string, queryProps: any) =>
     ...queryProps,
   });
 
-  export const useGetUserTypesQuery = (queryProps: any) =>
+export const useGetUserTypesQuery = (queryProps: any) =>
   useQuery([USERS_QUERY_KEYS.GET_USER_TYPES], () => getUserTypes(), {
     ...defaultOptions,
     ...queryProps,
   });
 
-  export const useGetUserStatusesQuery = (queryProps: any) =>
+export const useGetUserStatusesQuery = (queryProps: any) =>
   useQuery([USERS_QUERY_KEYS.GET_USER_STATUSES], () => getUserStatuses(), {
     ...defaultOptions,
     ...queryProps,
