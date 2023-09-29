@@ -32,7 +32,7 @@ export const initialValues: PurchaseOrderDetail = {
   price: 0,
   deliveryDateUtc: '',
   status: {
-    id: 100,
+    id: StatusOrderTypeId.Pending,
     name: StatusOrderType.Pending,
   },
   total: 0,

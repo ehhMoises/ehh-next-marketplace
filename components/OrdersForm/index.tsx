@@ -19,29 +19,33 @@ import {
   useUpdateStatusOrderMutation,
 } from '@/app/(Grower)/hooks/mutations/useOrderMutation';
 import { AccountType } from '@/models/account-user';
+import { StatusOrderType, StatusOrderTypeId } from '@/models/purchase-order';
 
 export const OrdersForm: FC<IParamsProps & { accountType?: AccountType }> = ({ params: { id }, accountType }) => {
+  const [initalStatus, setInitalStatus] = useState<{
+    id: StatusOrderTypeId;
+    name: StatusOrderType;
+  } | null>(null);
   const [currentRootPath, setCurrentRootPath] = useState('');
   const isNew = id === 'new';
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname) {
-      if (pathname === '/grower/home') {
-        setCurrentRootPath('/grower/orders');
+    if (pathname && accountType) {
+      if (accountType === AccountType.Grower) {
+        if (pathname === '/grower/orders' || !!pathname.split('/')[3]) {
+          setCurrentRootPath('/grower/orders');
+        }
       }
-      if (pathname === '/retailer/home') {
-        setCurrentRootPath('/retailer/orders');
-      }
-      if (pathname === '/grower/orders') {
-        setCurrentRootPath('/grower/orders');
-      }
-      if (pathname === '/retailer/orders') {
-        setCurrentRootPath('/retailer/orders');
+
+      if (accountType === AccountType.Buyer) {
+        if (pathname === '/retailer/orders' || !!pathname.split('/')[3]) {
+          setCurrentRootPath('/retailer/orders');
+        }
       }
     }
-  }, [pathname]);
+  }, [accountType, pathname]);
 
   // Get Order
   const {
@@ -89,7 +93,10 @@ export const OrdersForm: FC<IParamsProps & { accountType?: AccountType }> = ({ p
           });
         } else {
           try {
-            await updateOrder({ ...formValues, id });
+            if (accountType === AccountType.Grower) {
+              await updateOrder({ ...formValues, id });
+            }
+
             await updateStatusOrder({
               ...formValues,
               id,
@@ -115,6 +122,7 @@ export const OrdersForm: FC<IParamsProps & { accountType?: AccountType }> = ({ p
 
   useEffect(() => {
     if (!!order && isSuccessOrder && !isNew) {
+      setInitalStatus(order.status);
       setValues(order);
     }
   }, [order, isNew, isSuccessOrder, setValues]);
@@ -154,6 +162,7 @@ export const OrdersForm: FC<IParamsProps & { accountType?: AccountType }> = ({ p
       currentRootPath={currentRootPath}
       setFieldValue={setFieldValue}
       accountType={accountType}
+      initialStatus={initalStatus}
     />
   );
 };

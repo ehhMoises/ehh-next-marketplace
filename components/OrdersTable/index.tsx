@@ -50,7 +50,7 @@ export const MyOrdersTable: FC = () => {
         setDataSource(data.data);
       }
     }
-  }, [data]);
+  }, [data, pathname]);
 
   const columns: ColumnDef<PurchaseOrderList>[] = [
     {

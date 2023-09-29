@@ -29,6 +29,10 @@ interface IOrderProps {
   values: PurchaseOrderDetail;
   currentRootPath: string;
   accountType?: AccountType;
+  initialStatus: {
+    id: StatusOrderTypeId;
+    name: StatusOrderType;
+  } | null;
 }
 
 export const OrderFormComponent: FC<IOrderProps> = ({
@@ -42,19 +46,29 @@ export const OrderFormComponent: FC<IOrderProps> = ({
   values,
   currentRootPath,
   accountType,
+  initialStatus,
 }) => {
   const router = useRouter();
 
   const changeOrderStatusHandler = (_statusId: string) => {
-    const statusId = _statusId as unknown as StatusOrderTypeId;
+    if (_statusId) {
+      const statusId = _statusId as unknown as StatusOrderTypeId;
 
-    const selectedStatus = {
-      id: statusId,
-      name: OrderStatusName[statusId],
-    };
+      const selectedStatus = {
+        id: statusId,
+        name: OrderStatusName[statusId],
+      };
 
-    setFieldValue('status', selectedStatus);
+      setFieldValue('status', selectedStatus);
+    }
   };
+
+  const orderHasDone =
+    initialStatus && [StatusOrderType.Cancelled, StatusOrderType.Completed].includes(initialStatus.name);
+  const showLabelStatusBuyer =
+    initialStatus &&
+    [StatusOrderType.InProcess, StatusOrderType.Pending].includes(initialStatus.name) &&
+    accountType === AccountType.Buyer;
 
   return (
     <div className="p-4">
@@ -72,46 +86,55 @@ export const OrderFormComponent: FC<IOrderProps> = ({
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row pb-4 gap-x-4 gap-y-4">
-            <div className="w-full md:w-6/12 flex flex-col">
-              <Label htmlFor="status">Order Status:</Label>
-              <Select name="status" onValueChange={changeOrderStatusHandler} value={values.status.id.toString()}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Order Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {accountType === AccountType.Grower && (
-                      <Fragment key="growerStatusPortion">
-                        <SelectItem key={StatusOrderTypeId.Pending} value={StatusOrderTypeId.Pending.toString()}>
-                          <p className="capitalize">{OrderStatusLabels[StatusOrderType.Pending]}</p>
-                        </SelectItem>
-
-                        <SelectItem key={StatusOrderTypeId.InProcess} value={StatusOrderTypeId.InProcess.toString()}>
-                          <p className="capitalize">{OrderStatusLabels[StatusOrderType.InProcess]}</p>
-                        </SelectItem>
-
-                        <SelectItem key={StatusOrderTypeId.Delivered} value={StatusOrderTypeId.Delivered.toString()}>
-                          <p className="capitalize">{OrderStatusLabels[StatusOrderType.Delivered]}</p>
-                        </SelectItem>
-                      </Fragment>
-                    )}
-
-                    {accountType === AccountType.Buyer && (
-                      <Fragment key="buyerStatusPortion">
-                        <SelectItem key={StatusOrderTypeId.Completed} value={StatusOrderTypeId.Completed.toString()}>
-                          <p className="capitalize">{OrderStatusLabels[StatusOrderType.Completed]}</p>
-                        </SelectItem>
-
-                        <SelectItem key={StatusOrderTypeId.Cancelled} value={StatusOrderTypeId.Cancelled.toString()}>
-                          <p className="capitalize">{OrderStatusLabels[StatusOrderType.Cancelled]}</p>
-                        </SelectItem>
-                      </Fragment>
-                    )}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+          {(orderHasDone || showLabelStatusBuyer) && (
+            <div className="flex flex-col sm:flex-row pb-4 gap-x-4 gap-y-4 items-center">
+              <h4>Order Status:</h4>
+              <Label className="mt-1.5 font-semibold uppercase">{OrderStatusLabels[initialStatus.name]}</Label>
             </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row pb-4 gap-x-4 gap-y-4">
+            {!orderHasDone && (
+              <div className="w-full md:w-6/12 flex flex-col">
+                <Label htmlFor="status">Order Status:</Label>
+                <Select name="status" onValueChange={changeOrderStatusHandler} value={values.status.id.toString()}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Order Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {accountType === AccountType.Grower && (
+                        <Fragment key="growerStatusPortion">
+                          <SelectItem key={StatusOrderTypeId.Pending} value={StatusOrderTypeId.Pending.toString()}>
+                            <p className="capitalize">{OrderStatusLabels[StatusOrderType.Pending]}</p>
+                          </SelectItem>
+
+                          <SelectItem key={StatusOrderTypeId.InProcess} value={StatusOrderTypeId.InProcess.toString()}>
+                            <p className="capitalize">{OrderStatusLabels[StatusOrderType.InProcess]}</p>
+                          </SelectItem>
+
+                          <SelectItem key={StatusOrderTypeId.Delivered} value={StatusOrderTypeId.Delivered.toString()}>
+                            <p className="capitalize">{OrderStatusLabels[StatusOrderType.Delivered]}</p>
+                          </SelectItem>
+                        </Fragment>
+                      )}
+
+                      {accountType === AccountType.Buyer && (
+                        <Fragment key="buyerStatusPortion">
+                          <SelectItem key={StatusOrderTypeId.Completed} value={StatusOrderTypeId.Completed.toString()}>
+                            <p className="capitalize">{OrderStatusLabels[StatusOrderType.Completed]}</p>
+                          </SelectItem>
+
+                          <SelectItem key={StatusOrderTypeId.Cancelled} value={StatusOrderTypeId.Cancelled.toString()}>
+                            <p className="capitalize">{OrderStatusLabels[StatusOrderType.Cancelled]}</p>
+                          </SelectItem>
+                        </Fragment>
+                      )}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
             <div className="w-full md:w-6/12">
               <Label htmlFor="deliveryDateUtc">Delivery Date:</Label>
