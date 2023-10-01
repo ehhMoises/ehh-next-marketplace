@@ -19,18 +19,9 @@ import { Brand } from '@/models/brand';
 import { GrowingMethod } from '@/models/growingMethod';
 import { PackStyle } from '@/models/packStyle';
 import { PackSize } from '@/models/packSize';
-// import { useForm } from 'react-hook-form';
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import * as z from 'zod';
 import { StockCatalog } from '@/models/catalog';
 import { SpinClockwiseLoader } from '@/components/Loaders/SpinClockwise';
 import { AwesomeLoaderSize } from '@/components/Loaders/loader-size.constant';
-
-// const FormSchema = z.object({
-//   dob: z.date({
-//     required_error: 'A date of birth is required.',
-//   }),
-// });
 
 interface ICatalogProps {
   handleSubmit: (e?: FormEvent<HTMLFormElement> | undefined) => void;
@@ -76,16 +67,15 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
   isLoadingPackSizesByPackStyleId,
 }) => {
   const router = useRouter();
-  // const form = useForm<z.infer<typeof FormSchema>>({
-  //   resolver: zodResolver(FormSchema),
-  // });
   return (
     <div>
       <div className="bg-marketplace p-4 text-white">Product Information</div>
-      <div className="bg-gray-300 flex flex-col p-4">
-        <div className="font-bold">{catalog?.header}</div>
-        <div>{catalog?.subHeader}</div>
-      </div>
+      {catalog && (
+        <div className="bg-gray-300 flex flex-col p-4">
+          <div className="font-bold">{catalog?.header}</div>
+          <div>{catalog?.subHeader}</div>
+        </div>
+      )}
       <div className="p-4 bg-marketplace-accent-2">
         <form onSubmit={handleSubmit}>
           {/* BRAND */}
