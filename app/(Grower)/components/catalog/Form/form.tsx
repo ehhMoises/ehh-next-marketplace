@@ -100,7 +100,9 @@ export const CatalogFormComponent: FC<ICatalogProps> = ({
                   <SelectGroup>
                     {brands?.data.map((brand) => (
                       <SelectItem key={brand.id} value={brand.id}>
-                        <p className="capitalize">{brand.variety}</p>
+                        <p className="capitalize">
+                          {brand.name} - {brand.variety}
+                        </p>
                       </SelectItem>
                     ))}
                   </SelectGroup>

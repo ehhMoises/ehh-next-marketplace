@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation';
 import { useGetCatalogByIdQuery } from '@/app/(Grower)/hooks/queries/useStockQuery';
 import { useGetPackSizesByPackStyleIdMutation } from '@/app/(Grower)/hooks/mutations/usePackSizeMutation';
 import { PackSize } from '@/models/packSize';
+import { isEmpty } from 'lodash';
 
 export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string } }) => {
   const isNew = params.id === 'new';
@@ -27,7 +28,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
   const id = params.id;
   const {
     data: catalog,
-    isLoading: isLoadingCatalog,
+    isLoading: _isLoadingCatalog,
     isSuccess: isSuccessCatalog,
     isError: isErrorCatalog,
   } = useGetCatalogByIdQuery(id, {
@@ -46,6 +47,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
     isSuccess: isSuccessPackSizesByPackStyleId,
   } = useGetPackSizesByPackStyleIdMutation();
 
+  const isLoadingCatalog = !isNew && _isLoadingCatalog;
   const isLoadingData =
     isLoadingBrands ||
     isLoadingGrades ||
@@ -56,9 +58,9 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
 
   const isError = isErrorBrands || isErrorGrades || isErrorPackStyles || isErrorCatalog;
 
-  const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, dirty, setFieldValue } = useFormik({
+  const { handleSubmit, values, getFieldProps, errors, touched, resetForm, isValid, setFieldValue } = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: validationSchema(isNew),
     onSubmit: () => {
       if (isNew) {
         createCatalog(values, {
@@ -115,7 +117,7 @@ export const CatalogForm: FC<IParamsProps> = ({ params }: { params: { id: string
     },
   });
 
-  const isButtonDisabled = !isValid || !dirty || isLoadingData;
+  const isButtonDisabled = !isValid || isLoadingData || !isEmpty(errors);
 
   useEffect(() => {
     if (!!catalog && isSuccessCatalog && !isNew) {
